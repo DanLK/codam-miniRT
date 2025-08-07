@@ -6,13 +6,18 @@
 /*   By: dloustal <dloustal@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/07 13:30:20 by hogu          #+#    #+#                 */
-/*   Updated: 2025/08/07 15:12:18 by dloustal      ########   odam.nl         */
+/*   Updated: 2025/08/07 16:59:31 by dloustal      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINIRT_H
 # define MINIRT_H
+# define WIDTH 1024
+# define HEIGHT 512
 # include "libft.h"
+# include "MLX42/MLX42.h"
+# include <unistd.h>
+# include <math.h>
 
 typedef struct s_cord
 {
@@ -101,5 +106,12 @@ typedef struct s_scene
 	t_light		light;
 	t_object	*objects;
 }	t_scene;
+
+//Vec
+t_vec	*init_vec(double x, double y, double z);
+void	neg_vec(t_vec *vec);
+void	scale_vec(t_vec *vec, double scalar);
+double	len_vec(t_vec *vec);
+double	dot(t_vec *u, t_vec *v);
 
 #endif
