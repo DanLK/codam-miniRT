@@ -6,11 +6,23 @@
 /*   By: dloustal <dloustal@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/11 12:18:25 by dloustal      #+#    #+#                 */
-/*   Updated: 2025/08/11 12:18:41 by dloustal      ########   odam.nl         */
+/*   Updated: 2025/08/11 16:26:56 by dloustal      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
+
+t_vec	*sum_vec(t_vec *u, t_vec *v)
+{
+	t_vec *sum;
+
+	if (!u || !v)
+		return (NULL);
+	sum = init_vec(u->x + v->x, u->y + v->y, u->z + v->z);
+	if (!sum)
+		return (NULL);
+	return (sum);
+}
 
 double	dot(t_vec *u, t_vec *v)
 {

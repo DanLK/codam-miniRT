@@ -1,5 +1,5 @@
 NAME = miniRT
-SRC = miniRT.c vec/vec.c vec/vec_ops.c vec/vec_utils.c color/color.c
+SRC = miniRT.c vec/vec.c vec/vec_ops.c vec/vec_utils.c color/color.c ray.c
 SRC_DIR = ./src
 OBJ_DIR = ./obj
 OBJ = $(SRC:%.c=$(OBJ_DIR)/%.o)
