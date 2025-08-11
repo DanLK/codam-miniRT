@@ -6,7 +6,7 @@
 /*   By: dloustal <dloustal@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/07 13:30:20 by hogu          #+#    #+#                 */
-/*   Updated: 2025/08/07 16:59:31 by dloustal      ########   odam.nl         */
+/*   Updated: 2025/08/11 12:27:00 by dloustal      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,11 +107,18 @@ typedef struct s_scene
 	t_object	*objects;
 }	t_scene;
 
-//Vec
+//---------------------Vec----------------------------
+// Main
 t_vec	*init_vec(double x, double y, double z);
 void	neg_vec(t_vec *vec);
 void	scale_vec(t_vec *vec, double scalar);
 double	len_vec(t_vec *vec);
+void	normalize(t_vec *v);
+// Operations
 double	dot(t_vec *u, t_vec *v);
+t_vec	*cross(t_vec *u, t_vec *v);
+// Utils
+void	print_vec(t_vec *v);
+
 
 #endif
