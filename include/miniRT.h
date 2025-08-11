@@ -6,7 +6,7 @@
 /*   By: dloustal <dloustal@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/07 13:30:20 by hogu          #+#    #+#                 */
-/*   Updated: 2025/08/11 12:27:00 by dloustal      ########   odam.nl         */
+/*   Updated: 2025/08/11 14:28:51 by dloustal      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include "MLX42/MLX42.h"
 # include <unistd.h>
 # include <math.h>
+# include <stdio.h>
 
 typedef struct s_cord
 {
@@ -120,5 +121,7 @@ t_vec	*cross(t_vec *u, t_vec *v);
 // Utils
 void	print_vec(t_vec *v);
 
+//--------------------COLOR---------------------------
+int get_rgba(int r, int g, int b, int a);
 
 #endif
