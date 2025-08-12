@@ -1,0 +1,71 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                         ::::::::           */
+/*   parser.c                                            :+:    :+:           */
+/*                                                      +:+                   */
+/*   By: hogu <hogu@student.codam.nl>                  +#+                    */
+/*                                                    +#+                     */
+/*   Created: 2025/08/07 15:47:09 by hogu           #+#    #+#                */
+/*   Updated: 2025/08/07 15:47:10 by hogu           ########   odam.nl        */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "../include/miniRT.h"
+
+static bool	get_params(const char *line, t_scene *scene)
+{
+	if (!line || !scene)
+		return (0);
+	if (ft_strncmp(line, "A ", 2) == 0)
+		return (fill_in_ambient(line, scene));
+	else if (ft_strncmp(line, "C ", 2) == 0)
+		return (fill_in_camera(line, scene));
+	else if (ft_strncmp(line, "L ", 2) == 0)
+		return (fill_in_light(line, scene));
+	else if (ft_strncmp(line, "sp ", 3) == 0)
+		return (fill_in_sphere(line, scene));
+	else if (ft_strncmp(line, "pl ", 3) == 0)
+		return (fill_in_plane(line, scene));
+	else if (ft_strncmp(line, "cy ", 3) == 0)
+		return (fill_in_cylinder(line, scene));
+	print_error(PARAM_TYPE, line);
+	return (false);
+}
+
+static bool	handle_line(char *buffer, t_scene *scene)
+{
+	char	*trimmed;
+
+	trimmed = ft_strtrim(buffer, " \t\n\r\f\v");
+	free(buffer);
+	if (!trimmed)
+		return (printf("Error\n"), perror("malloc"), false);
+	if (trimmed[0] == '\0')
+		return (free(trimmed), true);
+	if (!get_params(trimmed, scene))
+		return (free(trimmed), false);
+	return (free(trimmed), true);
+}
+
+bool	parser(t_scene *scene, const char *filename)
+{
+	int		fd;
+	char	*buffer;
+	char	*trimmed;
+
+	if (!check_suffix(filename))
+		return (print_error(WRONG_SUFFIX, NULL), false);
+	fd = open(filename, O_RDONLY);
+	if (fd == -1)
+		return (printf("Error\n"), perror("Cannot open file"), false);
+	buffer = get_next_line(fd);
+	if (!buffer)
+		return (close(fd), print_error(EMPTY_FILE, NULL), false);
+	while (buffer)
+	{
+		if (!handle_line(buffer, scene))
+			return (close(fd), false);
+		buffer = get_next_line(fd);
+	}
+	return (close(fd), true);
+}
