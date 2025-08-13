@@ -6,13 +6,13 @@
 /*   By: dloustal <dloustal@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/07 14:51:55 by dloustal      #+#    #+#                 */
-/*   Updated: 2025/08/13 14:49:03 by dloustal      ########   odam.nl         */
+/*   Updated: 2025/08/13 15:28:43 by dloustal      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "miniRT.h"
+#include "../include/miniRT.h"
 
-int	main(void)
+int	main(int argc, char *argv[])
 {
 	mlx_t		*mlx;
 	mlx_image_t	*img;
@@ -77,4 +77,14 @@ int	main(void)
 	free(c_topright);
 	
 	return (0);
+}
+	t_scene	scene;
+
+	ft_bzero(&scene, sizeof(t_scene));
+	if (argc != 2)
+		return (print_error(WRONG_ARGS, NULL), EXIT_FAILURE);
+	if (!parser(&scene, argv[1]))
+		return (EXIT_FAILURE);
+	//execute
+	return (EXIT_SUCCESS);
 }

@@ -6,7 +6,7 @@
 /*   By: dloustal <dloustal@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/07 13:30:20 by hogu          #+#    #+#                 */
-/*   Updated: 2025/08/13 15:12:04 by dloustal      ########   odam.nl         */
+/*   Updated: 2025/08/13 15:31:24 by dloustal      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,17 +58,16 @@ typedef struct s_ambient
 
 typedef struct s_camera
 {
-	t_cord	pos;
+	t_coord	pos;
 	t_vec	dir;
-	double	fov;
+	int		fov;
 }	t_camera;
 
 typedef struct s_light
 {
-	t_cord			pos;
+	t_coord			pos;
 	double			ratio;
 	t_color			color;
-	struct s_light	*next;
 }	t_light;
 
 typedef enum e_obj_type
@@ -87,34 +86,44 @@ typedef struct s_object
 
 typedef struct s_sphere
 {
-	t_cord	center;
+	t_coord	center;
 	double	diameter;
 	t_color	color;
 }	t_sphere;
 
 typedef struct s_plane
 {
-	t_cord	point;
+	t_coord	point;
 	t_vec	dir;
 	t_color	color;
 }	t_plane;
 
 typedef struct s_cylinder
 {
-	t_cord	center;
+	t_coord	center;
 	t_vec	dir;
 	double	diameter;
 	double	height;
 	t_color	color;
 }	t_cylinder;
 
+typedef struct s_scene_status
+{
+	bool	has_ambient;
+	bool	has_camera;
+	bool	has_light;
+	bool	has_sphere;
+	bool	has_plane;
+	bool	has_cylinder;
+}	t_scene_status;
 
 typedef struct s_scene
 {
-	t_ambient	ambient;
-	t_camera	camera;
-	t_light		light;
-	t_object	*objects;
+	t_ambient		ambient;
+	t_camera		camera;
+	t_light			light;
+	t_object		*objects;
+	t_scene_status	status;
 }	t_scene;
 
 //---------------------Vec----------------------------
@@ -136,5 +145,48 @@ int get_rgba(int r, int g, int b, int a);
 
 //--------------------RAY---------------------------
 t_cord	*ray_at(t_ray *ray, double t);
+typedef enum e_error_code
+{
+	WRONG_ARGS,
+	WRONG_SUFFIX,
+	EMPTY_FILE,
+	PARAM_TYPE,
+	PARAM_COUNT,
+	DOUBLE,
+	WRONG_ELEM_COUNT,
+	OUT_RANGE,
+	VEC_NORM,
+	DIGITS_ONLY,
+	DUP_ELEM,
+	MISS_ELEM,
+}	t_error_code;
+
+# define EPSILON 1e-8
+
+//parser_ato
+bool		ft_atod(const char *s, double *result);
+bool		ft_atoi_strict(const char *s, int *result, int max_value);
+
+//parser_check_input
+bool		check_suffix(const char *str);
+bool		check_color(const char *s, t_color *color);
+bool		check_coord(const char *s, t_coord *pos);
+bool		check_vector(const char *s, t_vec *v);
+
+//parser_fill_in_structs
+bool		fill_in_ambient(const char *line, t_scene *scene);
+bool		fill_in_camera(const char *line, t_scene *scene);
+
+//parser_space_split
+void		free_split(char **split);
+char		**space_split(char const *s);
+
+//parser_util
+bool		check_range(double value, double min, double max);
+bool		check_equal(double value, double target);
+const char	*skip_spaces(const char *s);
+
+//print_error
+void		print_error(int code, const char *s);
 
 #endif

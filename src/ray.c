@@ -6,7 +6,7 @@
 /*   By: dloustal <dloustal@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/11 16:03:41 by dloustal      #+#    #+#                 */
-/*   Updated: 2025/08/13 15:23:02 by dloustal      ########   odam.nl         */
+/*   Updated: 2025/08/13 15:27:47 by dloustal      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,5 +32,3 @@ t_cord	*ray_at(t_ray *ray, double t)
 		return (NULL);
 	return (free(origin), free(dir), pos);
 }
-
-// t_vec	*compute_primray(double x, double y, )

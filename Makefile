@@ -1,5 +1,13 @@
 NAME = miniRT
-SRC = miniRT.c vec/vec.c vec/vec_ops.c vec/vec_utils.c color/color.c ray.c
+SRC = miniRT.c \
+	vec/vec.c \
+	vec/vec_ops.c \
+	vec/vec_utils.c \
+	color/color.c ray.c \
+	parser.c \
+	parse_atod.c \
+	print_error.c \
+	util.c
 SRC_DIR = ./src
 OBJ_DIR = ./obj
 OBJ = $(SRC:%.c=$(OBJ_DIR)/%.o)
