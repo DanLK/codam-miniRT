@@ -6,29 +6,27 @@
 /*   By: dloustal <dloustal@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/07 13:30:20 by hogu          #+#    #+#                 */
-/*   Updated: 2025/08/07 15:12:18 by dloustal      ########   odam.nl         */
+/*   Updated: 2025/08/13 15:31:24 by dloustal      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINIRT_H
 # define MINIRT_H
-
-# include "../libft/libft.h"
-
-# include <fcntl.h>
-# include <stdlib.h>
-# include <stdio.h>
-# include <stdbool.h>
+# define WIDTH 2048
+# define RATIO (16.0 / 9.0)
+# define HEIGHT (int)(WIDTH / RATIO)
+# include "libft.h"
+# include "MLX42/MLX42.h"
 # include <unistd.h>
 # include <math.h>
-# include <float.h>
+# include <stdio.h>
 
-typedef struct s_coord
-{
-	double	x;
-	double	y;
-	double	z;
-}	t_coord;
+// typedef struct s_cord
+// {
+// 	double	x;
+// 	double	y;
+// 	double	z;
+// }	t_cord;
 
 typedef struct s_vec
 {
@@ -37,12 +35,20 @@ typedef struct s_vec
 	double	z;
 }	t_vec;
 
+typedef t_vec	t_cord;
+
 typedef struct s_color
 {
 	int	r;
 	int	g;
 	int	b;
 }	t_color;
+
+typedef struct s_ray
+{
+	t_cord	*origin;
+	t_vec	*dir;
+}		t_ray;
 
 typedef struct s_ambient
 {
@@ -120,6 +126,25 @@ typedef struct s_scene
 	t_scene_status	status;
 }	t_scene;
 
+//---------------------Vec----------------------------
+// Main
+t_vec	*init_vec(double x, double y, double z);
+void	neg_vec(t_vec *vec);
+void	scale_vec(t_vec *vec, double scalar);
+double	len_vec(t_vec *vec);
+void	normalize(t_vec *v);
+// Operations
+t_vec	*sum_vec(t_vec *u, t_vec *v);
+double	dot(t_vec *u, t_vec *v);
+t_vec	*cross(t_vec *u, t_vec *v);
+// Utils
+void	print_vec(t_vec *v);
+
+//--------------------COLOR---------------------------
+int get_rgba(int r, int g, int b, int a);
+
+//--------------------RAY---------------------------
+t_cord	*ray_at(t_ray *ray, double t);
 typedef enum e_error_code
 {
 	WRONG_ARGS,
