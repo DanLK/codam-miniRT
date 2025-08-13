@@ -6,7 +6,7 @@
 /*   By: dloustal <dloustal@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/07 13:30:20 by hogu          #+#    #+#                 */
-/*   Updated: 2025/08/11 16:50:17 by dloustal      ########   odam.nl         */
+/*   Updated: 2025/08/13 15:12:04 by dloustal      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ typedef struct s_vec
 	double	z;
 }	t_vec;
 
-typedef t_vec t_cord;
+typedef t_vec	t_cord;
 
 typedef struct s_color
 {

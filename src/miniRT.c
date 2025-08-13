@@ -6,7 +6,7 @@
 /*   By: dloustal <dloustal@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/07 14:51:55 by dloustal      #+#    #+#                 */
-/*   Updated: 2025/08/11 15:48:06 by dloustal      ########   odam.nl         */
+/*   Updated: 2025/08/13 14:49:03 by dloustal      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,10 @@ int	main(void)
 	int			r;
 	int			g;
 	int			b;
+	// t_camera	*cam;
 
-
+	if (HEIGHT < 1)
+		return (1);
 	mlx = mlx_init(WIDTH, HEIGHT, "MiniRT", true);
 	if (!mlx)
 	{
@@ -38,6 +40,14 @@ int	main(void)
 		ft_putstr_fd((char *)mlx_strerror(mlx_errno), STDERR_FILENO);
 		return (EXIT_FAILURE);
 	}
+	// Start experimenting with the viewport
+	// cam = malloc(sizeof(t_camera));
+	// if (!cam)
+	// 	exit(EXIT_FAILURE);
+	// cam->pos = *init_vec(0, 0, 0);
+	// cam->dir = *init_vec(0, 0, -1); //Should not allocate memory for this
+	
+	//Paint a rectangle in the center with a color gradient
 	c_botleft = init_vec(138, 43, 226);
 	c_topright = init_vec(255, 255, 0);
 	w = 0;
@@ -55,6 +65,7 @@ int	main(void)
 		}
 		w++;
 	}
+	//------------------------------------------------------------------------------
 	if (mlx_image_to_window(mlx, img, WIDTH / 4, HEIGHT / 4) < 0)
     {
 		ft_putstr_fd((char *)mlx_strerror(mlx_errno), STDERR_FILENO);
