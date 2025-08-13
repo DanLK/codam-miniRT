@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/miniRT.h"
+#include "../../include/miniRT.h"
 
 static int	parse_sign(const char **s)
 {
@@ -98,7 +98,7 @@ bool	ft_atoi_strict(const char *s, int *result, int max_value)
 	{
 		val = val * 10 + (*p - '0');
 		if (val > max_value)
-			return (print_error(OUT_OF_RANGE, s), false);
+			return (print_error(OUT_RANGE, s), false);
 		p++;
 	}
 	p = skip_spaces(p);

@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/miniRT.h"
+#include "../../include/miniRT.h"
 
 bool	check_range(double value, double min, double max)
 {
@@ -22,25 +22,29 @@ bool	check_equal(double value, double target)
 	return (fabs(value - target) < EPSILON);
 }
 
-void	free_split(char **split)
+bool	ft_isspace(char c)
 {
-	int	i;
-
-	if (!split)
-		return ;
-	i = 0;
-	while (split[i])
-	{
-		free(split[i]);
-		i++;
-	}
-	free(split);
+	return (c == ' ' || c == '\f' || c == '\n'
+		|| c == '\r' || c == '\t' || c == '\v');
 }
 
 const char	*skip_spaces(const char *s)
 {
-	while (*s && (*s == ' ' || *s == '\f' || *s == '\n'
-			|| *s == '\r' || *s == '\t' || *s == '\v'))
+	while (*s && ft_isspace(*s))
 		s++;
 	return (s);
+}
+
+void	free_object_list(t_object *obj)
+{
+	t_object	*tmp;
+
+	while (obj)
+	{
+		tmp = obj->next;
+		if (obj->element)
+			free(obj->element);
+		free(obj);
+		obj = tmp;
+	}
 }

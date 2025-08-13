@@ -35,13 +35,8 @@ void	print_error(int code, const char *s)
 		printf("Vector not normalized: %s\n", s);
 	else if (code == DIGITS_ONLY)
 		printf("Only accepts positive integers with digits: %s\n", s);
+	else if (code == DUP_ELEM)
+		printf("Duplicate element: %s\n", s);
+	else if (code == MISS_ELEM)
+		printf("Missing element: %s\n", s);
 }
-	// else if (code == MALLOC_FAILED)
-	// 	printf("Malloc failed\n");
-
-
-	// else if (code == WRONG_FOV)
-	// 	printf("Wrong FOV\n");
-
-	// else if (code == WRONG_COORD)
-	// 	printf("Wrong coordinates\n");

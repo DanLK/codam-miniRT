@@ -1,5 +1,10 @@
 NAME = miniRT
-SRC = miniRT.c
+SRC = miniRT.c \
+	  parser.c \
+	  parse_atod.c \
+	  print_error.c \
+	  util.c
+
 SRC_DIR = ./src
 OBJ_DIR = ./obj
 OBJ = $(SRC:%.c=$(OBJ_DIR)/%.o)

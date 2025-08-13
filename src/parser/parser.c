@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/miniRT.h"
+#include "../../include/miniRT.h"
 
 static bool	get_params(const char *line, t_scene *scene)
 {
@@ -47,6 +47,23 @@ static bool	handle_line(char *buffer, t_scene *scene)
 	return (free(trimmed), true);
 }
 
+bool	validate_elem(t_scene *scene)
+{
+	if (!scene->status.has_ambient)
+		return (print_error(MISS_ELEM, "ambient"), false);
+	if (!scene->status.has_camera)
+		return (print_error(MISS_ELEM, "camera"), false);
+	if (!scene->status.has_light)
+		return (print_error(MISS_ELEM, "light"), false);
+	if (!scene->status.has_sphere)
+		return (print_error(MISS_ELEM, "sphere"), false);
+	if (!scene->status.has_plane)
+		return (print_error(MISS_ELEM, "plane"), false);
+	if (!scene->status.has_cylinder)
+		return (print_error(MISS_ELEM, "cylinder"), false);
+	return (true);
+}
+
 bool	parser(t_scene *scene, const char *filename)
 {
 	int		fd;
@@ -67,5 +84,7 @@ bool	parser(t_scene *scene, const char *filename)
 			return (close(fd), false);
 		buffer = get_next_line(fd);
 	}
+	if (!validate_elem(scene))
+		return (close(fd), false);
 	return (close(fd), true);
 }

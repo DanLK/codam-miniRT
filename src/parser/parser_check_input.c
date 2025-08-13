@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/miniRT.h"
+#include "../../include/miniRT.h"
 
 bool	check_suffix(const char *str)
 {
@@ -81,4 +81,19 @@ bool	check_vector(const char *s, t_vec *v)
 	if (!check_equal(len_vec(v), 1.0))
 		return (print_error(VEC_NORM, s), false);
 	return (true);
+}
+
+bool	check_ratio(const char *s, double *ratio_in_struct)
+{
+	double	ratio;
+
+	if (!s || !ft_atod(s, &ratio))
+		return (print_error(DOUBLE, s), false);
+	if (check_range(ratio, 0.0, 1.0))
+	{
+		*ratio_in_struct = ratio;
+		return (true);
+	}
+	else
+		return (print_error(OUT_RANGE, s), false);
 }

@@ -101,12 +101,23 @@ typedef struct s_cylinder
 	t_color	color;
 }	t_cylinder;
 
+typedef struct s_scene_status
+{
+	bool	has_ambient;
+	bool	has_camera;
+	bool	has_light;
+	bool	has_sphere;
+	bool	has_plane;
+	bool	has_cylinder;
+}	t_scene_status;
+
 typedef struct s_scene
 {
-	t_ambient	ambient;
-	t_camera	camera;
-	t_light		light;
-	t_object	*objects;
+	t_ambient		ambient;
+	t_camera		camera;
+	t_light			light;
+	t_object		*objects;
+	t_scene_status	status;
 }	t_scene;
 
 typedef enum e_error_code
@@ -121,6 +132,8 @@ typedef enum e_error_code
 	OUT_RANGE,
 	VEC_NORM,
 	DIGITS_ONLY,
+	DUP_ELEM,
+	MISS_ELEM,
 }	t_error_code;
 
 # define EPSILON 1e-8
@@ -139,10 +152,13 @@ bool		check_vector(const char *s, t_vec *v);
 bool		fill_in_ambient(const char *line, t_scene *scene);
 bool		fill_in_camera(const char *line, t_scene *scene);
 
+//parser_space_split
+void		free_split(char **split);
+char		**space_split(char const *s);
+
 //parser_util
 bool		check_range(double value, double min, double max);
 bool		check_equal(double value, double target);
-void		free_split(char **split);
 const char	*skip_spaces(const char *s);
 
 //print_error
