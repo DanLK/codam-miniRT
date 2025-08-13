@@ -1,26 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   miniRT.c                                           :+:    :+:            */
+/*   vec_utils.c                                        :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: dloustal <dloustal@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2025/08/07 14:51:55 by dloustal      #+#    #+#                 */
-/*   Updated: 2025/08/07 15:06:05 by dloustal      ########   odam.nl         */
+/*   Created: 2025/08/07 16:44:19 by dloustal      #+#    #+#                 */
+/*   Updated: 2025/08/11 12:38:17 by dloustal      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/miniRT.h"
+#include "miniRT.h"
+#include "stdio.h"
 
-int	main(int argc, char *argv[])
+void	print_vec(t_vec *v)
 {
-	t_scene	scene;
-
-	ft_bzero(&scene, sizeof(t_scene));
-	if (argc != 2)
-		return (print_error(WRONG_ARGS, NULL), EXIT_FAILURE);
-	if (!parser(&scene, argv[1]))
-		return (EXIT_FAILURE);
-	//execute
-	return (EXIT_SUCCESS);
+	printf("v: (%f, %f, %f)\n", v->x, v->y, v->z);
 }

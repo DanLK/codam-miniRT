@@ -1,0 +1,73 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                         ::::::::           */
+/*   parser_fill_in_structs_1.c                          :+:    :+:           */
+/*                                                      +:+                   */
+/*   By: hogu <hogu@student.codam.nl>                  +#+                    */
+/*                                                    +#+                     */
+/*   Created: 2025/08/12 15:52:00 by hogu           #+#    #+#                */
+/*   Updated: 2025/08/12 15:52:01 by hogu           ########   odam.nl        */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "../../include/miniRT.h"
+
+bool	fill_in_ambient(const char *s, t_scene *scene)
+{
+	char	**params;
+	double	ratio;
+
+	if (!s || !scene)
+		return (false);
+	if (scene->status.has_ambient)
+		return (print_error(DUP_ELEM, "ambient"), false);
+	params = space_split(s);
+	if (!params || !params[1] || !params[2] || params[3])
+		return (print_error(PARAM_COUNT, s), free_split(params), false);
+	if (!check_ratio(params[1], &scene->ambient.ratio)
+		|| !check_color(params[2], &scene->ambient.color))
+		return (free_split(params), false);
+	scene->status.has_ambient = true;
+	return (free_split(params), true);
+}
+
+bool	fill_in_camera(const char *s, t_scene *scene)
+{
+	char	**params;
+	int		fov;
+
+	if (!s || !scene)
+		return (false);
+	if (scene->status.has_camera)
+		return (print_error(DUP_ELEM, "camera"), false);
+	params = space_split(s);
+	if (!params || !params[1] || !params[2] || !params[3] || params[4])
+		return (print_error(PARAM_COUNT, s), free_split(params), false);
+	if (!check_coord(params[1], &scene->camera.pos)
+		|| !check_vector(params[2], &scene->camera.dir)
+		|| !ft_atoi_strict(params[3], &fov, 180))
+		return (free_split(params), false);
+	scene->camera.fov = fov;
+	scene->status.has_camera = true;
+	return (free_split(params), true);
+}
+
+//for mandatory part, light.color is untouched after initialized as 0,0,0
+bool	fill_in_light(const char *s, t_scene *scene)
+{
+	char	**params;
+	double	ratio;
+
+	if (!s || !scene)
+		return (false);
+	if (scene->status.has_light)
+		return (print_error(DUP_ELEM, "light"), false);
+	params = space_split(s);
+	if (!params || !params[1] || !params[2] || !params[3] || params[4])
+		return (print_error(PARAM_COUNT, s), free_split(params), false);
+	if (!check_coord(params[1], &scene->light.pos)
+		|| !check_ratio(params[2], &scene->light.ratio))
+		return (free_split(params), false);
+	scene->status.has_light = true;
+	return (free_split(params), true);
+}

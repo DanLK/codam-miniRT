@@ -12,14 +12,23 @@
 
 #ifndef MINIRT_H
 # define MINIRT_H
-# include "libft.h"
 
-typedef struct s_cord
+# include "../libft/libft.h"
+
+# include <fcntl.h>
+# include <stdlib.h>
+# include <stdio.h>
+# include <stdbool.h>
+# include <unistd.h>
+# include <math.h>
+# include <float.h>
+
+typedef struct s_coord
 {
 	double	x;
 	double	y;
 	double	z;
-}	t_cord;
+}	t_coord;
 
 typedef struct s_vec
 {
@@ -43,17 +52,16 @@ typedef struct s_ambient
 
 typedef struct s_camera
 {
-	t_cord	pos;
+	t_coord	pos;
 	t_vec	dir;
-	double	fov;
+	int		fov;
 }	t_camera;
 
 typedef struct s_light
 {
-	t_cord			pos;
+	t_coord			pos;
 	double			ratio;
 	t_color			color;
-	struct s_light	*next;
 }	t_light;
 
 typedef enum e_obj_type
@@ -72,34 +80,88 @@ typedef struct s_object
 
 typedef struct s_sphere
 {
-	t_cord	center;
+	t_coord	center;
 	double	diameter;
 	t_color	color;
 }	t_sphere;
 
 typedef struct s_plane
 {
-	t_cord	point;
+	t_coord	point;
 	t_vec	dir;
 	t_color	color;
 }	t_plane;
 
 typedef struct s_cylinder
 {
-	t_cord	center;
+	t_coord	center;
 	t_vec	dir;
 	double	diameter;
 	double	height;
 	t_color	color;
 }	t_cylinder;
 
+typedef struct s_scene_status
+{
+	bool	has_ambient;
+	bool	has_camera;
+	bool	has_light;
+	bool	has_sphere;
+	bool	has_plane;
+	bool	has_cylinder;
+}	t_scene_status;
 
 typedef struct s_scene
 {
-	t_ambient	ambient;
-	t_camera	camera;
-	t_light		light;
-	t_object	*objects;
+	t_ambient		ambient;
+	t_camera		camera;
+	t_light			light;
+	t_object		*objects;
+	t_scene_status	status;
 }	t_scene;
+
+typedef enum e_error_code
+{
+	WRONG_ARGS,
+	WRONG_SUFFIX,
+	EMPTY_FILE,
+	PARAM_TYPE,
+	PARAM_COUNT,
+	DOUBLE,
+	WRONG_ELEM_COUNT,
+	OUT_RANGE,
+	VEC_NORM,
+	DIGITS_ONLY,
+	DUP_ELEM,
+	MISS_ELEM,
+}	t_error_code;
+
+# define EPSILON 1e-8
+
+//parser_ato
+bool		ft_atod(const char *s, double *result);
+bool		ft_atoi_strict(const char *s, int *result, int max_value);
+
+//parser_check_input
+bool		check_suffix(const char *str);
+bool		check_color(const char *s, t_color *color);
+bool		check_coord(const char *s, t_coord *pos);
+bool		check_vector(const char *s, t_vec *v);
+
+//parser_fill_in_structs
+bool		fill_in_ambient(const char *line, t_scene *scene);
+bool		fill_in_camera(const char *line, t_scene *scene);
+
+//parser_space_split
+void		free_split(char **split);
+char		**space_split(char const *s);
+
+//parser_util
+bool		check_range(double value, double min, double max);
+bool		check_equal(double value, double target);
+const char	*skip_spaces(const char *s);
+
+//print_error
+void		print_error(int code, const char *s);
 
 #endif
