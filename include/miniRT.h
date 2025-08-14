@@ -6,7 +6,7 @@
 /*   By: dloustal <dloustal@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/07 13:30:20 by hogu          #+#    #+#                 */
-/*   Updated: 2025/08/13 15:31:24 by dloustal      ########   odam.nl         */
+/*   Updated: 2025/08/14 14:00:12 by dloustal      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,14 @@
 # define WIDTH 2048
 # define RATIO (16.0 / 9.0)
 # define HEIGHT (int)(WIDTH / RATIO)
+# define EPSILON 1e-8
 # include "libft.h"
 # include "MLX42/MLX42.h"
 # include <unistd.h>
 # include <math.h>
 # include <stdio.h>
+# include <fcntl.h>
+# include <float.h>
 
 // typedef struct s_cord
 // {
@@ -35,7 +38,7 @@ typedef struct s_vec
 	double	z;
 }	t_vec;
 
-typedef t_vec	t_cord;
+typedef t_vec	t_coord;
 
 typedef struct s_color
 {
@@ -46,9 +49,20 @@ typedef struct s_color
 
 typedef struct s_ray
 {
-	t_cord	*origin;
-	t_vec	*dir;
+	t_coord	origin;
+	t_vec	dir;
 }		t_ray;
+
+typedef struct s_vport
+{
+	double	width;
+	double	height;
+	t_vec	vx; // direction left-to-right
+	t_vec	vy; //direction up-to-down
+	t_vec	delta_x;//Pixel delta vectors
+	t_vec	delta_y;
+	t_coord	p_00;	 
+}		t_vport;
 
 typedef struct s_ambient
 {
@@ -126,25 +140,6 @@ typedef struct s_scene
 	t_scene_status	status;
 }	t_scene;
 
-//---------------------Vec----------------------------
-// Main
-t_vec	*init_vec(double x, double y, double z);
-void	neg_vec(t_vec *vec);
-void	scale_vec(t_vec *vec, double scalar);
-double	len_vec(t_vec *vec);
-void	normalize(t_vec *v);
-// Operations
-t_vec	*sum_vec(t_vec *u, t_vec *v);
-double	dot(t_vec *u, t_vec *v);
-t_vec	*cross(t_vec *u, t_vec *v);
-// Utils
-void	print_vec(t_vec *v);
-
-//--------------------COLOR---------------------------
-int get_rgba(int r, int g, int b, int a);
-
-//--------------------RAY---------------------------
-t_cord	*ray_at(t_ray *ray, double t);
 typedef enum e_error_code
 {
 	WRONG_ARGS,
@@ -161,7 +156,32 @@ typedef enum e_error_code
 	MISS_ELEM,
 }	t_error_code;
 
-# define EPSILON 1e-8
+//                 Vec
+// Main
+t_vec		*init_vec(double x, double y, double z);
+void		neg_vec(t_vec *vec);
+void		scale_vec(t_vec *vec, double scalar);
+t_vec		scale_vec_new(t_vec vec, double scalar);
+double		len_vec(t_vec *vec);
+void		normalize(t_vec *v);
+// Operations
+t_vec		sum_vec(t_vec u, t_vec v);
+t_vec		*sum_vec_new(t_vec u, t_vec v);
+double		dot(t_vec *u, t_vec *v);
+t_vec		*cross(t_vec *u, t_vec *v);
+// Utils
+void		print_vec(t_vec *v);
+
+//                 Color
+int 		get_rgba(int r, int g, int b, int a);
+
+//                 Rays
+t_coord		ray_at(t_ray ray, double t);
+t_vec		prim_ray_dir(t_camera cam, t_coord pixel);
+t_ray		set_ray(t_camera cam, t_vec prim_ray_dir);
+
+//viewport
+void		make_vport(t_camera cam, t_vport *viewport);
 
 //parser_ato
 bool		ft_atod(const char *s, double *result);

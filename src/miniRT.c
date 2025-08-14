@@ -6,13 +6,13 @@
 /*   By: dloustal <dloustal@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/07 14:51:55 by dloustal      #+#    #+#                 */
-/*   Updated: 2025/08/13 15:28:43 by dloustal      ########   odam.nl         */
+/*   Updated: 2025/08/14 13:44:29 by dloustal      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/miniRT.h"
+#include "miniRT.h"
 
-int	main(int argc, char *argv[])
+int	main(void)
 {
 	mlx_t		*mlx;
 	mlx_image_t	*img;
@@ -23,7 +23,8 @@ int	main(int argc, char *argv[])
 	int			r;
 	int			g;
 	int			b;
-	// t_camera	*cam;
+	t_camera	cam;
+	t_vport		vp;
 
 	if (HEIGHT < 1)
 		return (1);
@@ -41,15 +42,23 @@ int	main(int argc, char *argv[])
 		return (EXIT_FAILURE);
 	}
 	// Start experimenting with the viewport
-	// cam = malloc(sizeof(t_camera));
-	// if (!cam)
-	// 	exit(EXIT_FAILURE);
-	// cam->pos = *init_vec(0, 0, 0);
-	// cam->dir = *init_vec(0, 0, -1); //Should not allocate memory for this
+	cam.pos.x = 0;
+	cam.pos.y = 0;
+	cam.pos.z = 0;
+	cam.dir.x = 0;
+	cam.dir.y = 0;
+	cam.dir.z = 1;
+	cam.fov = 90;
+
+	make_vport(cam, &vp);
+
+	print_vec(&cam.pos);
+	print_vec(&vp.vx);
+	
 	
 	//Paint a rectangle in the center with a color gradient
-	c_botleft = init_vec(138, 43, 226);
-	c_topright = init_vec(255, 255, 0);
+	c_botleft = init_vec(0,191,255);
+	c_topright = init_vec(255, 20, 147);
 	w = 0;
 	while (w < img->width)
 	{
@@ -78,13 +87,13 @@ int	main(int argc, char *argv[])
 	
 	return (0);
 }
-	t_scene	scene;
+// 	t_scene	scene;
 
-	ft_bzero(&scene, sizeof(t_scene));
-	if (argc != 2)
-		return (print_error(WRONG_ARGS, NULL), EXIT_FAILURE);
-	if (!parser(&scene, argv[1]))
-		return (EXIT_FAILURE);
-	//execute
-	return (EXIT_SUCCESS);
-}
+// 	ft_bzero(&scene, sizeof(t_scene));
+// 	if (argc != 2)
+// 		return (print_error(WRONG_ARGS, NULL), EXIT_FAILURE);
+// 	if (!parser(&scene, argv[1]))
+// 		return (EXIT_FAILURE);
+// 	//execute
+// 	return (EXIT_SUCCESS);
+// }

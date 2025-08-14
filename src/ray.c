@@ -6,29 +6,35 @@
 /*   By: dloustal <dloustal@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/11 16:03:41 by dloustal      #+#    #+#                 */
-/*   Updated: 2025/08/13 15:27:47 by dloustal      ########   odam.nl         */
+/*   Updated: 2025/08/14 13:59:36 by dloustal      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
-t_cord	*ray_at(t_ray *ray, double t)
+t_coord	ray_at(t_ray ray, double t)
 {
-	t_cord	*pos;
-	t_cord	*origin;
-	t_vec	*dir;
+	t_coord	pos;
 
-	if (!ray)
-		return (NULL);
-	origin = init_vec(ray->origin->x, ray->origin->y, ray->origin->z);
-	if (!origin)
-		return (NULL);
-	dir = init_vec(ray->dir->x, ray->dir->y, ray->dir->z);
-	if (!dir)
-		return (NULL);
-	scale_vec(dir, t);
-	pos = sum_vec(origin, dir);
-	if (!pos)
-		return (NULL);
-	return (free(origin), free(dir), pos);
+	pos = sum_vec(ray.origin, scale_vec_new(ray.dir, t));
+	return (pos);
+}
+
+t_vec	prim_ray_dir(t_camera cam, t_coord pixel)
+{
+	t_vec	prim_ray_dir;
+
+	prim_ray_dir.x = pixel.x - cam.pos.x;
+	prim_ray_dir.y = pixel.y - cam.pos.y;
+	prim_ray_dir.z = pixel.z - cam.pos.z;
+	return (prim_ray_dir);
+}
+
+t_ray	set_ray(t_camera cam, t_vec prim_ray_dir)
+{
+	t_ray	ray;
+
+	ray.dir = prim_ray_dir;
+	ray.origin = cam.pos;
+	return (ray);
 }

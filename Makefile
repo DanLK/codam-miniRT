@@ -3,11 +3,13 @@ SRC = miniRT.c \
 	vec/vec.c \
 	vec/vec_ops.c \
 	vec/vec_utils.c \
-	color/color.c ray.c \
-	parser.c \
-	parse_atod.c \
+	color/color.c \
+	ray.c \
+	viewport.c \
+	parser/parser.c \
+	parser/parser_atod.c \
 	print_error.c \
-	util.c
+	parser/parser_util.c
 SRC_DIR = ./src
 OBJ_DIR = ./obj
 OBJ = $(SRC:%.c=$(OBJ_DIR)/%.o)

@@ -6,7 +6,7 @@
 /*   By: dloustal <dloustal@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/07 16:30:45 by dloustal      #+#    #+#                 */
-/*   Updated: 2025/08/11 12:20:44 by dloustal      ########   odam.nl         */
+/*   Updated: 2025/08/14 12:20:41 by dloustal      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,11 +46,30 @@ void	neg_vec(t_vec *vec)
 
 void	scale_vec(t_vec *vec, double scalar)
 {
-	if (!vec)
+	if (!vec || scalar == 0)
 		return ;
 	vec->x *= scalar;
 	vec->y *= scalar;
 	vec->z *= scalar;
+}
+
+t_vec	scale_vec_new(t_vec vec, double scalar)
+{
+	t_vec	scaled;
+
+	if (scalar != 0)
+	{
+		scaled.x = vec.x * scalar;
+		scaled.y = vec.y * scalar;
+		scaled.z = vec.z * scalar;
+	}
+	else //Don't really know how to handle this case
+	{
+		scaled.x = 0;
+		scaled.y = 0;
+		scaled.z = 0;
+	}
+	return (scaled);
 }
 
 void	normalize(t_vec *v)
