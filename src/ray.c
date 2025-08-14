@@ -6,7 +6,7 @@
 /*   By: dloustal <dloustal@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/11 16:03:41 by dloustal      #+#    #+#                 */
-/*   Updated: 2025/08/14 13:59:36 by dloustal      ########   odam.nl         */
+/*   Updated: 2025/08/14 16:31:44 by dloustal      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ t_coord	ray_at(t_ray ray, double t)
 {
 	t_coord	pos;
 
-	pos = sum_vec(ray.origin, scale_vec_new(ray.dir, t));
+	pos = sum_vec(ray.origin, scaled(ray.dir, t));
 	return (pos);
 }
 

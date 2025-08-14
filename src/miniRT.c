@@ -6,7 +6,7 @@
 /*   By: dloustal <dloustal@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/07 14:51:55 by dloustal      #+#    #+#                 */
-/*   Updated: 2025/08/14 13:44:29 by dloustal      ########   odam.nl         */
+/*   Updated: 2025/08/14 16:50:39 by dloustal      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ int	main(void)
 {
 	mlx_t		*mlx;
 	mlx_image_t	*img;
+	// Paint a gradient
 	t_vec		*c_topright;
 	t_vec		*c_botleft;
 	u_int32_t	w;
@@ -23,8 +24,13 @@ int	main(void)
 	int			r;
 	int			g;
 	int			b;
+	// Experiments with the viewport
 	t_camera	cam;
 	t_vport		vp;
+	int			i_h;
+	int			i_w;
+	t_coord		pixel_center;
+	t_ray		ray;
 
 	if (HEIGHT < 1)
 		return (1);
@@ -51,9 +57,28 @@ int	main(void)
 	cam.fov = 90;
 
 	make_vport(cam, &vp);
+	printf("VP width: %f\n", vp.width);
+	printf("VP height: %f\n", vp.height);
+	// printf("VP ratio: %f\n", vp.ratio);
+	// printf("w: %d h: %d  ratio: %f w/h: %f\n", WIDTH, HEIGHT, RATIO, (double)WIDTH / HEIGHT);
+	print_vec(&cam.pos, "cam_pos");
+	print_vec(&vp.v_right, "right");
+	print_vec(&vp.v_up, "up");
+	print_vec(&vp.p_00, "p(0,0)");
+	i_h = 0;
+	while (i_h < HEIGHT)
+	{
+		i_w = 0;
+		while (i_w < WIDTH)
+		{
+			pixel_center = sum_vec(vp.p_00, sum_vec(scaled(vp.delta_x, i_w), scaled(vp.delta_y, i_h)));
+			ray = set_ray(cam, prim_ray_dir(cam, pixel_center));
+		
+			i_w++;
+		}
+		i_h++;
+	}
 
-	print_vec(&cam.pos);
-	print_vec(&vp.vx);
 	
 	
 	//Paint a rectangle in the center with a color gradient

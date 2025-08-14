@@ -6,14 +6,14 @@
 /*   By: dloustal <dloustal@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/07 13:30:20 by hogu          #+#    #+#                 */
-/*   Updated: 2025/08/14 14:00:12 by dloustal      ########   odam.nl         */
+/*   Updated: 2025/08/14 17:12:10 by dloustal      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINIRT_H
 # define MINIRT_H
 # define WIDTH 2048
-# define RATIO (16.0 / 9.0)
+# define RATIO (4.0 / 3.0)
 # define HEIGHT (int)(WIDTH / RATIO)
 # define EPSILON 1e-8
 # include "libft.h"
@@ -57,8 +57,11 @@ typedef struct s_vport
 {
 	double	width;
 	double	height;
-	t_vec	vx; // direction left-to-right
-	t_vec	vy; //direction up-to-down
+	double	distance;
+	double	ratio;
+	t_coord	center;
+	t_vec	v_right; // direction left-to-right
+	t_vec	v_up; //direction up-to-down
 	t_vec	delta_x;//Pixel delta vectors
 	t_vec	delta_y;
 	t_coord	p_00;	 
@@ -159,18 +162,21 @@ typedef enum e_error_code
 //                 Vec
 // Main
 t_vec		*init_vec(double x, double y, double z);
+t_vec		vec(double x, double y, double z);
 void		neg_vec(t_vec *vec);
+t_vec		neg_vec_new(t_vec vec);
 void		scale_vec(t_vec *vec, double scalar);
-t_vec		scale_vec_new(t_vec vec, double scalar);
-double		len_vec(t_vec *vec);
-void		normalize(t_vec *v);
+t_vec		scaled(t_vec vec, double scalar);
+double		len_vec(t_vec vec);
+void		normalize(t_vec v);
+t_vec		normalized(t_vec v);
 // Operations
 t_vec		sum_vec(t_vec u, t_vec v);
 t_vec		*sum_vec_new(t_vec u, t_vec v);
-double		dot(t_vec *u, t_vec *v);
-t_vec		*cross(t_vec *u, t_vec *v);
+double		dot(t_vec u, t_vec v);
+t_vec		cross(t_vec u, t_vec v);
 // Utils
-void		print_vec(t_vec *v);
+void		print_vec(t_vec *v, char*name);
 
 //                 Color
 int 		get_rgba(int r, int g, int b, int a);
