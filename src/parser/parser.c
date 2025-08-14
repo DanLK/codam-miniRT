@@ -12,21 +12,31 @@
 
 #include "../../include/miniRT.h"
 
+static bool match_identifier(const char *line, const char *id)
+{
+	int	len;
+
+	len = ft_strlen(id);
+	if (ft_strncmp(line, id, len) != 0 || !ft_isspace(line[len]))
+		return (false);
+	return (true);
+}
+
 static bool	get_params(const char *line, t_scene *scene)
 {
 	if (!line || !scene)
 		return (0);
-	if (ft_strncmp(line, "A ", 2) == 0)
+	if (match_identifier(line, "A"))
 		return (fill_in_ambient(line, scene));
-	else if (ft_strncmp(line, "C ", 2) == 0)
+	else if (match_identifier(line, "C"))
 		return (fill_in_camera(line, scene));
-	else if (ft_strncmp(line, "L ", 2) == 0)
+	else if (match_identifier(line, "L"))
 		return (fill_in_light(line, scene));
-	else if (ft_strncmp(line, "sp ", 3) == 0)
+	else if (match_identifier(line, "sp"))
 		return (fill_in_sphere(line, scene));
-	else if (ft_strncmp(line, "pl ", 3) == 0)
+	else if (match_identifier(line, "pl"))
 		return (fill_in_plane(line, scene));
-	else if (ft_strncmp(line, "cy ", 3) == 0)
+	else if (match_identifier(line, "cy"))
 		return (fill_in_cylinder(line, scene));
 	print_error(PARAM_TYPE, line);
 	return (false);
@@ -61,6 +71,7 @@ bool	validate_elem(t_scene *scene)
 		return (print_error(MISS_ELEM, "plane"), false);
 	if (!scene->status.has_cylinder)
 		return (print_error(MISS_ELEM, "cylinder"), false);
+	printf("everything looks good!\n");
 	return (true);
 }
 
@@ -68,7 +79,6 @@ bool	parser(t_scene *scene, const char *filename)
 {
 	int		fd;
 	char	*buffer;
-	char	*trimmed;
 
 	if (!check_suffix(filename))
 		return (print_error(WRONG_SUFFIX, NULL), false);
@@ -81,10 +91,10 @@ bool	parser(t_scene *scene, const char *filename)
 	while (buffer)
 	{
 		if (!handle_line(buffer, scene))
-			return (close(fd), false);
+			return (close(fd), free_object_list(scene->objects), false);
 		buffer = get_next_line(fd);
 	}
 	if (!validate_elem(scene))
-		return (close(fd), false);
+		return (close(fd), free_object_list(scene->objects), false);
 	return (close(fd), true);
 }

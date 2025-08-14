@@ -66,7 +66,7 @@ bool	fill_in_sphere(const char *s, t_scene *scene)
 	obj->element = (void *)sp;
 	append_object(&scene->objects, obj);
 	scene->status.has_sphere = true;
-	return (true);
+	return (free_split(params), true);
 }
 
 bool	fill_in_plane(const char *s, t_scene *scene)
@@ -90,7 +90,7 @@ bool	fill_in_plane(const char *s, t_scene *scene)
 	obj->element = (void *)pl;
 	append_object(&scene->objects, obj);
 	scene->status.has_plane = true;
-	return (true);
+	return (free_split(params), true);
 }
 
 bool	fill_in_cylinder(const char *s, t_scene *scene)
@@ -104,8 +104,7 @@ bool	fill_in_cylinder(const char *s, t_scene *scene)
 	if (!s || !scene)
 		return (false);
 	pr = space_split(s);
-	if (!pr || !pr[1] || !pr[2] || !pr[3] || !pr[4]
-		|| !pr[5] || pr[6])
+	if (!pr || !pr[1] || !pr[2] || !pr[3] || !pr[4] || !pr[5] || pr[6])
 		return (print_error(PARAM_COUNT, s), free_split(pr), false);
 	if (!alloc_obj_and_elem(&obj, (void **)&cy, sizeof(t_cylinder)))
 		return (free_split(pr), false);
@@ -115,9 +114,10 @@ bool	fill_in_cylinder(const char *s, t_scene *scene)
 	if (!ft_atod(pr[3], &diameter) || !ft_atod(pr[4], &height))
 		return (print_error(DOUBLE, "diameter or height"), free(obj),
 			free(cy), free_split(pr), false);
+	cy->diameter = diameter;
+	cy->height = height;
 	obj->type = CYLINDER;
 	obj->element = (void *)cy;
-	append_object(&scene->objects, obj);
 	scene->status.has_cylinder = true;
-	return (true);
+	return (append_object(&scene->objects, obj), free_split(pr), true);
 }

@@ -1,14 +1,24 @@
 NAME = miniRT
 SRC = miniRT.c \
-	  parser.c \
-	  parse_atod.c \
 	  print_error.c \
-	  util.c
+	  print_struct.c \
+	  ray.c \
+	  color/color.c \
+	  parser/parser_ato.c \
+	  parser/parser_check_input.c \
+	  parser/parser_fill_in_structs_1.c \
+	  parser/parser_fill_in_structs_2.c \
+	  parser/parser_space_split.c \
+	  parser/parser_util.c \
+	  parser/parser.c \
+	  vec/vec.c \
+	  vec/vec_ops.c \
+	  vec/vec_utils.c
 
 SRC_DIR = ./src
 OBJ_DIR = ./obj
 OBJ = $(SRC:%.c=$(OBJ_DIR)/%.o)
-CFLAGS += -Wall -Werror -Wextra
+CFLAGS += -Wall -Werror -Wextra -g
 
 MLX42_REPO = https://github.com/codam-coding-college/MLX42.git
 LIBMLX = ./MLX42

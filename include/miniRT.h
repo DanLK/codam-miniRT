@@ -138,6 +138,10 @@ typedef enum e_error_code
 
 # define EPSILON 1e-8
 
+//---------------------Parser----------------------------
+bool		parser(t_scene *scene, const char *filename);
+void		print_scene(t_scene *scene);
+
 //parser_ato
 bool		ft_atod(const char *s, double *result);
 bool		ft_atoi_strict(const char *s, int *result, int max_value);
@@ -147,10 +151,15 @@ bool		check_suffix(const char *str);
 bool		check_color(const char *s, t_color *color);
 bool		check_coord(const char *s, t_coord *pos);
 bool		check_vector(const char *s, t_vec *v);
+bool		check_ratio(const char *s, double *ratio_in_struct);
 
 //parser_fill_in_structs
 bool		fill_in_ambient(const char *line, t_scene *scene);
 bool		fill_in_camera(const char *line, t_scene *scene);
+bool		fill_in_light(const char *s, t_scene *scene);
+bool		fill_in_sphere(const char *s, t_scene *scene);
+bool		fill_in_plane(const char *s, t_scene *scene);
+bool		fill_in_cylinder(const char *s, t_scene *scene);
 
 //parser_space_split
 void		free_split(char **split);
@@ -160,6 +169,8 @@ char		**space_split(char const *s);
 bool		check_range(double value, double min, double max);
 bool		check_equal(double value, double target);
 const char	*skip_spaces(const char *s);
+bool		ft_isspace(char c);
+void		free_object_list(t_object *obj);
 
 //print_error
 void		print_error(int code, const char *s);
