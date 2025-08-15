@@ -6,7 +6,7 @@
 /*   By: dloustal <dloustal@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/07 16:30:45 by dloustal      #+#    #+#                 */
-/*   Updated: 2025/08/14 17:11:12 by dloustal      ########   odam.nl         */
+/*   Updated: 2025/08/15 12:36:29 by dloustal      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ t_vec	vec(double x, double y, double z)
 double	len_vec(t_vec vec)
 {
 	double	len;
-	
+
 	len = sqrt(vec.x * vec.x + vec.y * vec.y + vec.z * vec.z);
 	return (len);
 }
@@ -53,7 +53,7 @@ void	neg_vec(t_vec *vec)
 
 t_vec	neg_vec_new(t_vec vec)
 {
-	t_vec neg;
+	t_vec	neg;
 
 	neg = vec;
 	neg_vec(&neg);

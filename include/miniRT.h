@@ -6,7 +6,7 @@
 /*   By: dloustal <dloustal@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/07 13:30:20 by hogu          #+#    #+#                 */
-/*   Updated: 2025/08/14 17:12:10 by dloustal      ########   odam.nl         */
+/*   Updated: 2025/08/15 13:31:10 by dloustal      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,6 @@
 # include <stdio.h>
 # include <fcntl.h>
 # include <float.h>
-
-// typedef struct s_cord
-// {
-// 	double	x;
-// 	double	y;
-// 	double	z;
-// }	t_cord;
 
 typedef struct s_vec
 {
@@ -60,11 +53,11 @@ typedef struct s_vport
 	double	distance;
 	double	ratio;
 	t_coord	center;
-	t_vec	v_right; // direction left-to-right
-	t_vec	v_up; //direction up-to-down
-	t_vec	delta_x;//Pixel delta vectors
+	t_vec	v_right;
+	t_vec	v_down;
+	t_vec	delta_x;
 	t_vec	delta_y;
-	t_coord	p_00;	 
+	t_coord	p_00;
 }		t_vport;
 
 typedef struct s_ambient
@@ -179,7 +172,7 @@ t_vec		cross(t_vec u, t_vec v);
 void		print_vec(t_vec *v, char*name);
 
 //                 Color
-int 		get_rgba(int r, int g, int b, int a);
+int			get_rgba(int r, int g, int b, int a);
 
 //                 Rays
 t_coord		ray_at(t_ray ray, double t);

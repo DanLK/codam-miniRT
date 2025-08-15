@@ -6,7 +6,7 @@
 /*   By: dloustal <dloustal@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/07 14:51:55 by dloustal      #+#    #+#                 */
-/*   Updated: 2025/08/14 16:50:39 by dloustal      ########   odam.nl         */
+/*   Updated: 2025/08/15 13:27:18 by dloustal      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ int	main(void)
 	int			i_w;
 	t_coord		pixel_center;
 	t_ray		ray;
+	int			counter;
 
 	if (HEIGHT < 1)
 		return (1);
@@ -53,19 +54,20 @@ int	main(void)
 	cam.pos.z = 0;
 	cam.dir.x = 0;
 	cam.dir.y = 0;
-	cam.dir.z = 1;
+	cam.dir.z = 10;
 	cam.fov = 90;
 
 	make_vport(cam, &vp);
 	printf("VP width: %f\n", vp.width);
 	printf("VP height: %f\n", vp.height);
-	// printf("VP ratio: %f\n", vp.ratio);
+	printf("VP ratio: %f\n", vp.ratio);
 	// printf("w: %d h: %d  ratio: %f w/h: %f\n", WIDTH, HEIGHT, RATIO, (double)WIDTH / HEIGHT);
 	print_vec(&cam.pos, "cam_pos");
 	print_vec(&vp.v_right, "right");
-	print_vec(&vp.v_up, "up");
+	print_vec(&vp.v_down, "down");
 	print_vec(&vp.p_00, "p(0,0)");
 	i_h = 0;
+	counter = 0;
 	while (i_h < HEIGHT)
 	{
 		i_w = 0;
@@ -73,7 +75,9 @@ int	main(void)
 		{
 			pixel_center = sum_vec(vp.p_00, sum_vec(scaled(vp.delta_x, i_w), scaled(vp.delta_y, i_h)));
 			ray = set_ray(cam, prim_ray_dir(cam, pixel_center));
-		
+			counter++;
+			if (counter % 2048 == 0)
+				print_vec(&ray.dir, "ray");
 			i_w++;
 		}
 		i_h++;
