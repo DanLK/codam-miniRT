@@ -6,7 +6,7 @@
 /*   By: dloustal <dloustal@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/11 14:28:16 by dloustal      #+#    #+#                 */
-/*   Updated: 2025/08/15 12:39:13 by dloustal      ########   odam.nl         */
+/*   Updated: 2025/08/15 14:18:19 by dloustal      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,3 +16,5 @@ int	get_rgba(int r, int g, int b, int a)
 {
 	return (r << 24 | g << 16 | b << 8 | a);
 }
+
+

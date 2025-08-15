@@ -6,7 +6,7 @@
 /*   By: dloustal <dloustal@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/07 13:30:20 by hogu          #+#    #+#                 */
-/*   Updated: 2025/08/15 13:31:10 by dloustal      ########   odam.nl         */
+/*   Updated: 2025/08/15 13:49:16 by dloustal      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -178,6 +178,7 @@ int			get_rgba(int r, int g, int b, int a);
 t_coord		ray_at(t_ray ray, double t);
 t_vec		prim_ray_dir(t_camera cam, t_coord pixel);
 t_ray		set_ray(t_camera cam, t_vec prim_ray_dir);
+void		paint_raygradient(mlx_image_t *img, t_camera cam, t_vport vp);
 
 //viewport
 void		make_vport(t_camera cam, t_vport *viewport);
