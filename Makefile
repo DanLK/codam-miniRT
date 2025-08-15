@@ -6,6 +6,7 @@ SRC = miniRT.c \
 	color/color.c \
 	ray.c \
 	viewport.c \
+	sphere/sphere.c \
 	parser/parser.c \
 	parser/parser_atod.c \
 	print_error.c \

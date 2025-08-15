@@ -6,7 +6,7 @@
 /*   By: dloustal <dloustal@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/07 14:51:55 by dloustal      #+#    #+#                 */
-/*   Updated: 2025/08/15 14:01:47 by dloustal      ########   odam.nl         */
+/*   Updated: 2025/08/15 15:40:41 by dloustal      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	main(void)
 		return (EXIT_FAILURE);
 	}
 	printf("Welcome to our miniRT\n");
-	img = mlx_new_image(mlx, WIDTH / 2, HEIGHT / 2);
+	img = mlx_new_image(mlx, WIDTH, HEIGHT);
 	if (!img)
 	{
 		ft_putstr_fd((char *)mlx_strerror(mlx_errno), STDERR_FILENO);
@@ -63,6 +63,7 @@ int	main(void)
 	printf("VP ratio: %f\n", vp.ratio);
 	// printf("w: %d h: %d  ratio: %f w/h: %f\n", WIDTH, HEIGHT, RATIO, (double)WIDTH / HEIGHT);
 	print_vec(&cam.pos, "cam_pos");
+	print_vec(&cam.dir, "cam direction");
 	print_vec(&vp.v_right, "right");
 	print_vec(&vp.v_down, "down");
 	print_vec(&vp.p_00, "p(0,0)");
@@ -90,7 +91,7 @@ int	main(void)
 	// 	w++;
 	// }
 	//------------------------------------------------------------------------------
-	if (mlx_image_to_window(mlx, img, WIDTH / 4, HEIGHT / 4) < 0)
+	if (mlx_image_to_window(mlx, img, 0, 0) < 0)
     {
 		ft_putstr_fd((char *)mlx_strerror(mlx_errno), STDERR_FILENO);
 		return (EXIT_FAILURE);

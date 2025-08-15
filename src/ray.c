@@ -6,7 +6,7 @@
 /*   By: dloustal <dloustal@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/11 16:03:41 by dloustal      #+#    #+#                 */
-/*   Updated: 2025/08/15 14:27:30 by dloustal      ########   odam.nl         */
+/*   Updated: 2025/08/15 15:38:27 by dloustal      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,12 +44,24 @@ static void	paint_gradientpix(mlx_image_t *img, t_ray ray, int x, int y, int cou
 	t_vec		unit_dir;
 	double		a;
 	t_color		color;
+	t_sphere	sp;
 
-	unit_dir = normalized(ray.dir);
-	a = 0.5 * (unit_dir.y + 1.0);
-	color.r = (1 - a) * 255 + a * 127;
-	color.g = (1 - a) * 255 + a * 180;
-	color.b = (1 - a) * 255 + a * 255;
+	sp.center = vec(0, 0, 100);
+	sp.diameter = 20;
+	sp.color.r = 255;
+	sp.color.g = 0;
+	sp.color.b = 0;
+	if (hit_sphere(sp, ray))
+		color = sp.color;
+	else
+	{
+		unit_dir = normalized(ray.dir);
+		a = 0.5 * (unit_dir.y + 1.0);
+		// a = (unit_dir.y + 0.75) / 1.5;
+		color.r = (1 - a) * 255 + a * 25;
+		color.g = (1 - a) * 255 + a * 25;
+		color.b = (1 - a) * 255 + a * 112;
+	}
 	mlx_put_pixel(img, x, y, get_rgba(color.r, color.g, color.b, 255));
 	// if (counter % 2048 == 0)
 	// 			print_vec(&unit_dir, "unit");

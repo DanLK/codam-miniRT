@@ -6,7 +6,7 @@
 /*   By: dloustal <dloustal@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/07 13:30:20 by hogu          #+#    #+#                 */
-/*   Updated: 2025/08/15 13:49:16 by dloustal      ########   odam.nl         */
+/*   Updated: 2025/08/15 15:16:01 by dloustal      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -174,14 +174,17 @@ void		print_vec(t_vec *v, char*name);
 //                 Color
 int			get_rgba(int r, int g, int b, int a);
 
+//viewport
+void		make_vport(t_camera cam, t_vport *viewport);
+
 //                 Rays
 t_coord		ray_at(t_ray ray, double t);
 t_vec		prim_ray_dir(t_camera cam, t_coord pixel);
 t_ray		set_ray(t_camera cam, t_vec prim_ray_dir);
 void		paint_raygradient(mlx_image_t *img, t_camera cam, t_vport vp);
 
-//viewport
-void		make_vport(t_camera cam, t_vport *viewport);
+//Sphere
+bool		hit_sphere(t_sphere sphere, t_ray ray);
 
 //parser_ato
 bool		ft_atod(const char *s, double *result);
