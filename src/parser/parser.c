@@ -12,7 +12,7 @@
 
 #include "../../include/miniRT.h"
 
-static bool match_identifier(const char *line, const char *id)
+static bool	match_identifier(const char *line, const char *id)
 {
 	int	len;
 
@@ -57,22 +57,17 @@ static bool	handle_line(char *buffer, t_scene *scene)
 	return (free(trimmed), true);
 }
 
-bool	validate_elem(t_scene *scene)
+static void	gnl_drain(int fd)
 {
-	if (!scene->status.has_ambient)
-		return (print_error(MISS_ELEM, "ambient"), false);
-	if (!scene->status.has_camera)
-		return (print_error(MISS_ELEM, "camera"), false);
-	if (!scene->status.has_light)
-		return (print_error(MISS_ELEM, "light"), false);
-	if (!scene->status.has_sphere)
-		return (print_error(MISS_ELEM, "sphere"), false);
-	if (!scene->status.has_plane)
-		return (print_error(MISS_ELEM, "plane"), false);
-	if (!scene->status.has_cylinder)
-		return (print_error(MISS_ELEM, "cylinder"), false);
-	printf("everything looks good!\n");
-	return (true);
+	char	*tmp;
+
+	tmp = get_next_line(fd);
+	while (tmp)
+	{
+		free(tmp);
+		tmp = get_next_line(fd);
+	}
+	close(fd);
 }
 
 bool	parser(t_scene *scene, const char *filename)
@@ -87,14 +82,14 @@ bool	parser(t_scene *scene, const char *filename)
 		return (printf("Error\n"), perror("Cannot open file"), false);
 	buffer = get_next_line(fd);
 	if (!buffer)
-		return (close(fd), print_error(EMPTY_FILE, NULL), false);
+		return (gnl_drain(fd), print_error(EMPTY_FILE, NULL), false);
 	while (buffer)
 	{
 		if (!handle_line(buffer, scene))
-			return (close(fd), free_object_list(scene->objects), false);
+			return (gnl_drain(fd), free_object_list(scene->objects), false);
 		buffer = get_next_line(fd);
 	}
 	if (!validate_elem(scene))
-		return (close(fd), free_object_list(scene->objects), false);
+		return (gnl_drain(fd), free_object_list(scene->objects), false);
 	return (close(fd), true);
 }
