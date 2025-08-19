@@ -12,6 +12,24 @@
 
 #include "../../include/miniRT.h"
 
+bool	validate_elem(t_scene *scene)
+{
+	if (!scene->status.has_ambient)
+		return (print_error(MISS_ELEM, "ambient"), false);
+	if (!scene->status.has_camera)
+		return (print_error(MISS_ELEM, "camera"), false);
+	if (!scene->status.has_light)
+		return (print_error(MISS_ELEM, "light"), false);
+	if (!scene->status.has_sphere)
+		return (print_error(MISS_ELEM, "sphere"), false);
+	if (!scene->status.has_plane)
+		return (print_error(MISS_ELEM, "plane"), false);
+	if (!scene->status.has_cylinder)
+		return (print_error(MISS_ELEM, "cylinder"), false);
+	printf("everything looks good!\n");
+	return (true);
+}
+
 bool	fill_in_ambient(const char *s, t_scene *scene)
 {
 	char	**params;

@@ -28,7 +28,7 @@ void	print_error(int code, const char *s)
 	else if (code == DOUBLE)
 		printf("Invalid number format: %s\n", s);
 	else if (code == WRONG_ELEM_COUNT)
-		printf("Three elements required: %s\n", s);
+		printf("Three elements separated by comma: %s\n", s);
 	else if (code == OUT_RANGE)
 		printf("Number out of range: %s\n", s);
 	else if (code == VEC_NORM)
