@@ -78,7 +78,7 @@ bool	check_vector(const char *s, t_vec *v)
 	v->x = x;
 	v->y = y;
 	v->z = z;
-	if (!check_equal(len_vec(v), 1.0))
+	if (!check_equal(len_vec(*v), 1.0))
 		return (print_error(VEC_NORM, s), false);
 	return (true);
 }

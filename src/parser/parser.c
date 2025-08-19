@@ -6,31 +6,41 @@
 /*   By: dloustal <dloustal@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/07 15:47:09 by hogu          #+#    #+#                 */
-/*   Updated: 2025/08/13 15:56:21 by dloustal      ########   odam.nl         */
+/*   Updated: 2025/08/19 12:07:35 by dloustal      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/miniRT.h"
 
-// static bool	get_params(const char *line, t_scene *scene)
-// {
-// 	if (!line || !scene)
-// 		return (0);
-// 	if (ft_strncmp(line, "A ", 2) == 0)
-// 		return (fill_in_ambient(line, scene));
-// 	else if (ft_strncmp(line, "C ", 2) == 0)
-// 		return (fill_in_camera(line, scene));
-// 	else if (ft_strncmp(line, "L ", 2) == 0)
-// 		return (fill_in_light(line, scene));
-// 	else if (ft_strncmp(line, "sp ", 3) == 0)
-// 		return (fill_in_sphere(line, scene));
-// 	else if (ft_strncmp(line, "pl ", 3) == 0)
-// 		return (fill_in_plane(line, scene));
-// 	else if (ft_strncmp(line, "cy ", 3) == 0)
-// 		return (fill_in_cylinder(line, scene));
-// 	print_error(PARAM_TYPE, line);
-// 	return (false);
-// }
+static bool	match_identifier(const char *line, const char *id)
+{
+	int	len;
+
+	len = ft_strlen(id);
+	if (ft_strncmp(line, id, len) != 0 || !ft_isspace(line[len]))
+		return (false);
+	return (true);
+}
+
+static bool	get_params(const char *line, t_scene *scene)
+{
+	if (!line || !scene)
+		return (0);
+	if (match_identifier(line, "A"))
+		return (fill_in_ambient(line, scene));
+	else if (match_identifier(line, "C"))
+		return (fill_in_camera(line, scene));
+	else if (match_identifier(line, "L"))
+		return (fill_in_light(line, scene));
+	else if (match_identifier(line, "sp"))
+		return (fill_in_sphere(line, scene));
+	else if (match_identifier(line, "pl"))
+		return (fill_in_plane(line, scene));
+	else if (match_identifier(line, "cy"))
+		return (fill_in_cylinder(line, scene));
+	print_error(PARAM_TYPE, line);
+	return (false);
+}
 
 // static bool	handle_line(char *buffer, t_scene *scene)
 // {
@@ -47,23 +57,20 @@
 // 	return (free(trimmed), true);
 // }
 
-bool	validate_elem(t_scene *scene)
+static void	gnl_drain(int fd)
 {
-	if (!scene->status.has_ambient)
-		return (print_error(MISS_ELEM, "ambient"), false);
-	if (!scene->status.has_camera)
-		return (print_error(MISS_ELEM, "camera"), false);
-	if (!scene->status.has_light)
-		return (print_error(MISS_ELEM, "light"), false);
-	if (!scene->status.has_sphere)
-		return (print_error(MISS_ELEM, "sphere"), false);
-	if (!scene->status.has_plane)
-		return (print_error(MISS_ELEM, "plane"), false);
-	if (!scene->status.has_cylinder)
-		return (print_error(MISS_ELEM, "cylinder"), false);
-	return (true);
+	char	*tmp;
+
+	tmp = get_next_line(fd);
+	while (tmp)
+	{
+		free(tmp);
+		tmp = get_next_line(fd);
+	}
+	close(fd);
 }
 
+<<<<<<< HEAD
 // bool	parser(t_scene *scene, const char *filename)
 // {
 // 	int		fd;
@@ -88,3 +95,28 @@ bool	validate_elem(t_scene *scene)
 // 		return (close(fd), false);
 // 	return (close(fd), true);
 // }
+=======
+bool	parser(t_scene *scene, const char *filename)
+{
+	int		fd;
+	char	*buffer;
+
+	if (!check_suffix(filename))
+		return (print_error(WRONG_SUFFIX, NULL), false);
+	fd = open(filename, O_RDONLY);
+	if (fd == -1)
+		return (printf("Error\n"), perror("Cannot open file"), false);
+	buffer = get_next_line(fd);
+	if (!buffer)
+		return (gnl_drain(fd), print_error(EMPTY_FILE, NULL), false);
+	while (buffer)
+	{
+		if (!handle_line(buffer, scene))
+			return (gnl_drain(fd), free_object_list(scene->objects), false);
+		buffer = get_next_line(fd);
+	}
+	if (!validate_elem(scene))
+		return (gnl_drain(fd), free_object_list(scene->objects), false);
+	return (close(fd), true);
+}
+>>>>>>> main

@@ -12,10 +12,27 @@
 
 #include "../../include/miniRT.h"
 
+bool	validate_elem(t_scene *scene)
+{
+	if (!scene->status.has_ambient)
+		return (print_error(MISS_ELEM, "ambient"), false);
+	if (!scene->status.has_camera)
+		return (print_error(MISS_ELEM, "camera"), false);
+	if (!scene->status.has_light)
+		return (print_error(MISS_ELEM, "light"), false);
+	if (!scene->status.has_sphere)
+		return (print_error(MISS_ELEM, "sphere"), false);
+	if (!scene->status.has_plane)
+		return (print_error(MISS_ELEM, "plane"), false);
+	if (!scene->status.has_cylinder)
+		return (print_error(MISS_ELEM, "cylinder"), false);
+	printf("everything looks good!\n");
+	return (true);
+}
+
 bool	fill_in_ambient(const char *s, t_scene *scene)
 {
 	char	**params;
-	double	ratio;
 
 	if (!s || !scene)
 		return (false);
@@ -52,11 +69,9 @@ bool	fill_in_camera(const char *s, t_scene *scene)
 	return (free_split(params), true);
 }
 
-//for mandatory part, light.color is untouched after initialized as 0,0,0
 bool	fill_in_light(const char *s, t_scene *scene)
 {
 	char	**params;
-	double	ratio;
 
 	if (!s || !scene)
 		return (false);
@@ -66,7 +81,8 @@ bool	fill_in_light(const char *s, t_scene *scene)
 	if (!params || !params[1] || !params[2] || !params[3] || params[4])
 		return (print_error(PARAM_COUNT, s), free_split(params), false);
 	if (!check_coord(params[1], &scene->light.pos)
-		|| !check_ratio(params[2], &scene->light.ratio))
+		|| !check_ratio(params[2], &scene->light.ratio)
+		|| !check_color(params[3], &scene->light.color))
 		return (free_split(params), false);
 	scene->status.has_light = true;
 	return (free_split(params), true);

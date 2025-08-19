@@ -6,7 +6,7 @@
 /*   By: dloustal <dloustal@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/07 13:30:20 by hogu          #+#    #+#                 */
-/*   Updated: 2025/08/15 15:16:01 by dloustal      ########   odam.nl         */
+/*   Updated: 2025/08/19 12:07:02 by dloustal      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # define RATIO (4.0 / 3.0)
 # define HEIGHT (int)(WIDTH / RATIO)
 # define EPSILON 1e-8
+<<<<<<< HEAD
 # include "libft.h"
 # include "MLX42/MLX42.h"
 # include <unistd.h>
@@ -23,6 +24,19 @@
 # include <stdio.h>
 # include <fcntl.h>
 # include <float.h>
+=======
+
+# include "../libft/libft.h"
+# include "MLX42/MLX42.h"
+
+# include <fcntl.h>
+# include <float.h>
+# include <math.h>
+# include <stdbool.h>
+# include <stdio.h>
+# include <stdlib.h>
+# include <unistd.h>
+>>>>>>> main
 
 typedef struct s_vec
 {
@@ -186,6 +200,10 @@ void		paint_raygradient(mlx_image_t *img, t_camera cam, t_vport vp);
 //Sphere
 bool		hit_sphere(t_sphere sphere, t_ray ray);
 
+//---------------------Parser----------------------------
+bool		parser(t_scene *scene, const char *filename);
+void		print_scene(t_scene *scene);
+
 //parser_ato
 bool		ft_atod(const char *s, double *result);
 bool		ft_atoi_strict(const char *s, int *result, int max_value);
@@ -195,10 +213,16 @@ bool		check_suffix(const char *str);
 bool		check_color(const char *s, t_color *color);
 bool		check_coord(const char *s, t_coord *pos);
 bool		check_vector(const char *s, t_vec *v);
+bool		check_ratio(const char *s, double *ratio_in_struct);
 
 //parser_fill_in_structs
+bool		validate_elem(t_scene *scene);
 bool		fill_in_ambient(const char *line, t_scene *scene);
 bool		fill_in_camera(const char *line, t_scene *scene);
+bool		fill_in_light(const char *s, t_scene *scene);
+bool		fill_in_sphere(const char *s, t_scene *scene);
+bool		fill_in_plane(const char *s, t_scene *scene);
+bool		fill_in_cylinder(const char *s, t_scene *scene);
 
 //parser_space_split
 void		free_split(char **split);
@@ -208,6 +232,8 @@ char		**space_split(char const *s);
 bool		check_range(double value, double min, double max);
 bool		check_equal(double value, double target);
 const char	*skip_spaces(const char *s);
+bool		ft_isspace(char c);
+void		free_object_list(t_object *obj);
 
 //print_error
 void		print_error(int code, const char *s);

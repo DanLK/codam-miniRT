@@ -6,7 +6,7 @@
 /*   By: dloustal <dloustal@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/07 14:51:55 by dloustal      #+#    #+#                 */
-/*   Updated: 2025/08/15 15:40:41 by dloustal      ########   odam.nl         */
+/*   Updated: 2025/08/19 12:07:01 by dloustal      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,11 +105,12 @@ int	main(void)
 }
 // 	t_scene	scene;
 
-// 	ft_bzero(&scene, sizeof(t_scene));
 // 	if (argc != 2)
 // 		return (print_error(WRONG_ARGS, NULL), EXIT_FAILURE);
+// 	ft_bzero(&scene, sizeof(t_scene));
 // 	if (!parser(&scene, argv[1]))
 // 		return (EXIT_FAILURE);
-// 	//execute
+// 	print_scene(&scene);
+//  free_object_list(scene.objects);
 // 	return (EXIT_SUCCESS);
 // }

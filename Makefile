@@ -1,16 +1,22 @@
 NAME = miniRT
 SRC = miniRT.c \
-	vec/vec.c \
-	vec/vec_ops.c \
-	vec/vec_utils.c \
-	color/color.c \
-	ray.c \
-	viewport.c \
-	sphere/sphere.c \
-	parser/parser.c \
-	parser/parser_atod.c \
-	print_error.c \
-	parser/parser_util.c
+	  print_error.c \
+	  print_struct.c \
+	  ray.c \
+	  viewport.c \
+	  color/color.c \
+	  parser/parser_ato.c \
+	  parser/parser_check_input.c \
+	  parser/parser_fill_in_structs_1.c \
+	  parser/parser_fill_in_structs_2.c \
+	  parser/parser_space_split.c \
+	  parser/parser_util.c \
+	  parser/parser.c \
+	  sphere/sphere.c \
+	  vec/vec_ops.c \
+	  vec/vec_utils.c \
+	  vec/vec.c \
+
 SRC_DIR = ./src
 OBJ_DIR = ./obj
 OBJ = $(SRC:%.c=$(OBJ_DIR)/%.o)

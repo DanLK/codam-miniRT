@@ -1,0 +1,7 @@
+.gitignore
+.DS_Store
+notes.md
+*.pdf
+.vscode
+*.o
+miniRT

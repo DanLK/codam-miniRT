@@ -6,7 +6,7 @@
 /*   By: dloustal <dloustal@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/11 16:03:41 by dloustal      #+#    #+#                 */
-/*   Updated: 2025/08/15 15:38:27 by dloustal      ########   odam.nl         */
+/*   Updated: 2025/08/19 12:07:09 by dloustal      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,21 +39,28 @@ t_ray	set_ray(t_camera cam, t_vec prim_ray_dir)
 	return (ray);
 }
 
-static void	paint_gradientpix(mlx_image_t *img, t_ray ray, int x, int y, int counter)
+static void	paint_gradientpix(mlx_image_t *img, t_ray ray, t_object *objs)
 {
-	t_vec		unit_dir;
-	double		a;
+	t_object	closest;
+	double		dist;
+	double		dist_min;
 	t_color		color;
-	t_sphere	sp;
 
-	sp.center = vec(0, 0, 100);
-	sp.diameter = 20;
-	sp.color.r = 255;
-	sp.color.g = 0;
-	sp.color.b = 0;
-	if (hit_sphere(sp, ray))
-		color = sp.color;
+	closest = NULL;
+	dist_min = DBL_MAX;
+	while (objs)
+	{
+		if (hit_object(ray, obj, &dist) && dist < dist_min && dist > EPSILON)
+		{
+			dist_min = t;
+			closest = obj;
+		} 
+		obj = objs->next;
+	}
+	if (closest)
+		color = get_obj_color(closest, scene);
 	else
+		color = get_backgrount_color(scene);
 	{
 		unit_dir = normalized(ray.dir);
 		a = 0.5 * (unit_dir.y + 1.0);
