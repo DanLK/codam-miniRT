@@ -6,29 +6,27 @@
 /*   By: dloustal <dloustal@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/07 13:30:20 by hogu          #+#    #+#                 */
-/*   Updated: 2025/08/07 15:12:18 by dloustal      ########   odam.nl         */
+/*   Updated: 2025/08/15 15:16:01 by dloustal      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINIRT_H
 # define MINIRT_H
+# define WIDTH 2048
+# define RATIO (4.0 / 3.0)
+# define HEIGHT (int)(WIDTH / RATIO)
+# define EPSILON 1e-8
 
 # include "../libft/libft.h"
+# include "MLX42/MLX42.h"
 
 # include <fcntl.h>
-# include <stdlib.h>
-# include <stdio.h>
-# include <stdbool.h>
-# include <unistd.h>
-# include <math.h>
 # include <float.h>
-
-typedef struct s_coord
-{
-	double	x;
-	double	y;
-	double	z;
-}	t_coord;
+# include <math.h>
+# include <stdbool.h>
+# include <stdio.h>
+# include <stdlib.h>
+# include <unistd.h>
 
 typedef struct s_vec
 {
@@ -37,12 +35,34 @@ typedef struct s_vec
 	double	z;
 }	t_vec;
 
+typedef t_vec	t_coord;
+
 typedef struct s_color
 {
 	int	r;
 	int	g;
 	int	b;
 }	t_color;
+
+typedef struct s_ray
+{
+	t_coord	origin;
+	t_vec	dir;
+}		t_ray;
+
+typedef struct s_vport
+{
+	double	width;
+	double	height;
+	double	distance;
+	double	ratio;
+	t_coord	center;
+	t_vec	v_right;
+	t_vec	v_down;
+	t_vec	delta_x;
+	t_vec	delta_y;
+	t_coord	p_00;
+}		t_vport;
 
 typedef struct s_ambient
 {
@@ -136,7 +156,39 @@ typedef enum e_error_code
 	MISS_ELEM,
 }	t_error_code;
 
-# define EPSILON 1e-8
+//                 Vec
+// Main
+t_vec		*init_vec(double x, double y, double z);
+t_vec		vec(double x, double y, double z);
+void		neg_vec(t_vec *vec);
+t_vec		neg_vec_new(t_vec vec);
+void		scale_vec(t_vec *vec, double scalar);
+t_vec		scaled(t_vec vec, double scalar);
+double		len_vec(t_vec vec);
+void		normalize(t_vec v);
+t_vec		normalized(t_vec v);
+// Operations
+t_vec		sum_vec(t_vec u, t_vec v);
+t_vec		*sum_vec_new(t_vec u, t_vec v);
+double		dot(t_vec u, t_vec v);
+t_vec		cross(t_vec u, t_vec v);
+// Utils
+void		print_vec(t_vec *v, char*name);
+
+//                 Color
+int			get_rgba(int r, int g, int b, int a);
+
+//viewport
+void		make_vport(t_camera cam, t_vport *viewport);
+
+//                 Rays
+t_coord		ray_at(t_ray ray, double t);
+t_vec		prim_ray_dir(t_camera cam, t_coord pixel);
+t_ray		set_ray(t_camera cam, t_vec prim_ray_dir);
+void		paint_raygradient(mlx_image_t *img, t_camera cam, t_vport vp);
+
+//Sphere
+bool		hit_sphere(t_sphere sphere, t_ray ray);
 
 //---------------------Parser----------------------------
 bool		parser(t_scene *scene, const char *filename);
@@ -154,6 +206,7 @@ bool		check_vector(const char *s, t_vec *v);
 bool		check_ratio(const char *s, double *ratio_in_struct);
 
 //parser_fill_in_structs
+bool		validate_elem(t_scene *scene);
 bool		fill_in_ambient(const char *line, t_scene *scene);
 bool		fill_in_camera(const char *line, t_scene *scene);
 bool		fill_in_light(const char *s, t_scene *scene);

@@ -1,0 +1,52 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                          ::::::::            #
+#    math.txt                                            :+:    :+:            #
+#                                                       +:+                    #
+#    By: hogu <hogu@student.codam.nl>                  +#+                     #
+#                                                     +#+                      #
+#    Created: 2025/08/14 10:15:46 by hogu           #+#    #+#                 #
+#    Updated: 2025/08/14 10:15:47 by hogu           ########   odam.nl         #
+#                                                                              #
+# **************************************************************************** #
+
+
+Known:
+1. horizontal FOV = fov
+2. image_height = 600, image_width = 800, viewport_ratio = 4/3
+3. camera_position = (a, b, c)
+4. camera_direction = (x, y, z)
+4. viewport_distance = 1
+5. t_vec world_up = (0, 1, 0)
+
+Then:
+1. fov_radian = fov * (M_PI / 180.0)
+
+2. viewport_width = tan(fov_radian / 2.0) * viewport_distance * 2.0
+
+3. viewport_height = viewport_width * viewport_ratio
+
+4. viewport_center:
+	center.x = a + x * 1.0
+	center.y = b + y * 1.0
+	center.z = c + z * 1.0
+
+5. local direction on viewport:
+	right = normalize(cross(world_up, camera_direction))
+	up = normalize(cross(right, camera_direction))
+
+6. upper left point on viewport:
+	ulp = center + up * viewport_height / 2 - right * viewport_width / 2
+
+7. pixel size
+	pixel_width = viewport_width / image_width
+	pixel_height = viewport_height / image_height
+
+8. every point on viewport: (i, j)
+	for i (0, 799), j (0, 599)
+	t_vec pixel_pos = ulp + right * (i + 0.5) * pixel_width - up * (j + 0.5) * pixel_height
+
+9. ray_vector = normalize(pixel_pos - camera_position)
+
+
+
