@@ -49,3 +49,13 @@ t_vec	cross(t_vec u, t_vec v)
 	cross.z = u.x * v.y - u.y * v.x;
 	return (cross);
 }
+
+t_vec	sub_vec(t_vec u, t_vec v) // new; parameters could be either t_vec or t_coord, which is very handy, thanks to your alias setting
+{
+	t_vec	diff;
+
+	diff.x = u.x - v.x;
+	diff.y = u.y - v.y;
+	diff.z = u.z - v.z;
+	return (diff);
+}
