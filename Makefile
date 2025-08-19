@@ -5,13 +5,14 @@ SRC = miniRT.c \
 	  ray.c \
 	  viewport.c \
 	  color/color.c \
-	  parser/parser_ato.c \
+	  parser/parser_atod.c \
 	  parser/parser_check_input.c \
 	  parser/parser_fill_in_structs_1.c \
 	  parser/parser_fill_in_structs_2.c \
 	  parser/parser_space_split.c \
 	  parser/parser_util.c \
 	  parser/parser.c \
+	  render.c \
 	  sphere/sphere.c \
 	  vec/vec_ops.c \
 	  vec/vec_utils.c \

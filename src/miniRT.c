@@ -6,7 +6,7 @@
 /*   By: dloustal <dloustal@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/07 14:51:55 by dloustal      #+#    #+#                 */
-/*   Updated: 2025/08/19 12:07:01 by dloustal      ########   odam.nl         */
+/*   Updated: 2025/08/19 14:35:59 by dloustal      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,13 +62,13 @@ int	main(void)
 	printf("VP height: %f\n", vp.height);
 	printf("VP ratio: %f\n", vp.ratio);
 	// printf("w: %d h: %d  ratio: %f w/h: %f\n", WIDTH, HEIGHT, RATIO, (double)WIDTH / HEIGHT);
-	print_vec(&cam.pos, "cam_pos");
-	print_vec(&cam.dir, "cam direction");
-	print_vec(&vp.v_right, "right");
-	print_vec(&vp.v_down, "down");
-	print_vec(&vp.p_00, "p(0,0)");
+	print_vec_name(&cam.pos, "cam_pos");
+	print_vec_name(&cam.dir, "cam direction");
+	print_vec_name(&vp.v_right, "right");
+	print_vec_name(&vp.v_down, "down");
+	print_vec_name(&vp.p_00, "p(0,0)");
 	
-	paint_raygradient(img, cam, vp);
+	render(img, cam, vp);
 
 	
 	

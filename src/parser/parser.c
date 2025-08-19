@@ -6,7 +6,7 @@
 /*   By: dloustal <dloustal@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/07 15:47:09 by hogu          #+#    #+#                 */
-/*   Updated: 2025/08/19 12:07:35 by dloustal      ########   odam.nl         */
+/*   Updated: 2025/08/19 13:43:42 by dloustal      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,20 +42,20 @@ static bool	get_params(const char *line, t_scene *scene)
 	return (false);
 }
 
-// static bool	handle_line(char *buffer, t_scene *scene)
-// {
-// 	char	*trimmed;
+static bool	handle_line(char *buffer, t_scene *scene)
+{
+	char	*trimmed;
 
-// 	trimmed = ft_strtrim(buffer, " \t\n\r\f\v");
-// 	free(buffer);
-// 	if (!trimmed)
-// 		return (printf("Error\n"), perror("malloc"), false);
-// 	if (trimmed[0] == '\0')
-// 		return (free(trimmed), true);
-// 	if (!get_params(trimmed, scene))
-// 		return (free(trimmed), false);
-// 	return (free(trimmed), true);
-// }
+	trimmed = ft_strtrim(buffer, " \t\n\r\f\v");
+	free(buffer);
+	if (!trimmed)
+		return (printf("Error\n"), perror("malloc"), false);
+	if (trimmed[0] == '\0')
+		return (free(trimmed), true);
+	if (!get_params(trimmed, scene))
+		return (free(trimmed), false);
+	return (free(trimmed), true);
+}
 
 static void	gnl_drain(int fd)
 {
@@ -70,32 +70,6 @@ static void	gnl_drain(int fd)
 	close(fd);
 }
 
-<<<<<<< HEAD
-// bool	parser(t_scene *scene, const char *filename)
-// {
-// 	int		fd;
-// 	char	*buffer;
-// 	char	*trimmed;
-
-// 	if (!check_suffix(filename))
-// 		return (print_error(WRONG_SUFFIX, NULL), false);
-// 	fd = open(filename, O_RDONLY);
-// 	if (fd == -1)
-// 		return (printf("Error\n"), perror("Cannot open file"), false);
-// 	buffer = get_next_line(fd);
-// 	if (!buffer)
-// 		return (close(fd), print_error(EMPTY_FILE, NULL), false);
-// 	while (buffer)
-// 	{
-// 		if (!handle_line(buffer, scene))
-// 			return (close(fd), false);
-// 		buffer = get_next_line(fd);
-// 	}
-// 	if (!validate_elem(scene))
-// 		return (close(fd), false);
-// 	return (close(fd), true);
-// }
-=======
 bool	parser(t_scene *scene, const char *filename)
 {
 	int		fd;
@@ -119,4 +93,3 @@ bool	parser(t_scene *scene, const char *filename)
 		return (gnl_drain(fd), free_object_list(scene->objects), false);
 	return (close(fd), true);
 }
->>>>>>> main

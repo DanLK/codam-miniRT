@@ -6,7 +6,7 @@
 /*   By: dloustal <dloustal@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/07 13:30:20 by hogu          #+#    #+#                 */
-/*   Updated: 2025/08/19 12:07:02 by dloustal      ########   odam.nl         */
+/*   Updated: 2025/08/19 13:41:58 by dloustal      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 # define RATIO (4.0 / 3.0)
 # define HEIGHT (int)(WIDTH / RATIO)
 # define EPSILON 1e-8
-<<<<<<< HEAD
 # include "libft.h"
 # include "MLX42/MLX42.h"
 # include <unistd.h>
@@ -24,19 +23,8 @@
 # include <stdio.h>
 # include <fcntl.h>
 # include <float.h>
-=======
-
-# include "../libft/libft.h"
-# include "MLX42/MLX42.h"
-
-# include <fcntl.h>
-# include <float.h>
-# include <math.h>
 # include <stdbool.h>
-# include <stdio.h>
 # include <stdlib.h>
-# include <unistd.h>
->>>>>>> main
 
 typedef struct s_vec
 {
@@ -183,7 +171,7 @@ t_vec		*sum_vec_new(t_vec u, t_vec v);
 double		dot(t_vec u, t_vec v);
 t_vec		cross(t_vec u, t_vec v);
 // Utils
-void		print_vec(t_vec *v, char*name);
+void		print_vec_name(t_vec *v, char*name);
 
 //                 Color
 int			get_rgba(int r, int g, int b, int a);
@@ -195,10 +183,11 @@ void		make_vport(t_camera cam, t_vport *viewport);
 t_coord		ray_at(t_ray ray, double t);
 t_vec		prim_ray_dir(t_camera cam, t_coord pixel);
 t_ray		set_ray(t_camera cam, t_vec prim_ray_dir);
-void		paint_raygradient(mlx_image_t *img, t_camera cam, t_vport vp);
+void		render(mlx_image_t *img, t_camera cam, t_vport vp);
 
 //Sphere
-bool		hit_sphere(t_sphere sphere, t_ray ray);
+bool		hit_sphere(t_sphere *sp, t_ray ray, double *dist);
+bool		hit_object(t_ray ray, t_object *obj, double *dist);
 
 //---------------------Parser----------------------------
 bool		parser(t_scene *scene, const char *filename);
