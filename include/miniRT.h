@@ -6,7 +6,7 @@
 /*   By: dloustal <dloustal@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/07 13:30:20 by hogu          #+#    #+#                 */
-/*   Updated: 2025/08/21 15:51:18 by dloustal      ########   odam.nl         */
+/*   Updated: 2025/08/21 16:14:18 by dloustal      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -185,7 +185,9 @@ void		make_vport(t_camera cam, t_vport *viewport);
 //                 Rays
 t_coord		ray_at(t_ray ray, double t);
 t_ray		set_ray(t_coord start, t_vec ray_dir);
-void		paint_raygradient(mlx_image_t *img, t_scene *scene, t_vport *vp);
+
+//Render
+void		render(mlx_image_t *img, t_scene *scene, t_vport *vp);
 
 //Hitting object
 bool		hit_sphere(t_sphere *sp, t_ray ray, double *dist);

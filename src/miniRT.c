@@ -6,7 +6,7 @@
 /*   By: dloustal <dloustal@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/07 14:51:55 by dloustal      #+#    #+#                 */
-/*   Updated: 2025/08/21 15:52:05 by dloustal      ########   odam.nl         */
+/*   Updated: 2025/08/21 16:13:33 by dloustal      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ int	main(int argc, char *argv[])
 	print_vport(&vp);
 	
 	//render
-	paint_raygradient(img, &scene, &vp);
+	render(img, &scene, &vp);
 
 	if (mlx_image_to_window(mlx, img, 0, 0) < 0)
     {

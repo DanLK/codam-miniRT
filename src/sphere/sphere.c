@@ -6,7 +6,7 @@
 /*   By: dloustal <dloustal@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/15 14:50:48 by dloustal      #+#    #+#                 */
-/*   Updated: 2025/08/19 15:12:46 by dloustal      ########   odam.nl         */
+/*   Updated: 2025/08/21 16:14:44 by dloustal      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,13 +64,8 @@ bool	hit_object(t_ray ray, t_object *obj, double *dist)
 {
 	if (obj->type == SPHERE)
 		return (hit_sphere((t_sphere *)obj->element, ray, dist));
-<<<<<<< HEAD
-	// else if (obj->type == PLANE)
-	// 	return (hit_plane((t_plane *)obj->element, ray, dist));
-=======
 	else if (obj->type == PLANE)
 		return (hit_plane((t_plane *)obj->element, ray, dist));
->>>>>>> parser_0812
 	// else if (obj->type == CYLINDER)
 	// 	return (hit_cylinder((t_cylinder *)obj->next, ray, dist));
 	return (false);

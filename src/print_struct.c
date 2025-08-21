@@ -6,7 +6,7 @@
 /*   By: dloustal <dloustal@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/14 12:23:50 by hogu          #+#    #+#                 */
-/*   Updated: 2025/08/19 13:28:24 by dloustal      ########   odam.nl         */
+/*   Updated: 2025/08/21 15:54:26 by dloustal      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,8 +105,8 @@ void	print_vport(t_vport *vp)
 	printf("VP width: %f\n", vp->width);
 	printf("VP height: %f\n", vp->height);
 	printf("VP ratio: %f\n", vp->ratio);
-	print_vec(&vp->center, "center");
-	print_vec(&vp->v_right, "right");
-	print_vec(&vp->v_down, "down");
-	print_vec(&vp->p_00, "p(0,0)");
+	print_vec_name(&vp->center, "center");
+	print_vec_name(&vp->v_right, "right");
+	print_vec_name(&vp->v_down, "down");
+	print_vec_name(&vp->p_00, "p(0,0)");
 }
