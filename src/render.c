@@ -6,7 +6,7 @@
 /*   By: dloustal <dloustal@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/19 13:36:40 by dloustal      #+#    #+#                 */
-/*   Updated: 2025/08/19 15:24:20 by dloustal      ########   odam.nl         */
+/*   Updated: 2025/08/21 12:00:04 by dloustal      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ static void	paint_gradientpix(mlx_image_t *img, t_ray ray, t_object *objs, int x
 	closest = NULL;
 	current = objs;
 	dist_min = DBL_MAX;
-	while (current)
+	while (current != NULL)
 	{
 		printf("OBJS not null\n");
 		if (hit_object(ray, current, &dist) && dist < dist_min && dist > EPSILON)
@@ -70,8 +70,10 @@ static void	paint_gradientpix(mlx_image_t *img, t_ray ray, t_object *objs, int x
 			closest = current;
 		} 
 		printf("objs->next == null: [%d]\n", current->next == NULL);
+		printf("current == null: [%d]\n", current == NULL);
 		// printf("objs->next->type: [%d]\n", objs->next->type);
-		current = objs->next;
+		current = current->next;
+		printf("current == null: [%d]\n", current == NULL);
 		// exit(1);
 	}
 	// if (closest)
