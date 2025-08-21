@@ -6,11 +6,7 @@
 /*   By: dloustal <dloustal@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/07 13:30:20 by hogu          #+#    #+#                 */
-<<<<<<< HEAD
-/*   Updated: 2025/08/21 14:40:19 by dloustal      ########   odam.nl         */
-=======
-/*   Updated: 2025/08/21 16:14:18 by dloustal      ########   odam.nl         */
->>>>>>> mathstructs
+/*   Updated: 2025/08/21 16:32:30 by dloustal      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
