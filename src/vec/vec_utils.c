@@ -13,7 +13,7 @@
 #include "miniRT.h"
 #include "stdio.h"
 
-void	print_vec(t_vec *v, char*name)
+void	print_vec(t_vec *v, char *name)
 {
 	printf("%s: (%f, %f, %f)\n", name, v->x, v->y, v->z);
 }

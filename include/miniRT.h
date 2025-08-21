@@ -24,7 +24,7 @@
 # include <float.h>
 # include <math.h>
 # include <stdbool.h>
-# include <stdio.h>
+# include <stdio.h>make f
 # include <stdlib.h>
 # include <unistd.h>
 
@@ -174,12 +174,12 @@ double		dot(t_vec u, t_vec v);
 t_vec		cross(t_vec u, t_vec v);
 t_vec		sub_vec(t_vec u, t_vec v);
 // Utils
-void		print_vec(t_vec *v, char*name);
+void		print_vec(t_vec *v, char *name);
 
 //                 Color
 int			get_rgba(int r, int g, int b, int a);
 t_color		get_object_color(t_object *obj, t_scene *scene, t_ray ray, double t);
-t_color 	get_background_color();
+t_color 	get_background_color(t_ray ray);
 
 //viewport
 void		make_vport(t_camera cam, t_vport *viewport);
@@ -187,16 +187,19 @@ void		make_vport(t_camera cam, t_vport *viewport);
 //                 Rays
 t_coord		ray_at(t_ray ray, double t);
 t_ray		set_ray(t_coord start, t_vec ray_dir);
-void		paint_raygradient(mlx_image_t *img, t_camera cam, t_vport vp);
+void		paint_raygradient(mlx_image_t *img, t_scene *scene, t_vport *vp);
 
 //Hitting object
-bool		hit_sphere(t_sphere sphere, t_ray ray);
+bool		hit_sphere(t_sphere *sp, t_ray ray, double *dist);
 bool		hit_plane(t_plane *plane, t_ray ray, double *dist);
 bool		hit_object(t_ray ray, t_object *obj, double *dist);
 
 //---------------------Parser----------------------------
 bool		parser(t_scene *scene, const char *filename);
+
+//print_struct
 void		print_scene(t_scene *scene);
+void		print_vport(t_vport *vp);
 
 //parser_ato
 bool		ft_atod(const char *s, double *result);

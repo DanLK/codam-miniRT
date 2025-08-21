@@ -32,7 +32,7 @@ t_ray	set_ray(t_coord start, t_vec ray_dir)
 	return (ray);
 }
 
-static void	paint_gradientpix(mlx_image_t *img, t_ray ray, t_scene *scene) // changed parameter t_object to t_scene, for get_obj_color() 
+static void	paint_gradientpix(mlx_image_t *img, t_ray ray, t_scene *scene, int x, int y) // changed parameter t_object to t_scene, for get_obj_color() 
 {
 	t_object	*tmp;
 	t_object	*closest;
@@ -53,32 +53,29 @@ static void	paint_gradientpix(mlx_image_t *img, t_ray ray, t_scene *scene) // ch
 		tmp = tmp->next;
 	}
 	if (closest)
-		color = get_obj_color(closest, scene, ray, dist);
+		color = get_object_color(closest, scene, ray, dist);
 	else
-		color = get_backgrount_color(scene);
+		color = get_background_color(ray);
 	mlx_put_pixel(img, x, y, get_rgba(color.r, color.g, color.b, 255));
 }
 
-void	paint_raygradient(mlx_image_t *img, t_camera cam, t_vport vp)
+void	paint_raygradient(mlx_image_t *img, t_scene *scene, t_vport *vp)
 {
 	int			i_h;
 	int			i_w;
 	t_coord		pixel_center;
 	t_ray		ray;
-	int			counter;
 
 	i_h = 0;
-	counter = 0;
 	while (i_h < (int)img->height)
 	{
 		i_w = 0;
 		while (i_w < (int)img->width)
 		{
-			pixel_center = sum_vec(vp.p_00, sum_vec(scaled(vp.delta_x, i_w),
-				scaled(vp.delta_y, i_h)));
-			ray = set_ray(cam.pos, sub_vec(pixel_center, cam.pos));
-			paint_gradientpix(img, ray, i_w, i_h, counter);
-			counter++;
+			pixel_center = sum_vec(vp->p_00, sum_vec(scaled(vp->delta_x, i_w),
+				scaled(vp->delta_y, i_h)));
+			ray = set_ray(scene->camera.pos, sub_vec(pixel_center, scene->camera.pos));
+			paint_gradientpix(img, ray, scene, i_w, i_h);
 			// if (counter % 2048 == 0)
 			// 	print_vec(&ray.dir, "ray");
 			i_w++;
