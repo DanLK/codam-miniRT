@@ -6,7 +6,7 @@
 /*   By: dloustal <dloustal@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/11 14:28:16 by dloustal      #+#    #+#                 */
-/*   Updated: 2025/08/21 15:04:11 by dloustal      ########   odam.nl         */
+/*   Updated: 2025/08/21 16:19:37 by dloustal      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,19 @@ int	get_rgba(int r, int g, int b, int a)
 // 	return (false);
 // }
 
+//shows object_color for testing
+t_color	get_object_color(t_object *obj, t_scene *scene, t_ray ray, double t)
+{
+	(void) t;
+	(void) scene;
+	(void) ray;
+
+	if (obj->type == SPHERE)
+		return (((t_sphere *)obj->element)->color);
+	else
+		return (((t_plane *)obj->element)->color);
+}
+
 // t_color	get_object_color(t_object *obj, t_scene *scene, t_ray ray, double t)
 // {
 // 	t_coord	hit_point;
@@ -48,19 +61,18 @@ int	get_rgba(int r, int g, int b, int a)
 // 		return (none_shadow_color());
 // }
 
-
-t_color get_background_color(t_ray ray, t_color bkgd)
+//gradient
+t_color get_background_color(t_ray ray)
 {
+	t_color	color;
 	t_vec	unit_dir;
 	double	a;
-	t_color	color;
 
 	unit_dir = normalized(ray.dir);
 	a = 0.5 * (unit_dir.y + 1.0);
 	// a = (unit_dir.y + 0.75) / 1.5;
-	color.r = (1 - a) * 255 + a * bkgd.r;
-	color.g = (1 - a) * 255 + a * bkgd.g;
-	color.b = (1 - a) * 255 + a * bkgd.b;
-
+	color.r = (1 - a) * 255 + a * 25;
+	color.g = (1 - a) * 255 + a * 25;
+	color.b = (1 - a) * 255 + a * 112;
 	return (color);
 }

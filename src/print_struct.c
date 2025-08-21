@@ -6,7 +6,7 @@
 /*   By: dloustal <dloustal@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/14 12:23:50 by hogu          #+#    #+#                 */
-/*   Updated: 2025/08/19 13:28:24 by dloustal      ########   odam.nl         */
+/*   Updated: 2025/08/21 15:54:26 by dloustal      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	print_coord(t_coord c)
 	printf("  Coord: (%g, %g, %g)\n", c.x, c.y, c.z);
 }
 
-void	print_vec(t_vec v)
+void	print_vector(t_vec v)
 {
 	printf("  Vector: (%g, %g, %g)\n", v.x, v.y, v.z);
 }
@@ -39,7 +39,7 @@ void	print_camera(t_camera *c)
 {
 	printf("Camera:\n");
 	print_coord(c->pos);
-	print_vec(c->dir);
+	print_vector(c->dir);
 	printf("  FOV: %d\n", c->fov);
 	printf("\n");
 }
@@ -71,7 +71,7 @@ void	print_object(t_object *obj)
 			t_plane *p = (t_plane *)obj->element;
 			printf("Plane:\n");
 			print_coord(p->point);
-			print_vec(p->dir);
+			print_vector(p->dir);
 			print_color(p->color);
 			printf("\n");
 		}
@@ -80,7 +80,7 @@ void	print_object(t_object *obj)
 			t_cylinder *c = (t_cylinder *)obj->element;
 			printf("Cylinder:\n");
 			print_coord(c->center);
-			print_vec(c->dir);
+			print_vector(c->dir);
 			printf("  Diameter: %g\n", c->diameter);
 			printf("  Height: %g\n", c->height);
 			print_color(c->color);
@@ -98,4 +98,15 @@ void	print_scene(t_scene *scene)
 	print_light(&scene->light);
 	print_object(scene->objects);
 	printf("========================\n");
+}
+
+void	print_vport(t_vport *vp)
+{
+	printf("VP width: %f\n", vp->width);
+	printf("VP height: %f\n", vp->height);
+	printf("VP ratio: %f\n", vp->ratio);
+	print_vec_name(&vp->center, "center");
+	print_vec_name(&vp->v_right, "right");
+	print_vec_name(&vp->v_down, "down");
+	print_vec_name(&vp->p_00, "p(0,0)");
 }
