@@ -13,7 +13,11 @@
 #include "miniRT.h"
 #include "stdio.h"
 
+<<<<<<< HEAD
 void	print_vec_name(t_vec *v, char*name)
+=======
+void	print_vec(t_vec *v, char *name)
+>>>>>>> parser_0812
 {
 	printf("%s: (%f, %f, %f)\n", name, v->x, v->y, v->z);
 }

@@ -6,13 +6,13 @@
 /*   By: dloustal <dloustal@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/07 14:51:55 by dloustal      #+#    #+#                 */
-/*   Updated: 2025/08/21 12:22:02 by dloustal      ########   odam.nl         */
+/*   Updated: 2025/08/21 15:52:05 by dloustal      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
-int	main(void)
+int	main(int argc, char *argv[])
 {
 	mlx_t		*mlx;
 	mlx_image_t	*img;
@@ -25,20 +25,30 @@ int	main(void)
 	// int			g;
 	// int			b;
 	// Experiments with the viewport
-	t_camera	cam;
 	t_vport		vp;
 	// int			i_h;
 	// int			i_w;
 	// t_coord		pixel_center;
 	// t_ray		ray;
 	// int			counter;
+	t_scene	scene;
 
-	if (HEIGHT < 1)
+	//parsing
+	if (argc != 2)
+		return (print_error(WRONG_ARGS, NULL), EXIT_FAILURE);
+	if (HEIGHT < 1) // I'll prepare a error_msg for this
 		return (1);
+	ft_bzero(&scene, sizeof(t_scene));
+	if (!parser(&scene, argv[1]))
+		return (free_object_list(scene.objects), EXIT_FAILURE);
+	print_scene(&scene);
+
+	//mlx init
 	mlx = mlx_init(WIDTH, HEIGHT, "MiniRT", true);
 	if (!mlx)
 	{
 		ft_putstr_fd((char *)mlx_strerror(mlx_errno), STDERR_FILENO);
+		free_object_list(scene.objects);
 		return (EXIT_FAILURE);
 	}
 	printf("Welcome to our miniRT\n");
@@ -46,51 +56,18 @@ int	main(void)
 	if (!img)
 	{
 		ft_putstr_fd((char *)mlx_strerror(mlx_errno), STDERR_FILENO);
+		free_object_list(scene.objects);
+		mlx_terminate(mlx);
 		return (EXIT_FAILURE);
 	}
-	// Start experimenting with the viewport
-	cam.pos.x = 0;
-	cam.pos.y = 0;
-	cam.pos.z = 0;
-	cam.dir.x = 0;
-	cam.dir.y = 0;
-	cam.dir.z = 10;
-	cam.fov = 90;
 
-	make_vport(cam, &vp);
-	printf("VP width: %f\n", vp.width);
-	printf("VP height: %f\n", vp.height);
-	printf("VP ratio: %f\n", vp.ratio);
-	// printf("w: %d h: %d  ratio: %f w/h: %f\n", WIDTH, HEIGHT, RATIO, (double)WIDTH / HEIGHT);
-	print_vec_name(&cam.pos, "cam_pos");
-	print_vec_name(&cam.dir, "cam direction");
-	print_vec_name(&vp.v_right, "right");
-	print_vec_name(&vp.v_down, "down");
-	print_vec_name(&vp.p_00, "p(0,0)");
+	//vport
+	make_vport(scene.camera, &vp);
+	print_vport(&vp);
 	
-	render(img, cam, vp);
+	//render
+	paint_raygradient(img, &scene, &vp);
 
-	
-	
-	//Paint a rectangle in the center with a color gradient
-	// c_botleft = init_vec(0,191,255);
-	// c_topright = init_vec(255, 20, 147);
-	// w = 0;
-	// while (w < img->width)
-	// {
-	// 	h = 0;
-	// 	while (h < img->height)
-	// 	{
-	// 		r = (int)((((double)w / (img->width - 1)) * c_topright->x + ((double)h / (img->height - 1)) * c_botleft->x) / 2.0);
-	// 		g = (int)((((double)w / (img->width - 1)) * c_topright->y + ((double)h / (img->height - 1)) * c_botleft->y) / 2.0);
-	// 		b = (int)((((double)w / (img->width - 1)) * c_topright->z + ((double)h / (img->height - 1)) * c_botleft->z) / 2.0);
-	// 		mlx_put_pixel(img, w, h, get_rgba(r, g, b, 255));
-	// 		// printf("x: %d, y: %d\n", w, h);
-	// 		h++;
-	// 	}
-	// 	w++;
-	// }
-	//------------------------------------------------------------------------------
 	if (mlx_image_to_window(mlx, img, 0, 0) < 0)
     {
 		ft_putstr_fd((char *)mlx_strerror(mlx_errno), STDERR_FILENO);
@@ -100,20 +77,6 @@ int	main(void)
 	mlx_terminate(mlx);
 	// free(c_botleft);
 	// free(c_topright);
-	
+ 	free_object_list(scene.objects);
 	return (0);
 }
-
-// int	main(int argc, char **argv)
-// {
-// 	t_scene	scene;
-
-// 	if (argc != 2)
-// 		return (print_error(WRONG_ARGS, NULL), EXIT_FAILURE);
-// 	ft_bzero(&scene, sizeof(t_scene));
-// 	if (!parser(&scene, argv[1]))
-// 		return (EXIT_FAILURE);
-// 	print_scene(&scene);
-//  	free_object_list(scene.objects);
-// 	return (EXIT_SUCCESS);
-// }

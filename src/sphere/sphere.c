@@ -50,10 +50,10 @@ bool	hit_plane(t_plane *plane, t_ray ray, double *dist)
 	double	numerator;
 
 	denominator = dot(ray.dir, plane->dir);
-	if (fabs[denominator] < EPSILON)
+	if (fabs(denominator) < EPSILON)
 		return (false);
 	oc = sub_vec(plane->point, ray.origin);
-	numerator = doc(oc, plane->dir);
+	numerator = dot(oc, plane->dir);
 	*dist = numerator / denominator;
 	if (*dist < EPSILON)
 		return (false);
@@ -64,8 +64,13 @@ bool	hit_object(t_ray ray, t_object *obj, double *dist)
 {
 	if (obj->type == SPHERE)
 		return (hit_sphere((t_sphere *)obj->element, ray, dist));
+<<<<<<< HEAD
 	// else if (obj->type == PLANE)
 	// 	return (hit_plane((t_plane *)obj->element, ray, dist));
+=======
+	else if (obj->type == PLANE)
+		return (hit_plane((t_plane *)obj->element, ray, dist));
+>>>>>>> parser_0812
 	// else if (obj->type == CYLINDER)
 	// 	return (hit_cylinder((t_cylinder *)obj->next, ray, dist));
 	return (false);
