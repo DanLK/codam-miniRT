@@ -6,7 +6,7 @@
 /*   By: dloustal <dloustal@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/07 13:30:20 by hogu          #+#    #+#                 */
-/*   Updated: 2025/08/21 14:21:14 by dloustal      ########   odam.nl         */
+/*   Updated: 2025/08/21 14:40:19 by dloustal      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -185,7 +185,7 @@ void		make_vport(t_camera cam, t_vport *viewport);
 //                 Rays
 t_coord		ray_at(t_ray ray, double t);
 t_vec		prim_ray_dir(t_camera cam, t_coord pixel);
-t_ray		set_ray(t_camera cam, t_vec prim_ray_dir);
+t_ray		set_ray(t_coord start, t_vec ray_dir);
 void		render(mlx_image_t *img, t_camera cam, t_vport vp);
 
 //t_ray		set_ray(t_coord start, t_vec ray_dir);

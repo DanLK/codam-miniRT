@@ -6,7 +6,7 @@
 /*   By: dloustal <dloustal@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/19 13:36:40 by dloustal      #+#    #+#                 */
-/*   Updated: 2025/08/21 12:00:04 by dloustal      ########   odam.nl         */
+/*   Updated: 2025/08/21 14:48:45 by dloustal      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,7 +132,7 @@ void	render(mlx_image_t *img, t_camera cam, t_vport vp)
 		{
 			pixel_center = sum_vec(vp.p_00, sum_vec(scaled(vp.delta_x, i_w),
 				scaled(vp.delta_y, i_h)));
-			ray = set_ray(cam, prim_ray_dir(cam, pixel_center));
+			ray = set_ray(cam.pos, sub_vec(pixel_center, cam.pos));
 			paint_gradientpix(img, ray, &objs, i_w, i_h);
 			counter++;
 			// if (counter % 2048 == 0)

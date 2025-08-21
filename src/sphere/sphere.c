@@ -6,7 +6,7 @@
 /*   By: dloustal <dloustal@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/15 14:50:48 by dloustal      #+#    #+#                 */
-/*   Updated: 2025/08/19 15:12:46 by dloustal      ########   odam.nl         */
+/*   Updated: 2025/08/21 15:05:46 by dloustal      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,10 +50,10 @@ bool	hit_plane(t_plane *plane, t_ray ray, double *dist)
 	double	numerator;
 
 	denominator = dot(ray.dir, plane->dir);
-	if (fabs[denominator] < EPSILON)
+	if (fabs(denominator) < EPSILON)
 		return (false);
 	oc = sub_vec(plane->point, ray.origin);
-	numerator = doc(oc, plane->dir);
+	numerator = dot(oc, plane->dir);
 	*dist = numerator / denominator;
 	if (*dist < EPSILON)
 		return (false);

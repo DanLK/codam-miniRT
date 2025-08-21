@@ -5,3 +5,5 @@ notes.md
 .vscode
 *.o
 miniRT
+MLX42/
+libft/
