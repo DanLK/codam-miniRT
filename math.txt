@@ -10,7 +10,7 @@
 #                                                                              #
 # **************************************************************************** #
 
-
+//camera ray
 Known:
 1. horizontal FOV = fov
 2. image_height = 600, image_width = 800, viewport_ratio = 4/3
@@ -21,32 +21,51 @@ Known:
 
 Then:
 1. fov_radian = fov * (M_PI / 180.0)
-
 2. viewport_width = tan(fov_radian / 2.0) * viewport_distance * 2.0
-
 3. viewport_height = viewport_width * viewport_ratio
-
 4. viewport_center:
 	center.x = a + x * 1.0
 	center.y = b + y * 1.0
 	center.z = c + z * 1.0
-
 5. local direction on viewport:
 	right = normalize(cross(world_up, camera_direction))
 	up = normalize(cross(right, camera_direction))
-
 6. upper left point on viewport:
 	ulp = center + up * viewport_height / 2 - right * viewport_width / 2
-
 7. pixel size
 	pixel_width = viewport_width / image_width
 	pixel_height = viewport_height / image_height
-
 8. every point on viewport: (i, j)
 	for i (0, 799), j (0, 599)
 	t_vec pixel_pos = ulp + right * (i + 0.5) * pixel_width - up * (j + 0.5) * pixel_height
-
 9. ray_vector = normalize(pixel_pos - camera_position)
 
 
+//check_shadow
+Checks if a hit_point is in shadow (not directedly lighted by point light)
 
+logic:
+imagine a shadow ray between hit_point and light_point,
+and apply hit_object again to all objects one by one, to check if convergence
+
+known:
+1. t_coord hit_point
+2. t_object *obj
+3. t_coord light_point
+
+steps:
+1. get the shadow ray from hit_point to light_point
+	t_vec shadow_dir = sub_vec(lihgt_point, hit_point);
+	t_ray shadow = set_ray(hit_point, shadow_dir);
+2. hit_object(shadow, obj, &dist)
+3. also check if dist > EPSILON and dist < len_vec of shadow ray
+4. if true -> is in_shadow; otherwise -> not in_shadow
+
+
+//calculate color
+
+logic:
+each pixel belongs to one of the three groups:
+1. background: gradient or pure color, we can decide on later
+2. object in shadow: object color + ambient light
+3. object not in shadow: object color + ambient light + point light

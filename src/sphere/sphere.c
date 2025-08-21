@@ -43,6 +43,23 @@ bool	hit_sphere(t_sphere *sp, t_ray ray, double *dist)
 	return (true);
 }
 
+bool	hit_plane(t_plane *plane, t_ray ray, double *dist)
+{
+	t_vec	oc;
+	double	denominator;
+	double	numerator;
+
+	denominator = dot(ray.dir, plane->dir);
+	if (fabs[denominator] < EPSILON)
+		return (false);
+	oc = sub_vec(plane->point, ray.origin);
+	numerator = doc(oc, plane->dir);
+	*dist = numerator / denominator;
+	if (*dist < EPSILON)
+		return (false);
+	return (true);
+}
+
 bool	hit_object(t_ray ray, t_object *obj, double *dist)
 {
 	if (obj->type == SPHERE)
