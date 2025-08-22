@@ -6,7 +6,7 @@
 /*   By: dloustal <dloustal@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/07 13:30:20 by hogu          #+#    #+#                 */
-/*   Updated: 2025/08/15 15:16:01 by dloustal      ########   odam.nl         */
+/*   Updated: 2025/08/21 16:14:18 by dloustal      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,17 +16,15 @@
 # define RATIO (4.0 / 3.0)
 # define HEIGHT (int)(WIDTH / RATIO)
 # define EPSILON 1e-8
-
-# include "../libft/libft.h"
+# include "libft.h"
 # include "MLX42/MLX42.h"
-
+# include <unistd.h>
+# include <math.h>
+# include <stdio.h>
 # include <fcntl.h>
 # include <float.h>
-# include <math.h>
 # include <stdbool.h>
-# include <stdio.h>make f
 # include <stdlib.h>
-# include <unistd.h>
 
 typedef struct s_vec
 {
@@ -81,7 +79,7 @@ typedef struct s_light
 {
 	t_coord			pos;
 	double			ratio;
-	t_color			color;
+	t_color			color; // not used in mandatory part
 }	t_light;
 
 typedef enum e_obj_type
@@ -174,12 +172,17 @@ double		dot(t_vec u, t_vec v);
 t_vec		cross(t_vec u, t_vec v);
 t_vec		sub_vec(t_vec u, t_vec v);
 // Utils
-void		print_vec(t_vec *v, char *name);
+void		print_vec_name(t_vec *v, char *name);
 
 //                 Color
+t_color		calc_obj_color(t_object *obj, t_scene *scene, t_ray ray, double t);
+t_color		calc_background_color(t_ray ray);
+//color_intensity
+double		calc_intensity(t_coord hit_p, t_object *obj, t_coord light_p);
+//color_utils
 int			get_rgba(int r, int g, int b, int a);
-t_color		get_object_color(t_object *obj, t_scene *scene, t_ray ray, double t);
-t_color 	get_background_color(t_ray ray);
+t_color		sum_color(t_color cl1, t_color cl2);
+
 
 //viewport
 void		make_vport(t_camera cam, t_vport *viewport);
@@ -187,11 +190,11 @@ void		make_vport(t_camera cam, t_vport *viewport);
 //                 Rays
 t_coord		ray_at(t_ray ray, double t);
 t_ray		set_ray(t_coord start, t_vec ray_dir);
-void		paint_raygradient(mlx_image_t *img, t_scene *scene, t_vport *vp);
+
+//Render
+void		render(mlx_image_t *img, t_scene *scene, t_vport *vp);
 
 //Hitting object
-bool		hit_sphere(t_sphere *sp, t_ray ray, double *dist);
-bool		hit_plane(t_plane *plane, t_ray ray, double *dist);
 bool		hit_object(t_ray ray, t_object *obj, double *dist);
 
 //---------------------Parser----------------------------

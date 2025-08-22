@@ -42,7 +42,7 @@ Then:
 
 
 //check_shadow
-Checks if a hit_point is in shadow (not directedly lighted by point light)
+Checks if a hit_point is in shadow (i.e., blocked from the point light)
 
 logic:
 imagine a shadow ray between hit_point and light_point,
@@ -66,6 +66,24 @@ steps:
 
 logic:
 each pixel belongs to one of the three groups:
-1. background: gradient or pure color, we can decide on later
-2. object in shadow: object color + ambient light
-3. object not in shadow: object color + ambient light + point light
+1. background: gradient
+2. object in shadow: object_ambient_color
+3. object in light: object_ambient_color + object_diffuse_color
+
+
+// calculation for object_ambient_color:
+	result_color = object_color × (ambient_color / 255.0) × ambient_ratio
+
+
+//calculation for object_diffuse_color:
+	result_color = object_color × light_color × diffuse_intensity × light_brightness;
+
+	in which, diffuse_intensity = max(0.0, dot(normal, light_dir));
+		The dot product describes how "directly" the surface is facing the light source.
+		It gives the cosine of the angle between:
+			a. surface normal vector
+			b. the direction to the light source
+		- the closer the value is to 1, the more directly the surface is lit
+		- when close to 0, the surface is nearly parallel to the light direction
+		- when negative, the surface is back-facing the point light, aka shadowed by itself,
+		we take 0.0 for intensity to avoid nagetive lighting.

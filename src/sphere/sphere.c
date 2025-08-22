@@ -6,13 +6,18 @@
 /*   By: dloustal <dloustal@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/15 14:50:48 by dloustal      #+#    #+#                 */
-/*   Updated: 2025/08/15 15:14:27 by dloustal      ########   odam.nl         */
+/*   Updated: 2025/08/21 16:20:55 by dloustal      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
-bool	hit_sphere(t_sphere *sp, t_ray ray, double *dist)
+/* 
+The vector abc is to represent the variables a, b and c in the general
+solution for a quadratic equation. abc.x = a, abc.y = b, abc.z = z
+*/
+
+static bool	hit_sphere(t_sphere *sp, t_ray ray, double *dist)
 {
 	t_vec	abc;
 	double	rad;
@@ -39,7 +44,7 @@ bool	hit_sphere(t_sphere *sp, t_ray ray, double *dist)
 	return (true);
 }
 
-bool	hit_plane(t_plane *plane, t_ray ray, double *dist)
+static bool	hit_plane(t_plane *plane, t_ray ray, double *dist)
 {
 	t_vec	oc;
 	double	denominator;

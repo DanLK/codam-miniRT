@@ -6,63 +6,72 @@
 /*   By: dloustal <dloustal@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/11 14:28:16 by dloustal      #+#    #+#                 */
-/*   Updated: 2025/08/15 14:18:19 by dloustal      ########   odam.nl         */
+/*   Updated: 2025/08/21 16:19:37 by dloustal      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
-int	get_rgba(int r, int g, int b, int a)
+static bool	is_in_shadow(t_coord hit_p, t_object *obj, t_coord light_p)
 {
-	return (r << 24 | g << 16 | b << 8 | a);
+	t_vec	shadow_dir;
+	t_ray	shadow_ray;
+	double	hit_obj_t;
+	double	hit_light_t;
+
+	shadow_dir = sub_vec(light_p, hit_p);
+	hit_light_t = len_vec(shadow_dir);
+	shadow_ray = set_ray(hit_p, shadow_dir);
+	while (obj)
+	{
+		if (hit_object(shadow_ray, obj, &hit_obj_t) && hit_obj_t > EPSILON
+			&& hit_obj_t < hit_light_t)
+			return (true);
+		obj = obj->next;
+	}
+	return (false);
 }
 
-// static bool	is_in_shadow(t_coord hit_p, t_object *obj, t_coord light_p)
-// {
-// 	t_vec	shadow_dir;
-// 	t_ray	shadow_ray;
-// 	double	hit_obj_t;
-// 	double	hit_light_t;
-
-// 	shadow_dir = sub_vec(light_p, hit_p);
-// 	hit_light_t = len_vec(shadow_dir);
-// 	shadow_ray = set_ray(hit_p, shadow_dir);
-// 	while (obj)
-// 	{
-// 		if (hit_object(shadow_ray, obj, &hit_obj_t) && hit_obj_t > EPSILON
-// 			&& hit_obj_t < hit_light_t)
-// 			return (true);
-// 		obj = obj->next;
-// 	}
-// 	return (false);
-// }
-
-//shows object_color for testing
-t_color	get_object_color(t_object *obj, t_scene *scene, t_ray ray, double t)
+/*
+calculate object lighting effect under one light source. 
+	for ambient light, 'intensity' = 1
+	for point light, use calculated diffuse_intensity from calc_intensity()
+*/
+t_color	calc_obj_solo(t_color obj, t_color light, double ratio, double intens)
 {
-	(void) t;
-	(void) scene;
-	(void) ray;
+	t_color	ret;
 
-	if (obj->type == SPHERE)
-		return (((t_sphere *)obj->element)->color);
-	else
-		return (((t_plane *)obj->element)->color);
+	ret.r = obj.r * light.r / 255.0 * ratio * intens;
+	ret.g = obj.g * light.g / 255.0 * ratio * intens;
+	ret.b = obj.b * light.b / 255.0 * ratio * intens;
+	return (ret);
 }
 
-// t_color	get_object_color(t_object *obj, t_scene *scene, t_ray ray, double t)
-// {
-// 	t_coord	hit_point;
+/*	
+calculate object color for hit_points.
+	- obj_cl: object original color;
+	- obj_amb: effect under ambient light only;
+	- obj_dif: effect under point light only;	
+*/
+t_color	calc_obj_color(t_object *obj, t_scene *scn, t_ray ray, double t)
+{
+	t_coord	hit_point;
+	t_color	obj_cl;
+	t_color	obj_amb;
+	t_color	obj_dif;
+	double	intens;
 
-// 	hit_point = ray_at(ray, t);
-// 	if (is_in_shadow(hit_point, scene->objects, scene->light.pos))
-// 		return (shadow_color());
-// 	else
-// 		return (none_shadow_color());
-// }
+	hit_point = ray_at(ray, t);
+	obj_cl = get_object_color();//need this function
+	obj_amb = calc_obj_solo(obj_cl, scn->ambient.color, scn->ambient.ratio, 1);
+	if (is_in_shadow(hit_point, scn->objects, scn->light.pos))
+		return (obj_amb);
+	intens = calc_intensity(hit_point, obj, scn->light.pos);
+	obj_dif = calc_obj_solo(obj_cl, scn->light.color, scn->light.ratio, intens);
+	return (sum_color(obj_amb, obj_dif));
+}
 
-//gradient
-t_color get_background_color(t_ray ray)
+t_color	calc_background_color(t_ray ray)
 {
 	t_color	color;
 	t_vec	unit_dir;
@@ -76,3 +85,16 @@ t_color get_background_color(t_ray ray)
 	color.b = (1 - a) * 255 + a * 112;
 	return (color);
 }
+
+// //testing code: shows object_color as it is
+// t_color	calc_obj_color(t_object *obj, t_scene *scn, t_ray ray, double t)
+// {
+// 	(void) t;
+// 	(void) scene;
+// 	(void) ray;
+
+// 	if (obj->type == SPHERE)
+// 		return (((t_sphere *)obj->element)->color);
+// 	else
+// 		return (((t_plane *)obj->element)->color);
+// }
