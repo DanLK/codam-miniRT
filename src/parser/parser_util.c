@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                         ::::::::           */
-/*   util.c                                              :+:    :+:           */
-/*                                                      +:+                   */
-/*   By: hogu <hogu@student.codam.nl>                  +#+                    */
-/*                                                    +#+                     */
-/*   Created: 2025/08/07 16:01:31 by hogu           #+#    #+#                */
-/*   Updated: 2025/08/07 16:01:33 by hogu           ########   odam.nl        */
+/*                                                        ::::::::            */
+/*   parser_util.c                                      :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: dloustal <dloustal@student.42.fr>            +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2025/08/07 16:01:31 by hogu          #+#    #+#                 */
+/*   Updated: 2025/08/26 14:13:35 by dloustal      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/miniRT.h"
+#include "miniRT.h"
 
 bool	check_range(double value, double min, double max)
 {
@@ -42,8 +42,8 @@ void	free_object_list(t_object *obj)
 	while (obj)
 	{
 		tmp = obj->next;
-		if (obj->element)
-			free(obj->element);
+		// if (obj->element)
+		// 	free(obj->element);
 		free(obj);
 		obj = tmp;
 	}

@@ -6,7 +6,7 @@
 /*   By: dloustal <dloustal@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/07 13:30:20 by hogu          #+#    #+#                 */
-/*   Updated: 2025/08/26 11:42:29 by dloustal      ########   odam.nl         */
+/*   Updated: 2025/08/26 14:17:01 by dloustal      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,35 +89,37 @@ typedef enum e_obj_type
 	CYLINDER
 }	t_obj_type;
 
-typedef struct s_object
-{
-	t_obj_type		type;
-	void			*element;
-	struct s_object	*next;
-}	t_object;
-
 typedef struct s_sphere
 {
-	t_coord	center;
 	double	diameter;
-	t_color	color;
 }	t_sphere;
 
 typedef struct s_plane
 {
-	t_coord	point;
 	t_vec	dir;
-	t_color	color;
 }	t_plane;
 
 typedef struct s_cylinder
 {
-	t_coord	center;
 	t_vec	dir;
 	double	diameter;
 	double	height;
-	t_color	color;
 }	t_cylinder;
+
+typedef struct s_object
+{
+	t_obj_type		type;
+	t_color			color;
+	t_coord			center;
+	union
+	{
+		t_sphere	sp;
+		t_cylinder	cy;
+		t_plane		pl;
+	};
+	// void			*element;
+	struct s_object	*next;
+}	t_object;
 
 typedef struct s_scene_status
 {
@@ -190,8 +192,8 @@ t_ray		set_ray(t_coord start, t_vec ray_dir);
 void		render(mlx_image_t *img, t_scene *scene, t_vport *vp);
 
 //Hitting object
-bool		hit_sphere(t_sphere *sp, t_ray ray, double *dist);
-bool		hit_plane(t_plane *plane, t_ray ray, double *dist);
+bool		hit_sphere(t_object *obj, t_ray ray, double *dist);
+bool		hit_plane(t_object *obj, t_ray ray, double *dist);
 bool		hit_object(t_ray ray, t_object *obj, double *dist);
 
 //---------------------Parser----------------------------

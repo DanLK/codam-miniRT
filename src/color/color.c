@@ -6,7 +6,7 @@
 /*   By: dloustal <dloustal@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/11 14:28:16 by dloustal      #+#    #+#                 */
-/*   Updated: 2025/08/21 16:19:37 by dloustal      ########   odam.nl         */
+/*   Updated: 2025/08/26 12:09:06 by dloustal      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,22 +44,8 @@ t_color	get_object_color(t_object *obj, t_scene *scene, t_ray ray, double t)
 	(void) scene;
 	(void) ray;
 
-	if (obj->type == SPHERE)
-		return (((t_sphere *)obj->element)->color);
-	else
-		return (((t_plane *)obj->element)->color);
+	return (obj->color);
 }
-
-// t_color	get_object_color(t_object *obj, t_scene *scene, t_ray ray, double t)
-// {
-// 	t_coord	hit_point;
-
-// 	hit_point = ray_at(ray, t);
-// 	if (is_in_shadow(hit_point, scene->objects, scene->light.pos))
-// 		return (shadow_color());
-// 	else
-// 		return (none_shadow_color());
-// }
 
 //gradient
 t_color get_background_color(t_ray ray)
@@ -70,7 +56,6 @@ t_color get_background_color(t_ray ray)
 
 	unit_dir = normalized(ray.dir);
 	a = 0.5 * (unit_dir.y + 1.0);
-	// a = (unit_dir.y + 0.75) / 1.5;
 	color.r = (1 - a) * 255 + a * 25;
 	color.g = (1 - a) * 255 + a * 25;
 	color.b = (1 - a) * 255 + a * 112;
