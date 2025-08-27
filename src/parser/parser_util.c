@@ -42,8 +42,6 @@ void	free_object_list(t_object *obj)
 	while (obj)
 	{
 		tmp = obj->next;
-		if (obj->element)
-			free(obj->element);
 		free(obj);
 		obj = tmp;
 	}

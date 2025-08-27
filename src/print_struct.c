@@ -6,7 +6,7 @@
 /*   By: dloustal <dloustal@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/14 12:23:50 by hogu          #+#    #+#                 */
-/*   Updated: 2025/08/21 15:54:26 by dloustal      ########   odam.nl         */
+/*   Updated: 2025/08/26 14:09:20 by dloustal      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,31 +59,28 @@ void	print_object(t_object *obj)
 	{
 		if (obj->type == SPHERE)
 		{
-			t_sphere *s = (t_sphere *)obj->element;
 			printf("Sphere:\n");
-			print_coord(s->center);
-			printf("  Diameter: %g\n", s->diameter);
-			print_color(s->color);
+			print_coord(obj->center);
+			printf("  Diameter: %g\n", obj->sp.diameter);
+			print_color(obj->color);
 			printf("\n");
 		}
 		else if (obj->type == PLANE)
 		{
-			t_plane *p = (t_plane *)obj->element;
 			printf("Plane:\n");
-			print_coord(p->point);
-			print_vector(p->dir);
-			print_color(p->color);
+			print_coord(obj->center);
+			print_vector(obj->pl.dir);
+			print_color(obj->color);
 			printf("\n");
 		}
 		else if (obj->type == CYLINDER)
 		{
-			t_cylinder *c = (t_cylinder *)obj->element;
 			printf("Cylinder:\n");
-			print_coord(c->center);
-			print_vector(c->dir);
-			printf("  Diameter: %g\n", c->diameter);
-			printf("  Height: %g\n", c->height);
-			print_color(c->color);
+			print_coord(obj->center);
+			print_vector(obj->cy.dir);
+			printf("  Diameter: %g\n", obj->cy.diameter);
+			printf("  Height: %g\n", obj->cy.height);
+			print_color(obj->color);
 			printf("\n");
 		}
 		obj = obj->next;
