@@ -87,3 +87,20 @@ each pixel belongs to one of the three groups:
 		- when close to 0, the surface is nearly parallel to the light direction
 		- when negative, the surface is back-facing the point light, aka shadowed by itself,
 		we take 0.0 for intensity to avoid nagetive lighting.
+
+
+// Finding normal vector for hit_points on cylinder:
+1. determine where is the hit_point: 1) bottom flat surface 2) top flat surface 3) curved surface
+	(note: axis points towards the top cap)
+	project the vector [from cylinder_center to hit_point] onto the cylinder's axis
+	in which,
+		t_vec v = hit_point - cylinder.center
+		proj = dot(v, cylinder.dir)
+	now we can determine hit_point position based on projection:
+		- if proj = height / 2, the hit_point is on the top cap;
+		- if proj = -height / 2 -> bottom cap;
+		- if proj is within (-height / 2 , +height / 2), the hit_point is on the curved surface
+2. determine the normal vector
+	for hit_point on the top cap: same as axis vector
+	for bottom cap: opposite to axis vector
+	for curved surface: normalized(v - proj * axis)
