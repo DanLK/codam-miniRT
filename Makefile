@@ -1,4 +1,4 @@
-vpath %.c src:src/color:src/parser:src/sphere:src/vec
+vpath %.c src:src/color:src/parser:src/hittables:src/vec
 
 NAME = miniRT
 SRC = miniRT.c \
@@ -17,7 +17,8 @@ SRC = miniRT.c \
 	  parser_util.c \
 	  parser.c \
 	  render.c \
-	  sphere.c \
+	  hits.c \
+	  cylinder.c \
 	  vec_ops.c \
 	  vec_utils.c \
 	  vec.c \

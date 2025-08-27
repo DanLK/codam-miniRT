@@ -6,7 +6,11 @@
 /*   By: dloustal <dloustal@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/11 14:28:16 by dloustal      #+#    #+#                 */
+<<<<<<< HEAD
+/*   Updated: 2025/08/26 12:09:06 by dloustal      ########   odam.nl         */
+=======
 /*   Updated: 2025/08/21 16:19:37 by dloustal      ########   odam.nl         */
+>>>>>>> main
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +83,6 @@ t_color	calc_background_color(t_ray ray)
 
 	unit_dir = normalized(ray.dir);
 	a = 0.5 * (unit_dir.y + 1.0);
-	// a = (unit_dir.y + 0.75) / 1.5;
 	color.r = (1 - a) * 255 + a * 25;
 	color.g = (1 - a) * 255 + a * 25;
 	color.b = (1 - a) * 255 + a * 112;
