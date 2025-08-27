@@ -20,14 +20,11 @@ t_coord	ray_at(t_ray ray, double t)
 	return (pos);
 }
 
-// here I deleted t_vec prim_ray_dir(t_camera cam, t_coord pixel)
-// because it is exactly the same as sub_vec(), and the latter is more universal
-
 t_ray	set_ray(t_coord start, t_vec ray_dir)
 {
 	t_ray	ray;
 
-	ray.dir = normalized(ray_dir); // so that ray.dir is always normalized
+	ray.dir = normalized(ray_dir);
 	ray.origin = start;
 	return (ray);
 }

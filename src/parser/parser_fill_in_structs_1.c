@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/miniRT.h"
+#include "miniRT.h"
 
 bool	validate_elem(t_scene *scene)
 {
@@ -92,5 +92,4 @@ bool	fill_in_light(const char *s, t_scene *scene)
 // {
 // 	t_ray	test_ray;
 // 	t_vec	test_ray_dir;
-	
 // }

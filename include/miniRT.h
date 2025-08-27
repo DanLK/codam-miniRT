@@ -6,7 +6,7 @@
 /*   By: dloustal <dloustal@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/07 13:30:20 by hogu          #+#    #+#                 */
-/*   Updated: 2025/08/27 11:48:41 by dloustal      ########   odam.nl         */
+/*   Updated: 2025/08/27 12:27:07 by dloustal      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ typedef struct s_light
 {
 	t_coord			pos;
 	double			ratio;
-	t_color			color;
+	t_color			color; // not used in mandatory part
 }	t_light;
 
 typedef enum e_obj_type
@@ -117,7 +117,10 @@ typedef struct s_object
 		t_cylinder	cy;
 		t_plane		pl;
 	};
+<<<<<<< HEAD
 	// void			*element;
+=======
+>>>>>>> main
 	struct s_object	*next;
 }	t_object;
 
@@ -174,12 +177,20 @@ double		dot(t_vec u, t_vec v);
 t_vec		cross(t_vec u, t_vec v);
 t_vec		sub_vec(t_vec u, t_vec v);
 // Utils
+<<<<<<< HEAD
 void		print_vec_name(t_vec *v, char*name);
+=======
+void		print_vec_name(t_vec *v, char *name);
+>>>>>>> main
 
 //                 Color
+t_color		calc_obj_color(t_object *obj, t_scene *scene, t_ray ray, double t);
+t_color		calc_background_color(t_ray ray);
+//color_intensity
+double		calc_intensity(t_coord hit_p, t_object *obj, t_coord light_p);
+//color_utils
 int			get_rgba(int r, int g, int b, int a);
-t_color		get_object_color(t_object *obj, t_scene *scene, t_ray ray, double t);
-t_color 	get_background_color(t_ray ray);
+t_color		sum_color(t_color cl1, t_color cl2);
 
 //viewport
 void		make_vport(t_camera cam, t_vport *viewport);
@@ -194,7 +205,10 @@ void		render(mlx_image_t *img, t_scene *scene, t_vport *vp);
 //Hitting object
 bool		hit_sphere(t_object *obj, t_ray ray, double *dist);
 bool		hit_plane(t_object *obj, t_ray ray, double *dist);
+<<<<<<< HEAD
 bool		hit_cylinder(t_object *obj, t_ray ray, double *dist);
+=======
+>>>>>>> main
 bool		hit_object(t_ray ray, t_object *obj, double *dist);
 
 //---------------------Parser----------------------------

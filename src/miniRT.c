@@ -36,8 +36,8 @@ int	main(int argc, char *argv[])
 	//parsing
 	if (argc != 2)
 		return (print_error(WRONG_ARGS, NULL), EXIT_FAILURE);
-	if (HEIGHT < 1) // I'll prepare a error_msg for this
-		return (1);
+	if (HEIGHT < 1)
+		return (print_error(OUT_RANGE, "Image height"), EXIT_FAILURE);
 	ft_bzero(&scene, sizeof(t_scene));
 	if (!parser(&scene, argv[1]))
 		return (free_object_list(scene.objects), EXIT_FAILURE);
@@ -78,5 +78,5 @@ int	main(int argc, char *argv[])
 	// free(c_botleft);
 	// free(c_topright);
  	free_object_list(scene.objects);
-	return (0);
+	return (EXIT_SUCCESS);
 }

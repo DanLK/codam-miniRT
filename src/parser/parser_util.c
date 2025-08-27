@@ -6,7 +6,7 @@
 /*   By: dloustal <dloustal@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/07 16:01:31 by hogu          #+#    #+#                 */
-/*   Updated: 2025/08/26 14:13:35 by dloustal      ########   odam.nl         */
+/*   Updated: 2025/08/27 12:29:29 by dloustal      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,6 @@ void	free_object_list(t_object *obj)
 	while (obj)
 	{
 		tmp = obj->next;
-		// if (obj->element)
-		// 	free(obj->element);
 		free(obj);
 		obj = tmp;
 	}

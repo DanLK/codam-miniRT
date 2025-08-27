@@ -6,6 +6,8 @@ SRC = miniRT.c \
 	  print_struct.c \
 	  ray.c \
 	  viewport.c \
+	  color_intensity.c \
+	  color_utils.c \
 	  color.c \
 	  parser_atod.c \
 	  parser_check_input.c \

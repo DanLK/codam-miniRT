@@ -6,11 +6,11 @@
 /*   By: dloustal <dloustal@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/14 12:23:50 by hogu          #+#    #+#                 */
-/*   Updated: 2025/08/26 14:09:20 by dloustal      ########   odam.nl         */
+/*   Updated: 2025/08/27 12:29:43 by dloustal      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/miniRT.h"
+#include "miniRT.h"
 
 void	print_color(t_color c)
 {
@@ -59,7 +59,6 @@ void	print_object(t_object *obj)
 	{
 		if (obj->type == SPHERE)
 		{
-			// t_sphere *s = (t_sphere *)obj->element;
 			printf("Sphere:\n");
 			print_coord(obj->center);
 			printf("  Diameter: %g\n", obj->sp.diameter);
@@ -68,7 +67,6 @@ void	print_object(t_object *obj)
 		}
 		else if (obj->type == PLANE)
 		{
-			// t_plane *p = (t_plane *)obj->element;
 			printf("Plane:\n");
 			print_coord(obj->center);
 			print_vector(obj->pl.dir);
@@ -77,7 +75,6 @@ void	print_object(t_object *obj)
 		}
 		else if (obj->type == CYLINDER)
 		{
-			// t_cylinder *c = (t_cylinder *)obj->element;
 			printf("Cylinder:\n");
 			print_coord(obj->center);
 			print_vector(obj->cy.dir);

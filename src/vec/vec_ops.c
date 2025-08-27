@@ -50,7 +50,7 @@ t_vec	cross(t_vec u, t_vec v)
 	return (cross);
 }
 
-t_vec	sub_vec(t_vec u, t_vec v) // new; parameters could be either t_vec or t_coord, which is very handy, thanks to your alias setting
+t_vec	sub_vec(t_vec u, t_vec v)
 {
 	t_vec	diff;
 

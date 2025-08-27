@@ -6,7 +6,7 @@
 /*   By: dloustal <dloustal@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/13 12:27:58 by hogu          #+#    #+#                 */
-/*   Updated: 2025/08/26 14:09:35 by dloustal      ########   odam.nl         */
+/*   Updated: 2025/08/27 12:29:19 by dloustal      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,12 +35,6 @@ static bool	alloc_object(t_object **obj)
 	if (!*obj)
 		return (printf("Error\n"), perror("malloc"), false);
 	(*obj)->next = NULL;
-
-	//I believe no allocation for the actual object is needed anymore
-
-	// *elem = malloc(elem_size); 
-	// if (!*elem)
-	// 	return (free(*obj), printf("Error\n"), perror("malloc"), false);
 	return (true);
 }
 
@@ -48,7 +42,6 @@ bool	fill_in_sphere(const char *s, t_scene *scene)
 {
 	char		**params;
 	t_object	*obj;
-	// t_sphere	*sp;
 	double		diameter;
 
 	if (!s || !scene)
@@ -62,7 +55,7 @@ bool	fill_in_sphere(const char *s, t_scene *scene)
 		|| !check_color(params[3], &obj->color))
 		return (free(obj), free_split(params), false);
 	if (!ft_atod(params[2], &diameter))
-		return (print_error(DOUBLE, params[2]), free(obj),
+		return (print_error(DOUBLE, params[2]), free(obj), 
 			free_split(params), false);
 	obj->sp.diameter = diameter;
 	obj->type = SPHERE;
@@ -75,7 +68,6 @@ bool	fill_in_plane(const char *s, t_scene *scene)
 {
 	char		**params;
 	t_object	*obj;
-	// t_plane		*pl;
 
 	if (!s || !scene)
 		return (false);
@@ -98,7 +90,6 @@ bool	fill_in_cylinder(const char *s, t_scene *scene)
 {
 	char		**pr;
 	t_object	*obj;
-	// t_cylinder	*cy;
 	double		diameter;
 	double		height;
 
