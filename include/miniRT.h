@@ -6,7 +6,7 @@
 /*   By: dloustal <dloustal@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/07 13:30:20 by hogu          #+#    #+#                 */
-/*   Updated: 2025/08/26 14:17:01 by dloustal      ########   odam.nl         */
+/*   Updated: 2025/08/27 11:48:41 by dloustal      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -194,6 +194,7 @@ void		render(mlx_image_t *img, t_scene *scene, t_vport *vp);
 //Hitting object
 bool		hit_sphere(t_object *obj, t_ray ray, double *dist);
 bool		hit_plane(t_object *obj, t_ray ray, double *dist);
+bool		hit_cylinder(t_object *obj, t_ray ray, double *dist);
 bool		hit_object(t_ray ray, t_object *obj, double *dist);
 
 //---------------------Parser----------------------------

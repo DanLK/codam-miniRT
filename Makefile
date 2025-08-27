@@ -16,6 +16,7 @@ SRC = miniRT.c \
 	  parser.c \
 	  render.c \
 	  hits.c \
+	  cylinder.c \
 	  vec_ops.c \
 	  vec_utils.c \
 	  vec.c \

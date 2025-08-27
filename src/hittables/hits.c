@@ -6,7 +6,7 @@
 /*   By: dloustal <dloustal@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/15 14:50:48 by dloustal      #+#    #+#                 */
-/*   Updated: 2025/08/26 15:37:38 by dloustal      ########   odam.nl         */
+/*   Updated: 2025/08/27 11:58:17 by dloustal      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,9 @@ bool	hit_sphere(t_object *obj, t_ray ray, double *dist)
 
 	rad = obj->sp.diameter / 2.0;
 	abc.x = dot(ray.dir, ray.dir);
-	abc.y = -2.0 * dot(ray.dir, sum_vec(obj->center, neg_vec_new(ray.origin)));
-	abc.z = dot(sum_vec(obj->center, neg_vec_new(ray.origin)),
-			sum_vec(obj->center, neg_vec_new(ray.origin))) - (rad * rad);
+	abc.y = -2.0 * dot(ray.dir, sub_vec(obj->center, ray.origin));
+	abc.z = dot(sub_vec(obj->center, ray.origin),
+			sub_vec(obj->center, ray.origin)) - (rad * rad);
 	discriminant = abc.y * abc.y - 4 * abc.x * abc.z;
 	if (discriminant < 0)
 		return (false);
@@ -58,38 +58,6 @@ bool	hit_plane(t_object *obj, t_ray ray, double *dist)
 	if (*dist < EPSILON)
 		return (false);
 	return (true);
-}
-
-static bool	hit_topcap(t_object *obj, t_ray ray, double *dist)
-{
-	t_coord	top_cap_center;
-	double	t;
-	double	denom;
-	t_coord	point;
-
-	top_cap_center = sub_vec(obj->center, scaled(obj->cy.dir, obj->cy.height / 2.0));
-	denom = dot(ray.dir, obj->cy.dir);
-	if (fabs(denom) < EPSILON)
-		return (false);
-	t = dot(sub_vec(top_cap_center, ray.origin), obj->cy.dir) / denom;
-	point = sum_vec(ray.origin, scaled(ray.dir, t));
-	if (len_vec(sub_vec(point, top_cap_center)) > (obj->cy.diameter) / 2.0)
-		return (false);
-	*dist = t;
-	return (true);
-}
-
-// static bool	hit_botcap(t_object *obj, t_ray ray, double *dist)
-// {
-// 	t_coord	bot_cap_center;
-
-// 	bot_cap_center = sum_vec(obj->center, scaled(obj->cy.dir, obj->cy.height / 2.0));
-// 	if (dot(ray.dir, neg_vec_new(obj->cy.dir)) == 0)
-// }
-
-bool	hit_cylinder(t_object *obj, t_ray ray, double *dist)
-{
-	return (hit_topcap(obj, ray, dist));
 }
 
 bool	hit_object(t_ray ray, t_object *obj, double *dist)
