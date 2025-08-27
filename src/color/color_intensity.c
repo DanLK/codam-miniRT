@@ -1,41 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                         ::::::::           */
-/*   color_get_intensity.c                               :+:    :+:           */
-/*                                                      +:+                   */
-/*   By: hogu <hogu@student.codam.nl>                  +#+                    */
-/*                                                    +#+                     */
-/*   Created: 2025/08/22 14:50:29 by hogu           #+#    #+#                */
-/*   Updated: 2025/08/22 14:50:30 by hogu           ########   odam.nl        */
+/*                                                        ::::::::            */
+/*   color_intensity.c                                  :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: dloustal <dloustal@student.42.fr>            +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2025/08/22 14:50:29 by hogu          #+#    #+#                 */
+/*   Updated: 2025/08/27 12:37:11 by dloustal      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
-static t_vec	get_sphere_normal(t_sphere *sp, t_coord hit_p)
+static t_vec	get_sphere_normal(t_object *obj, t_coord hit_p)
 {
-	return (normalized(sub_vec(hit_p, sp->center)));
+	return (normalized(sub_vec(hit_p, obj->center)));
 }
 
-static t_vec	get_plane_normal(t_plane *pl, t_coord hit_p)
+static t_vec	get_plane_normal(t_object *obj, t_coord hit_p)
 {
 	(void) hit_p;
-	return (pl->dir);
+	return (obj->pl.dir);
 }
 
-static t_vec	get_cylinder_normal(t_cylinder *cy, t_coord hit_p)
-{
+// static t_vec	get_cylinder_normal(t_object *obj, t_coord hit_p)
+// {
 	
-}
+// }
 
 static t_vec	get_normal(t_object *obj, t_coord hit_point)
 {
 	if (obj->type == SPHERE)
-		return (get_sphere_normal((t_sphere *)obj->element, hit_point));
+		return (get_sphere_normal(obj, hit_point));
 	if (obj->type == PLANE)
-		return (get_plane_normal((t_sphere *)obj->element, hit_point));
-	if (obj->type == CYLINDER)
-		return (get_cylinder_normal((t_sphere *)obj->element, hit_point));
+		return (get_plane_normal(obj, hit_point));
+	// if (obj->type == CYLINDER)
+	// 	return (get_cylinder_normal(obj, hit_point));
 	else
 		return (vec(0, 0, 0)); //fallback
 }

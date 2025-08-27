@@ -6,11 +6,7 @@
 /*   By: dloustal <dloustal@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/11 14:28:16 by dloustal      #+#    #+#                 */
-<<<<<<< HEAD
-/*   Updated: 2025/08/26 12:09:06 by dloustal      ########   odam.nl         */
-=======
-/*   Updated: 2025/08/21 16:19:37 by dloustal      ########   odam.nl         */
->>>>>>> main
+/*   Updated: 2025/08/27 12:38:13 by dloustal      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +62,7 @@ t_color	calc_obj_color(t_object *obj, t_scene *scn, t_ray ray, double t)
 	double	intens;
 
 	hit_point = ray_at(ray, t);
-	obj_cl = get_object_color();//need this function
+	obj_cl = obj->color;
 	obj_amb = calc_obj_solo(obj_cl, scn->ambient.color, scn->ambient.ratio, 1);
 	if (is_in_shadow(hit_point, scn->objects, scn->light.pos))
 		return (obj_amb);
