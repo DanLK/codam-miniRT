@@ -6,7 +6,7 @@
 /*   By: dloustal <dloustal@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/15 14:50:48 by dloustal      #+#    #+#                 */
-/*   Updated: 2025/08/27 12:38:50 by dloustal      ########   odam.nl         */
+/*   Updated: 2025/08/27 15:05:55 by dloustal      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,9 @@ bool	hit_sphere(t_object *obj, t_ray ray, double *dist)
 
 	rad = obj->sp.diameter / 2.0;
 	abc.x = dot(ray.dir, ray.dir);
-	abc.y = -2.0 * dot(ray.dir, sub_vec(obj->center, ray.origin));
-	abc.z = dot(sub_vec(obj->center, ray.origin),
-			sub_vec(obj->center, ray.origin)) - (rad * rad);
+	abc.y = 2.0 * dot(ray.dir, sub_vec(ray.origin, obj->center));
+	abc.z = dot(sub_vec(ray.origin, obj->center),
+			sub_vec(ray.origin, obj->center)) - (rad * rad);
 	discriminant = abc.y * abc.y - 4 * abc.x * abc.z;
 	if (discriminant < 0)
 		return (false);

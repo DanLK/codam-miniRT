@@ -6,7 +6,7 @@
 /*   By: dloustal <dloustal@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/11 14:28:16 by dloustal      #+#    #+#                 */
-/*   Updated: 2025/08/27 12:38:13 by dloustal      ########   odam.nl         */
+/*   Updated: 2025/08/27 13:00:53 by dloustal      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ t_color	calc_background_color(t_ray ray)
 	a = 0.5 * (unit_dir.y + 1.0);
 	color.r = (1 - a) * 255 + a * 25;
 	color.g = (1 - a) * 255 + a * 25;
-	color.b = (1 - a) * 255 + a * 112;
+	color.b = (1 - a) * 255 + a * 255;
 	return (color);
 }
 

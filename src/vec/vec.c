@@ -6,7 +6,7 @@
 /*   By: dloustal <dloustal@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/07 16:30:45 by dloustal      #+#    #+#                 */
-/*   Updated: 2025/08/15 12:36:29 by dloustal      ########   odam.nl         */
+/*   Updated: 2025/08/27 15:18:38 by dloustal      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ t_vec	normalized(t_vec v)
 	double	len;
 
 	len = len_vec(v);
-	if (len != 0)
+	if (len > EPSILON)
 		return (scaled(v, 1 / len));
 	else
 		return (vec(0, 0, 0)); //Not sure what to do in this error case

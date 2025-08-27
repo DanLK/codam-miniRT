@@ -6,7 +6,7 @@
 /*   By: dloustal <dloustal@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/19 13:36:40 by dloustal      #+#    #+#                 */
-/*   Updated: 2025/08/27 12:30:42 by dloustal      ########   odam.nl         */
+/*   Updated: 2025/08/27 17:09:37 by dloustal      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,8 @@ static void	paint_pixel(mlx_image_t *img, t_ray ray, t_scene *scene, int *pixel)
 		tmp = tmp->next;
 	}
 	if (closest)
-		cl = calc_obj_color(closest, scene, ray, dist);
+		// cl = calc_obj_color(closest, scene, ray, dist);
+		cl = closest->color;
 	else
 		cl = calc_background_color(ray);
 	mlx_put_pixel(img, pixel[0], pixel[1], get_rgba(cl.r, cl.g, cl.b, 255));
@@ -61,12 +62,13 @@ void	render(mlx_image_t *img, t_scene *scene, t_vport *vp)
 		i_w = 0;
 		while (i_w < (int)img->width)
 		{
-			pixel_center = sum_vec(vp->p_00, sum_vec(scaled(vp->delta_x, i_w),
-						scaled(vp->delta_y, i_h)));
+			pixel_center = sum_vec(vp->p_00, sum_vec(scaled(vp->delta_x, i_w + 0.5),
+						scaled(vp->delta_y, i_h + 0.5)));
 			ray = set_ray(scene->camera.pos,
 					sub_vec(pixel_center, scene->camera.pos));
-			pixel_coord[0] = i_h;
-			pixel_coord[1] = i_w;
+			// ray = set_ray(pixel_center, normalized(scene->camera.pos));
+			pixel_coord[0] = i_w;
+			pixel_coord[1] = i_h;
 			paint_pixel(img, ray, scene, pixel_coord);
 			// if (counter % 2048 == 0)
 			// 	print_vec(&ray.dir, "ray");
