@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/miniRT.h"
+#include "miniRT.h"
 
 bool	validate_elem(t_scene *scene)
 {
@@ -24,8 +24,8 @@ bool	validate_elem(t_scene *scene)
 		return (print_error(MISS_ELEM, "sphere"), false);
 	if (!scene->status.has_plane)
 		return (print_error(MISS_ELEM, "plane"), false);
-	if (!scene->status.has_cylinder)
-		return (print_error(MISS_ELEM, "cylinder"), false);
+	// if (!scene->status.has_cylinder)
+	// 	return (print_error(MISS_ELEM, "cylinder"), false);
 	printf("everything looks good!\n");
 	return (true);
 }
@@ -87,3 +87,9 @@ bool	fill_in_light(const char *s, t_scene *scene)
 	scene->status.has_light = true;
 	return (free_split(params), true);
 }
+
+// bool	check_light_obj_overlap(t_coord lt_pos, t_object *obj)
+// {
+// 	t_ray	test_ray;
+// 	t_vec	test_ray_dir;
+// }

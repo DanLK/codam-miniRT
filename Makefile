@@ -1,23 +1,27 @@
+vpath %.c src:src/color:src/parser:src/sphere:src/vec
+
 NAME = miniRT
 SRC = miniRT.c \
 	  print_error.c \
 	  print_struct.c \
 	  ray.c \
 	  viewport.c \
-	  color/color.c \
-	  parser/parser_ato.c \
-	  parser/parser_check_input.c \
-	  parser/parser_fill_in_structs_1.c \
-	  parser/parser_fill_in_structs_2.c \
-	  parser/parser_space_split.c \
-	  parser/parser_util.c \
-	  parser/parser.c \
-	  sphere/sphere.c \
-	  vec/vec_ops.c \
-	  vec/vec_utils.c \
-	  vec/vec.c \
+	  color_intensity.c \
+	  color_utils.c \
+	  color.c \
+	  parser_atod.c \
+	  parser_check_input.c \
+	  parser_fill_in_structs_1.c \
+	  parser_fill_in_structs_2.c \
+	  parser_space_split.c \
+	  parser_util.c \
+	  parser.c \
+	  render.c \
+	  sphere.c \
+	  vec_ops.c \
+	  vec_utils.c \
+	  vec.c \
 
-SRC_DIR = ./src
 OBJ_DIR = ./obj
 OBJ = $(SRC:%.c=$(OBJ_DIR)/%.o)
 CFLAGS += -Wall -Werror -Wextra
@@ -41,7 +45,7 @@ $(LIBMLX):
 $(NAME): $(OBJ) $(LIBFT)
 	$(CC) -o $(NAME) $(OBJ) $(LIBS) $(LIBFT) $(HEADERS)
 
-$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
+$(OBJ_DIR)/%.o: %.c
 	mkdir -p $(dir $@)
 	$(CC) $(CFLAGS) $(HEADERS) -c $< -o $@
 
