@@ -65,8 +65,8 @@ void	render(mlx_image_t *img, t_scene *scene, t_vport *vp)
 						scaled(vp->delta_y, i_h)));
 			ray = set_ray(scene->camera.pos,
 					sub_vec(pixel_center, scene->camera.pos));
-			pixel_coord[0] = i_h;
-			pixel_coord[1] = i_w;
+			pixel_coord[0] = i_w;
+			pixel_coord[1] = i_h;
 			paint_pixel(img, ray, scene, pixel_coord);
 			// if (counter % 2048 == 0)
 			// 	print_vec(&ray.dir, "ray");

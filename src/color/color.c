@@ -37,7 +37,8 @@ calculate object lighting effect under one light source.
 	for ambient light, 'intensity' = 1
 	for point light, use calculated diffuse_intensity from calc_intensity()
 */
-t_color	calc_obj_solo(t_color obj, t_color light, double ratio, double intens)
+static t_color	calc_obj_solo(t_color obj, t_color light, double ratio,
+								double intens)
 {
 	t_color	ret;
 
@@ -49,25 +50,25 @@ t_color	calc_obj_solo(t_color obj, t_color light, double ratio, double intens)
 
 /*	
 calculate object color for hit_points.
-	- obj_cl: object original color;
+	- obj->color: object's original color;
 	- obj_amb: effect under ambient light only;
 	- obj_dif: effect under point light only;	
 */
 t_color	calc_obj_color(t_object *obj, t_scene *scn, t_ray ray, double t)
 {
 	t_coord	hit_point;
-	t_color	obj_cl;
 	t_color	obj_amb;
 	t_color	obj_dif;
 	double	intens;
 
 	hit_point = ray_at(ray, t);
-	obj_cl = obj->color;
-	obj_amb = calc_obj_solo(obj_cl, scn->ambient.color, scn->ambient.ratio, 1);
+	obj_amb = calc_obj_solo(obj->color, scn->ambient.color,
+			scn->ambient.ratio, 1);
 	if (is_in_shadow(hit_point, scn->objects, scn->light.pos))
 		return (obj_amb);
 	intens = calc_intensity(hit_point, obj, scn->light.pos);
-	obj_dif = calc_obj_solo(obj_cl, scn->light.color, scn->light.ratio, intens);
+	obj_dif = calc_obj_solo(obj->color, scn->light.color, scn->light.ratio,
+			intens);
 	return (sum_color(obj_amb, obj_dif));
 }
 
@@ -85,15 +86,12 @@ t_color	calc_background_color(t_ray ray)
 	return (color);
 }
 
-// //testing code: shows object_color as it is
+// // //testing code: shows object_color as it is
 // t_color	calc_obj_color(t_object *obj, t_scene *scn, t_ray ray, double t)
 // {
 // 	(void) t;
-// 	(void) scene;
+// 	(void) scn;
 // 	(void) ray;
 
-// 	if (obj->type == SPHERE)
-// 		return (((t_sphere *)obj->element)->color);
-// 	else
-// 		return (((t_plane *)obj->element)->color);
+// 	return (obj->color);
 // }
