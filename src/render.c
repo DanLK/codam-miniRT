@@ -6,7 +6,7 @@
 /*   By: dloustal <dloustal@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/19 13:36:40 by dloustal      #+#    #+#                 */
-/*   Updated: 2025/08/27 17:09:37 by dloustal      ########   odam.nl         */
+/*   Updated: 2025/08/29 12:23:54 by dloustal      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,6 @@ void	render(mlx_image_t *img, t_scene *scene, t_vport *vp)
 						scaled(vp->delta_y, i_h + 0.5)));
 			ray = set_ray(scene->camera.pos,
 					sub_vec(pixel_center, scene->camera.pos));
-			// ray = set_ray(pixel_center, normalized(scene->camera.pos));
 			pixel_coord[0] = i_w;
 			pixel_coord[1] = i_h;
 			paint_pixel(img, ray, scene, pixel_coord);

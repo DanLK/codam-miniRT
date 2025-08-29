@@ -23,10 +23,21 @@ static t_vec	get_plane_normal(t_object *obj, t_coord hit_p)
 	return (obj->pl.dir);
 }
 
-// static t_vec	get_cylinder_normal(t_object *obj, t_coord hit_p)
-// {
-	
-// }
+/* logic see math_updated.txt */
+static t_vec	get_cylinder_normal(t_object *obj, t_coord hit_p)
+{
+	t_vec	v;
+	double	proj;
+
+	v = sub_vec(hit_p, obj->center);
+	proj = dot(v, obj->cy.dir);
+	if (check_equal(proj, obj->cy.height / 2))
+		return (obj->cy.dir);
+	if (check_equal(proj, -obj->cy.height / 2))
+		return (neg_vec_new(obj->cy.dir));
+	else
+		return (normalized(sub_vec(v, scaled(obj->cy.dir, proj))));
+}
 
 static t_vec	get_normal(t_object *obj, t_coord hit_point)
 {
@@ -34,10 +45,10 @@ static t_vec	get_normal(t_object *obj, t_coord hit_point)
 		return (get_sphere_normal(obj, hit_point));
 	if (obj->type == PLANE)
 		return (get_plane_normal(obj, hit_point));
-	// if (obj->type == CYLINDER)
-	// 	return (get_cylinder_normal(obj, hit_point));
+	if (obj->type == CYLINDER)
+		return (get_cylinder_normal(obj, hit_point));
 	else
-		return (vec(0, 0, 0)); //fallback
+		return (vec(0, 0, 0));
 }
 
 /*

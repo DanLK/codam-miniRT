@@ -55,7 +55,7 @@ bool	fill_in_sphere(const char *s, t_scene *scene)
 		|| !check_color(params[3], &obj->color))
 		return (free(obj), free_split(params), false);
 	if (!ft_atod(params[2], &diameter))
-		return (print_error(DOUBLE, params[2]), free(obj), 
+		return (print_error(DOUBLE, params[2]), free(obj),
 			free_split(params), false);
 	obj->sp.diameter = diameter;
 	obj->type = SPHERE;
