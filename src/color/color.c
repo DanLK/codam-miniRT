@@ -37,7 +37,8 @@ calculate object lighting effect under one light source.
 	for ambient light, 'intensity' = 1
 	for point light, use calculated diffuse_intensity from calc_intensity()
 */
-t_color	calc_obj_solo(t_color obj, t_color light, double ratio, double intens)
+static t_color	calc_obj_solo(t_color obj, t_color light, double ratio,
+								double intens)
 {
 	t_color	ret;
 
@@ -61,11 +62,13 @@ t_color	calc_obj_color(t_object *obj, t_scene *scn, t_ray ray, double t)
 	double	intens;
 
 	hit_point = ray_at(ray, t);
-	obj_amb = calc_obj_solo(obj->color, scn->ambient.color, scn->ambient.ratio, 1);
+	obj_amb = calc_obj_solo(obj->color, scn->ambient.color,
+			scn->ambient.ratio, 1);
 	if (is_in_shadow(hit_point, scn->objects, scn->light.pos))
 		return (obj_amb);
 	intens = calc_intensity(hit_point, obj, scn->light.pos);
-	obj_dif = calc_obj_solo(obj->color, scn->light.color, scn->light.ratio, intens);
+	obj_dif = calc_obj_solo(obj->color, scn->light.color, scn->light.ratio,
+			intens);
 	return (sum_color(obj_amb, obj_dif));
 }
 

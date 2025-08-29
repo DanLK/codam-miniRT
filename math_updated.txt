@@ -41,6 +41,64 @@ Then:
 9. ray_vector = normalize(pixel_pos - camera_position)
 
 
+//hitting cylinder
+It is difficult to abstract a cylinder into one single intersection model.
+A ray can hit the cylinder in one of three parts:
+1. curved side surface
+2. top cap (pointed to by axis)
+3. bottom cap
+
+For curved surface:
+	O = ray.origin
+	D = ray.dir
+	C = cy.center
+	V = cy.dir
+
+1. hit_point = ray.origin + ray.dir * t = O + tD
+2. create a vector m from hit_point to cylinder_center
+	m = C - (O + tD)
+3. get vector n from hit_point to axis, by subtracting m's projection on axis from m
+	n = m - dot(m, V) * V
+
+Summing up:
+	n = (O - C + tD) - dot(O - C + tD, V) * V
+
+	now let:
+	w = O - C
+	a = D - dot(D, V) * V
+	b = w - dot(w, V) * V
+
+	we get n = b + ta
+
+4. length of n should be radius
+	solve: (b + ta) ^ 2 = r ^ 2, the proces is similar to hit_sphere
+
+5. check if hit_point is in between 2 caps
+	-h / 2 <= dot(P - C, V) <= h / 2
+
+For each cap:
+1. determine a. t_coord cap_center, b. t_vec normal
+2. check for parallel ray:
+	- similar to hit_plane, get dot product of ray.dir and normal
+	- if close to 0, then ray is parallel to cap, no intersection for sure
+3. solve for the intersection point (if any)
+	- sub_vec(hit_point, cap_center) should be perpendicular to normal
+	- hit_point = ray.origin + ray.dir * t
+	Details in calculation:
+		O = ray.origin
+		D = ray.dir
+		C = cap_center
+		N = normal
+
+		dot(((O + tD) - C), N) = 0			=>
+		dot((O - C + tD), N) = 0			=>
+		dot(O - C, N) + dot(tD, N) = 0		=>
+		dot(O - C, N) + t * dot(D, N) = 0	=>
+		t = -dot(O - C, N) / dot(D, N)		=>
+		t = dot(C - O, N) / denom
+4. check whether hit_point lies inside the cap disk
+	distance(hit_plane, cap_center) <= radius
+
 //check_shadow
 Checks if a hit_point is in shadow (i.e., blocked from the point light)
 
