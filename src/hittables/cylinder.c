@@ -3,10 +3,10 @@
 /*                                                        ::::::::            */
 /*   cylinder.c                                         :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: dloustal <dloustal@student.42.fr>            +#+                     */
+/*   By: dloustal <marvin@42.fr>                      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/27 11:41:53 by dloustal      #+#    #+#                 */
-/*   Updated: 2025/08/29 17:52:37 by dloustal      ########   odam.nl         */
+/*   Updated: 2025/09/03 14:51:33 by dloustalot    ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,16 +48,20 @@ static bool	hit_cap(t_object *obj, t_ray ray, double *dist, char cap)
 
 static bool	in_bounds(t_object *obj, t_ray ray, double *dist, double t)
 {
-	double	to_center;
+	t_coord	hit_point;
+	t_vec	v; //vector from center to hitpoint
+	double	proj;//projection onto axis
 
-	to_center = dot(sum_vec(ray.origin, scaled(ray.dir, t)), obj->cy.dir);
-	if (to_center <= obj->cy.height / 2.0 && to_center >= -(obj->cy.height / 2.0))
+	hit_point = sum_vec(ray.origin, scaled(ray.dir, t));
+	v = sub_vec(hit_point, obj->center);
+	proj = dot(v, obj->cy.dir);
+
+	if (proj <= obj->cy.height / 2.0 && proj >= -(obj->cy.height / 2.0))
 	{
 		*dist = t;
 		return (true);
 	}
 	return (false);
-
 }	
 
 static bool	hit_wall(t_object *obj, t_ray ray, double *dist)
@@ -91,31 +95,37 @@ static bool	hit_wall(t_object *obj, t_ray ray, double *dist)
 		return (false);
 }
 
+/*************************************************************
+ * hit_dist stores the hit distances to:
+ * [0] - top cap
+ * [1] - bottom cap
+ * [2] - walls
+ *************************************************************/
 bool	hit_cylinder(t_object *obj, t_ray ray, double *dist)
 {
 	bool	hits_tcap;
 	bool	hits_bcap;
 	bool	hits_wall;
-	double	dtcap;
-	double	dbcap;
-	double	dwall;
+	double	hit_dist[3];
+	double	nearest;
 
-	dtcap = 0;
-	dbcap = 0;
-	dwall = 0;
-	hits_tcap = hit_cap(obj, ray, &dtcap, 't');
-	hits_bcap = hit_cap(obj, ray, &dtcap, 'b');
-	hits_wall = hit_wall(obj, ray, &dwall);
-	if (hits_tcap && hits_wall)
+	hit_dist[0] = DBL_MAX;
+	hit_dist[1] = DBL_MAX;
+	hit_dist[2] = DBL_MAX;
+	nearest = DBL_MAX;
+	hits_tcap = hit_cap(obj, ray, &hit_dist[0], 't');
+	hits_bcap = hit_cap(obj, ray, &hit_dist[1], 'b');
+	hits_wall = hit_wall(obj, ray, &hit_dist[2]);
+	if (hits_tcap && hit_dist[0] > EPSILON)
+		nearest = fmin(nearest, hit_dist[0]);
+	if (hits_bcap && hit_dist[1] > EPSILON)
+		nearest = fmin(nearest, hit_dist[1]);
+	if (hits_wall && hit_dist[2] > EPSILON)
+		nearest = fmin(nearest, hit_dist[2]);
+	if (nearest < DBL_MAX)
 	{
-		*dist = fmin(dtcap, dwall);
+		*dist = nearest;
 		return (true);
 	}
-	else if (hits_wall)
-	{
-		*dist = dwall;
-		return (true);
-	}
-
 	return (false);
 }
