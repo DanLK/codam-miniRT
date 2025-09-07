@@ -12,10 +12,11 @@
 
 #ifndef MINIRT_H
 # define MINIRT_H
-# define WIDTH 2048
+# define WIDTH 1024
 # define RATIO (4.0 / 3.0)
 # define HEIGHT (int)(WIDTH / RATIO)
 # define EPSILON 1e-8
+
 # include "libft.h"
 # include "MLX42/MLX42.h"
 # include <unistd.h>
@@ -79,7 +80,7 @@ typedef struct s_light
 {
 	t_coord			pos;
 	double			ratio;
-	t_color			color; // not used in mandatory part
+	t_color			color;
 }	t_light;
 
 typedef enum e_obj_type
@@ -94,9 +95,17 @@ typedef struct s_sphere
 	double	diameter;
 }	t_sphere;
 
+typedef struct s_basis
+{
+	t_vec	x_axis;
+	t_vec	y_axis;
+	bool	ready;
+}	t_basis;
+
 typedef struct s_plane
 {
 	t_vec	dir;
+	t_basis	basis;
 }	t_plane;
 
 typedef struct s_cylinder
@@ -104,12 +113,14 @@ typedef struct s_cylinder
 	t_vec	dir;
 	double	diameter;
 	double	height;
+	t_basis	basis;
 }	t_cylinder;
 
 typedef struct s_object
 {
 	t_obj_type		type;
 	t_color			color;
+	bool			is_chkb;
 	t_coord			center;
 	union
 	{
@@ -153,7 +164,15 @@ typedef enum e_error_code
 	DIGITS_ONLY,
 	DUP_ELEM,
 	MISS_ELEM,
+	INVALID_CHKB
 }	t_error_code;
+
+typedef enum e_cy_position
+{
+	TOP_CAP,
+	BOTTOM_CAP,
+	CURVED_SURFACE
+}	t_cy_position;
 
 //                 Vec
 // Main
@@ -178,11 +197,20 @@ void		print_vec_name(t_vec *v, char *name);
 //                 Color
 t_color		calc_obj_color(t_object *obj, t_scene *scene, t_ray ray, double t);
 t_color		calc_background_color(t_ray ray);
+
 //color_intensity
+t_vec		get_sphere_normal(t_object *obj, t_coord hit_p);
+int			find_point_on_cylinder(t_object *obj, t_coord hit_p, t_vec *v,
+				double *proj);
 double		calc_intensity(t_coord hit_p, t_object *obj, t_coord light_p);
+
 //color_utils
 int			get_rgba(int r, int g, int b, int a);
 t_color		sum_color(t_color cl1, t_color cl2);
+t_color		calc_background_color(t_ray ray);
+t_color		calc_obj_solo(t_color obj, t_color light, double ratio,
+				double intens);
+bool		is_in_shadow(t_coord hit_p, t_object *obj, t_coord light_p);
 
 //viewport
 void		make_vport(t_camera cam, t_vport *viewport);
@@ -240,5 +268,23 @@ void		free_object_list(t_object *obj);
 
 //print_error
 void		print_error(int code, const char *s);
+
+# ifdef BONUS
+
+#  define CHKB_COLS 10
+#  define CHKB_ROWS 10
+
+//color
+void		set_local_basis(t_vec dir, t_basis *basis);
+void		get_local_coord(t_basis *basis, t_coord *local, t_vec v);
+t_color		cal_pl_chkb(t_object *obj, t_coord hit_p);
+t_color		cal_sp_chkb(t_object *obj, t_coord hit_p);
+t_color		cal_cy_chkb_cap(t_object *obj, t_vec v);
+t_color		cal_cy_chkb_curved_surface(t_object *obj, t_vec v, double proj);
+//parser
+bool		check_chkb(const char *str, bool *is_chkb);
+//print error
+void		print_error_bonus(int code, const char *s);
+# endif
 
 #endif

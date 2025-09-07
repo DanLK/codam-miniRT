@@ -40,7 +40,7 @@ int	main(int argc, char *argv[])
 		return (print_error(OUT_RANGE, "Image height"), EXIT_FAILURE);
 	ft_bzero(&scene, sizeof(t_scene));
 	if (!parser(&scene, argv[1]))
-		return (free_object_list(scene.objects), EXIT_FAILURE);
+		return (EXIT_FAILURE);
 	print_scene(&scene);
 
 	//mlx init

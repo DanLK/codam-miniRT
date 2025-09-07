@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   parser_fill_in_structs_2.c                         :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: dloustal <dloustal@student.42.fr>            +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2025/08/13 12:27:58 by hogu          #+#    #+#                 */
-/*   Updated: 2025/08/27 12:29:19 by dloustal      ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   parser_fill_in_structs_bonus.c                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hogu <hogu@student.codam.nl>               +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/09/03 16:22:22 by hogu              #+#    #+#             */
+/*   Updated: 2025/09/03 16:22:23 by hogu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,12 +47,14 @@ bool	fill_in_sphere(const char *s, t_scene *scene)
 	if (!s || !scene)
 		return (false);
 	params = space_split(s);
-	if (!params || !params[1] || !params[2] || !params[3] || params[4])
+	if (!params || !params[1] || !params[2] || !params[3] || !params[4]
+		|| params[5])
 		return (print_error(PARAM_COUNT, s), free_split(params), false);
 	if (!alloc_object(&obj))
 		return (free_split(params), false);
 	if (!check_coord(params[1], &obj->center)
-		|| !check_color(params[3], &obj->color))
+		|| !check_color(params[3], &obj->color)
+		|| !check_chkb(params[4], &obj->is_chkb))
 		return (free(obj), free_split(params), false);
 	if (!ft_atod(params[2], &diameter))
 		return (print_error(DOUBLE, params[2]), free(obj),
@@ -72,13 +74,15 @@ bool	fill_in_plane(const char *s, t_scene *scene)
 	if (!s || !scene)
 		return (false);
 	params = space_split(s);
-	if (!params || !params[1] || !params[2] || !params[3] || params[4])
+	if (!params || !params[1] || !params[2] || !params[3] || !params[4]
+		|| params[5])
 		return (print_error(PARAM_COUNT, s), free_split(params), false);
 	if (!alloc_object(&obj))
 		return (free_split(params), false);
 	if (!check_coord(params[1], &obj->center)
 		|| !check_vector(params[2], &(obj->pl.dir))
-		|| !check_color(params[3], &obj->color))
+		|| !check_color(params[3], &obj->color)
+		|| !check_chkb(params[4], &obj->is_chkb))
 		return (free(obj), free_split(params), false);
 	obj->type = PLANE;
 	append_object(&scene->objects, obj);
@@ -96,12 +100,14 @@ bool	fill_in_cylinder(const char *s, t_scene *scene)
 	if (!s || !scene)
 		return (false);
 	pr = space_split(s);
-	if (!pr || !pr[1] || !pr[2] || !pr[3] || !pr[4] || !pr[5] || pr[6])
+	if (!pr || !pr[1] || !pr[2] || !pr[3] || !pr[4] || !pr[5] || !pr[6]
+		|| pr[7])
 		return (print_error(PARAM_COUNT, s), free_split(pr), false);
 	if (!alloc_object(&obj))
 		return (free_split(pr), false);
-	if (!check_coord(pr[1], &obj->center) || !check_vector(pr[2], &(obj->cy.dir))
-		|| !check_color(pr[5], &obj->color))
+	if (!check_coord(pr[1], &obj->center) || !check_color(pr[5], &obj->color)
+		|| !check_vector(pr[2], &(obj->cy.dir))
+		|| !check_chkb(pr[6], &obj->is_chkb))
 		return (free(obj), free_split(pr), false);
 	if (!ft_atod(pr[3], &diameter) || !ft_atod(pr[4], &height))
 		return (print_error(DOUBLE, "diameter or height"), free(obj),

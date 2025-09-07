@@ -24,8 +24,8 @@ bool	validate_elem(t_scene *scene)
 		return (print_error(MISS_ELEM, "sphere"), false);
 	if (!scene->status.has_plane)
 		return (print_error(MISS_ELEM, "plane"), false);
-	// if (!scene->status.has_cylinder)
-	// 	return (print_error(MISS_ELEM, "cylinder"), false);
+	if (!scene->status.has_cylinder)
+		return (print_error(MISS_ELEM, "cylinder"), false);
 	printf("everything looks good!\n");
 	return (true);
 }
