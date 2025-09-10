@@ -12,28 +12,33 @@
 
 #include "miniRT.h"
 
-static t_vec	get_sphere_normal(t_object *obj, t_coord hit_p)
+t_vec	get_sphere_normal(t_object *obj, t_coord hit_p)
 {
 	return (normalized(sub_vec(hit_p, obj->center)));
 }
 
-static t_vec	get_plane_normal(t_object *obj, t_coord hit_p)
+int	find_point_on_cylinder(t_object *obj, t_coord hit_p, t_vec *v, double *proj)
 {
-	(void) hit_p;
-	return (obj->pl.dir);
+	*v = sub_vec(hit_p, obj->center);
+	*proj = dot(*v, obj->cy.dir);
+	if (check_equal(*proj, obj->cy.height / 2))
+		return (TOP_CAP);
+	if (check_equal(*proj, -obj->cy.height / 2))
+		return (BOTTOM_CAP);
+	else
+		return (CURVED_SURFACE);
 }
 
-/* logic see math_updated.txt */
 static t_vec	get_cylinder_normal(t_object *obj, t_coord hit_p)
 {
+	int		pos;
 	t_vec	v;
 	double	proj;
 
-	v = sub_vec(hit_p, obj->center);
-	proj = dot(v, obj->cy.dir);
-	if (check_equal(proj, obj->cy.height / 2))
+	pos = find_point_on_cylinder(obj, hit_p, &v, &proj);
+	if (pos == TOP_CAP)
 		return (obj->cy.dir);
-	if (check_equal(proj, -obj->cy.height / 2))
+	else if (pos == BOTTOM_CAP)
 		return (neg_vec_new(obj->cy.dir));
 	else
 		return (normalized(sub_vec(v, scaled(obj->cy.dir, proj))));
@@ -44,7 +49,7 @@ static t_vec	get_normal(t_object *obj, t_coord hit_point)
 	if (obj->type == SPHERE)
 		return (get_sphere_normal(obj, hit_point));
 	if (obj->type == PLANE)
-		return (get_plane_normal(obj, hit_point));
+		return (obj->pl.dir);
 	if (obj->type == CYLINDER)
 		return (get_cylinder_normal(obj, hit_point));
 	else

@@ -34,15 +34,3 @@ const char	*skip_spaces(const char *s)
 		s++;
 	return (s);
 }
-
-void	free_object_list(t_object *obj)
-{
-	t_object	*tmp;
-
-	while (obj)
-	{
-		tmp = obj->next;
-		free(obj);
-		obj = tmp;
-	}
-}

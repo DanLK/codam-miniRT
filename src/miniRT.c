@@ -40,7 +40,7 @@ int	main(int argc, char *argv[])
 		return (print_error(OUT_RANGE, "Image height"), EXIT_FAILURE);
 	ft_bzero(&scene, sizeof(t_scene));
 	if (!parser(&scene, argv[1]))
-		return (free_object_list(scene.objects), EXIT_FAILURE);
+		return (EXIT_FAILURE);
 	print_scene(&scene);
 
 	//mlx init
@@ -49,6 +49,7 @@ int	main(int argc, char *argv[])
 	{
 		ft_putstr_fd((char *)mlx_strerror(mlx_errno), STDERR_FILENO);
 		free_object_list(scene.objects);
+		free_light_list(scene.light);
 		return (EXIT_FAILURE);
 	}
 	printf("Welcome to our miniRT\n");
@@ -57,6 +58,7 @@ int	main(int argc, char *argv[])
 	{
 		ft_putstr_fd((char *)mlx_strerror(mlx_errno), STDERR_FILENO);
 		free_object_list(scene.objects);
+		free_light_list(scene.light);
 		mlx_terminate(mlx);
 		return (EXIT_FAILURE);
 	}
@@ -78,5 +80,6 @@ int	main(int argc, char *argv[])
 	// free(c_botleft);
 	// free(c_topright);
  	free_object_list(scene.objects);
+	free_light_list(scene.light);
 	return (EXIT_SUCCESS);
 }

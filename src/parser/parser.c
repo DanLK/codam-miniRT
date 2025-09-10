@@ -86,10 +86,12 @@ bool	parser(t_scene *scene, const char *filename)
 	while (buffer)
 	{
 		if (!handle_line(buffer, scene))
-			return (gnl_drain(fd), free_object_list(scene->objects), false);
+			return (gnl_drain(fd), free_object_list(scene->objects),
+				free_light_list(scene->light), false);
 		buffer = get_next_line(fd);
 	}
 	if (!validate_elem(scene))
-		return (gnl_drain(fd), free_object_list(scene->objects), false);
+		return (gnl_drain(fd), free_object_list(scene->objects), 
+			free_light_list(scene->light), false);
 	return (close(fd), true);
 }

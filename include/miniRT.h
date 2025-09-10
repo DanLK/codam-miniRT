@@ -12,10 +12,11 @@
 
 #ifndef MINIRT_H
 # define MINIRT_H
-# define WIDTH 2048
+# define WIDTH 1024
 # define RATIO (4.0 / 3.0)
 # define HEIGHT (int)(WIDTH / RATIO)
 # define EPSILON 1e-8
+
 # include "libft.h"
 # include "MLX42/MLX42.h"
 # include <unistd.h>
@@ -79,7 +80,8 @@ typedef struct s_light
 {
 	t_coord			pos;
 	double			ratio;
-	t_color			color; // not used in mandatory part
+	t_color			color;
+	struct	s_light	*next;
 }	t_light;
 
 typedef enum e_obj_type
@@ -94,9 +96,17 @@ typedef struct s_sphere
 	double	diameter;
 }	t_sphere;
 
+typedef struct s_basis
+{
+	t_vec	x_axis;
+	t_vec	y_axis;
+	bool	ready;
+}	t_basis;
+
 typedef struct s_plane
 {
 	t_vec	dir;
+	t_basis	basis;
 }	t_plane;
 
 typedef struct s_cylinder
@@ -104,12 +114,15 @@ typedef struct s_cylinder
 	t_vec	dir;
 	double	diameter;
 	double	height;
+	t_basis	basis;
 }	t_cylinder;
 
 typedef struct s_object
 {
 	t_obj_type		type;
 	t_color			color;
+	bool			is_chkb;
+	t_color			show_color;
 	t_coord			center;
 	union
 	{
@@ -134,7 +147,7 @@ typedef struct s_scene
 {
 	t_ambient		ambient;
 	t_camera		camera;
-	t_light			light;
+	t_light			*light;
 	t_object		*objects;
 	t_scene_status	status;
 }	t_scene;
@@ -153,7 +166,16 @@ typedef enum e_error_code
 	DIGITS_ONLY,
 	DUP_ELEM,
 	MISS_ELEM,
+	INVALID_CHKB
 }	t_error_code;
+
+typedef enum e_cy_position
+{
+	TOP_CAP,
+	BOTTOM_CAP,
+	CURVED_SURFACE
+}	t_cy_position;
+
 
 //                 Vec
 // Main
@@ -177,12 +199,23 @@ void		print_vec_name(t_vec *v, char *name);
 
 //                 Color
 t_color		calc_obj_color(t_object *obj, t_scene *scene, t_ray ray, double t);
-t_color		calc_background_color(t_ray ray);
+
+//color_cal_lights
+t_color		calc_obj_solo(t_color obj, t_color light, double ratio,
+				double intens);
+t_color		cal_diffuse(t_scene *scn, t_coord hit_p, t_object *obj,
+				bool *in_shadow);
+
 //color_intensity
+t_vec		get_sphere_normal(t_object *obj, t_coord hit_p);
+int			find_point_on_cylinder(t_object *obj, t_coord hit_p, t_vec *v,
+				double *proj);
 double		calc_intensity(t_coord hit_p, t_object *obj, t_coord light_p);
+
 //color_utils
 int			get_rgba(int r, int g, int b, int a);
 t_color		sum_color(t_color cl1, t_color cl2);
+t_color		calc_background_color(t_ray ray);
 
 //viewport
 void		make_vport(t_camera cam, t_vport *viewport);
@@ -227,6 +260,12 @@ bool		fill_in_sphere(const char *s, t_scene *scene);
 bool		fill_in_plane(const char *s, t_scene *scene);
 bool		fill_in_cylinder(const char *s, t_scene *scene);
 
+//parser_list_manager
+void		append_light(t_light **list, t_light *new);
+void		append_object(t_object **list, t_object *new);
+void		free_light_list(t_light *light);
+void		free_object_list(t_object *obj);
+
 //parser_space_split
 void		free_split(char **split);
 char		**space_split(char const *s);
@@ -236,7 +275,6 @@ bool		check_range(double value, double min, double max);
 bool		check_equal(double value, double target);
 const char	*skip_spaces(const char *s);
 bool		ft_isspace(char c);
-void		free_object_list(t_object *obj);
 
 //print_error
 void		print_error(int code, const char *s);

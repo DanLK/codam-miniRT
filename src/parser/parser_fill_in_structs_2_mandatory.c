@@ -12,23 +12,6 @@
 
 #include "miniRT.h"
 
-static void	append_object(t_object **list, t_object *new)
-{
-	t_object	*cur;
-
-	if (!list || !new)
-		return ;
-	if (!*list)
-	{
-		*list = new;
-		return ;
-	}
-	cur = *list;
-	while (cur->next)
-		cur = cur->next;
-	cur->next = new;
-}
-
 static bool	alloc_object(t_object **obj)
 {
 	*obj = (t_object *)malloc(sizeof(t_object));
@@ -100,8 +83,8 @@ bool	fill_in_cylinder(const char *s, t_scene *scene)
 		return (print_error(PARAM_COUNT, s), free_split(pr), false);
 	if (!alloc_object(&obj))
 		return (free_split(pr), false);
-	if (!check_coord(pr[1], &obj->center) || !check_vector(pr[2], &(obj->cy.dir))
-		|| !check_color(pr[5], &obj->color))
+	if (!check_coord(pr[1], &obj->center) || !check_color(pr[5], &obj->color)
+		|| !check_vector(pr[2], &(obj->cy.dir)))
 		return (free(obj), free_split(pr), false);
 	if (!ft_atod(pr[3], &diameter) || !ft_atod(pr[4], &height))
 		return (print_error(DOUBLE, "diameter or height"), free(obj),

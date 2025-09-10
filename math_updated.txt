@@ -162,3 +162,66 @@ each pixel belongs to one of the three groups:
 	for hit_point on the top cap: same as axis vector
 	for bottom cap: opposite to axis vector
 	for curved surface: normalized(v - proj * axis)
+
+
+//bonus: checkerboard color
+To add checkekboard effect with minimal change to the existing code,
+get_chkb_color() will return either object's original color (as defined in .rt scene),
+or white, based on the hit point's position.
+
+In .rt file, each object must explicitly specify whether the checkerboard pattern should be applied.
+This is indicated by a string “True” or “False” immediately following the object's RGB color definition.
+
+1. project hit_p to object local coordinate system
+	a. create local coordinate
+		For sphere, there's no need for a local coordinate system.
+			- because it is naturally symmetrical, just use world coordinate system.
+
+		For plane, local coordinate is a local 2D plane  => set_local_basis()
+			z_axis = normal vector at the hit point (use get_normal())
+			x_axis = normalized(cross(z_axis, world_up))
+			y_axis = cross(z_axis, x_axis)
+
+		For cylinder, take its cap as a plane.  => set_local_basis()
+
+2. determine color
+	a. For sphere, consider longtitude and latitude: => cal_sp_chkb()
+
+		Step 1: compute the "normal vector", from sphere center to hit_point.
+
+		Step 2: compute longtitude
+		longtitude describes how far the direction has rotated around the y-axis,
+		starting from x-positive direction.
+
+		in code:
+			longt = atan2(dir.z, dir.x)			//[-π, π]
+			u = (longt + π) / (2 * π)			//map to [0,1]
+		
+		Step3: compute latitude
+		latitude describes how far the direction is from the y-axis.
+
+		in code:
+			latit = acos(dir.y)					//[0, π]
+			v = latit / π						//map to [0,1]
+
+		Step 4: determine which color to return => coord_to_color()
+		For easier calculation, we set the checkerboard pattern with 10 columns and 10 rows.
+
+		int iu = (int)(u * 10)
+		int iv = (int)(v * 10)
+		if ((iu + iv) % 2 == 0)
+			return base_color;
+		else
+			return white_color;
+		
+	b. For plane, find the hit point's position in the local coordinate system => cal_pl_chkb()
+
+		Step 1: compute the vector from plane center to the hit point
+		Step 2: project this vector to local x-axis and local y-axis respectively,
+			and find the hit point's coordinates in the local basis.
+		Step 3: Use floor() to divide all possible hit points into 2 groups, by summing up
+			its local.x and local.y values, and see if it is even or not.
+
+	c. For cylinder
+		Step 1: determine hit point's location. use find_point_on_cylinder()
+		Step 2: for hit_points on the curved surface => cal_cy_chkb_curved_surface()

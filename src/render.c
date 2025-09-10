@@ -33,7 +33,7 @@ static void	paint_pixel(mlx_image_t *img, t_ray ray, t_scene *scene, int *pixel)
 		tmp = tmp->next;
 	}
 	if (closest)
-		cl = calc_obj_color(closest, scene, ray, dist);
+		cl = calc_obj_color(closest, scene, ray, dist_min);
 	else
 		cl = calc_background_color(ray);
 	mlx_put_pixel(img, pixel[0], pixel[1], get_rgba(cl.r, cl.g, cl.b, 255));

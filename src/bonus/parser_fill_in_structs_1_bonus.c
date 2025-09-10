@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "miniRT.h"
+#include "miniRT_bonus.h"
 
 bool	validate_elem(t_scene *scene)
 {
@@ -24,8 +24,8 @@ bool	validate_elem(t_scene *scene)
 		return (print_error(MISS_ELEM, "sphere"), false);
 	if (!scene->status.has_plane)
 		return (print_error(MISS_ELEM, "plane"), false);
-	// if (!scene->status.has_cylinder)
-	// 	return (print_error(MISS_ELEM, "cylinder"), false);
+	if (!scene->status.has_cylinder)
+		return (print_error(MISS_ELEM, "cylinder"), false);
 	printf("everything looks good!\n");
 	return (true);
 }
@@ -69,27 +69,32 @@ bool	fill_in_camera(const char *s, t_scene *scene)
 	return (free_split(params), true);
 }
 
+static bool	alloc_light(t_light **light)
+{
+	*light = (t_light *)malloc(sizeof(t_light));
+	if (!light)
+		return (printf("Error\n"), perror("malloc"), false);
+	(*light)->next = NULL;
+	return (true);
+}
+
 bool	fill_in_light(const char *s, t_scene *scene)
 {
 	char	**params;
+	t_light	*light;
 
 	if (!s || !scene)
 		return (false);
-	if (scene->status.has_light)
-		return (print_error(DUP_ELEM, "light"), false);
 	params = space_split(s);
 	if (!params || !params[1] || !params[2] || !params[3] || params[4])
 		return (print_error(PARAM_COUNT, s), free_split(params), false);
-	if (!check_coord(params[1], &scene->light.pos)
-		|| !check_ratio(params[2], &scene->light.ratio)
-		|| !check_color(params[3], &scene->light.color))
+	if (!alloc_light(&light))
 		return (free_split(params), false);
+	if (!check_coord(params[1], &light->pos)
+		|| !check_ratio(params[2], &light->ratio)
+		|| !check_color(params[3], &light->color))
+		return (free(light), free_split(params), false);
+	append_light(&scene->light, light);
 	scene->status.has_light = true;
 	return (free_split(params), true);
 }
-
-// bool	check_light_obj_overlap(t_coord lt_pos, t_object *obj)
-// {
-// 	t_ray	test_ray;
-// 	t_vec	test_ray_dir;
-// }
