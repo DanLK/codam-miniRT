@@ -6,7 +6,7 @@
 /*   By: dloustal <dloustal@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/12 15:52:00 by hogu          #+#    #+#                 */
-/*   Updated: 2025/09/11 12:22:29 by dloustal      ########   odam.nl         */
+/*   Updated: 2025/09/11 13:09:13 by dloustal      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,10 @@ bool	validate_elem(t_scene *scene)
 		return (print_error(MISS_ELEM, "camera"), false);
 	if (!scene->status.has_light)
 		return (print_error(MISS_ELEM, "light"), false);
-	if (!scene->status.has_sphere)
-		return (print_error(MISS_ELEM, "sphere"), false);
-	if (!scene->status.has_plane)
-		return (print_error(MISS_ELEM, "plane"), false);
+	// if (!scene->status.has_sphere)
+	// 	return (print_error(MISS_ELEM, "sphere"), false);
+	// if (!scene->status.has_plane)
+	// 	return (print_error(MISS_ELEM, "plane"), false);
 	// if (!scene->status.has_cylinder)
 	// 	return (print_error(MISS_ELEM, "cylinder"), false);
 	printf("everything looks good!\n");

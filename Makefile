@@ -50,17 +50,19 @@ CFLAGS += -Wall -Werror -Wextra
 MLX42_REPO = https://github.com/codam-coding-college/MLX42.git
 LIBMLX = ./MLX42
 
-HEADERS = -Iinclude -I$(LIBFT_DIR) -I $(LIBMLX)/include
 LIBS := $(LIBMLX)/build/libmlx42.a -lm -ldl -lglfw -pthread
 LIBFT_DIR = ./libft
 LIBFT = $(LIBFT_DIR)/libft.a
+HEADERS = -Iinclude -I$(LIBFT_DIR) -I $(LIBMLX)/include
 
 all: libmlx42 $(NAME)
 
 bonus: CFLAGS += -DBONUS
 bonus: libmlx42 $(BONUS_NAME)
 
-libmlx42: $(LIBMLX)
+libmlx42: $(LIBMLX)/build/libmlx42.a
+
+$(LIBMLX)/build/libmlx42.a: $(LIBMLX)
 	@cmake $(LIBMLX) -B $(LIBMLX)/build && make -C $(LIBMLX)/build -j4
 
 $(LIBMLX):
