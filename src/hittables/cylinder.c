@@ -70,7 +70,8 @@ static bool	in_bounds(t_object *obj, t_ray ray, double *dist, double t)
 	return (false);
 }
 
-bool	quadratic_check(double coef[3], t_object *obj, t_ray ray, double *dist)
+static bool	quadratic_check(double coef[3], t_object *obj, t_ray ray,
+		double *dist)
 {
 	double	disc;
 	double	t0;

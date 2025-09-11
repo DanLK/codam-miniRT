@@ -273,7 +273,5 @@ bool		hit_object(t_ray ray, t_object *obj, double *dist);
 //cylinder
 bool		hit_wall(t_object *obj, t_ray ray, double *dist);
 bool		hit_cap(t_object *obj, t_ray ray, double *dist, char cap);
-bool		quadratic_check(double coef[3], t_object *obj, t_ray ray,
-				double *dist);
 
 #endif
