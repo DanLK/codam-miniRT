@@ -17,6 +17,7 @@ static bool	alloc_object(t_object **obj)
 	*obj = (t_object *)malloc(sizeof(t_object));
 	if (!*obj)
 		return (printf("Error\n"), perror("malloc"), false);
+	ft_bzero(*obj, sizeof(t_object));
 	(*obj)->next = NULL;
 	return (true);
 }

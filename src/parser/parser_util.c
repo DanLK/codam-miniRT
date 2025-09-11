@@ -22,15 +22,24 @@ bool	check_equal(double value, double target)
 	return (fabs(value - target) < EPSILON);
 }
 
-bool	ft_isspace(char c)
-{
-	return (c == ' ' || c == '\f' || c == '\n'
-		|| c == '\r' || c == '\t' || c == '\v');
-}
-
 const char	*skip_spaces(const char *s)
 {
 	while (*s && ft_isspace(*s))
 		s++;
 	return (s);
+}
+
+void	free_split(char **split)
+{
+	int	i;
+
+	if (!split)
+		return ;
+	i = 0;
+	while (split[i])
+	{
+		free(split[i]);
+		i++;
+	}
+	free(split);
 }

@@ -72,8 +72,9 @@ bool	fill_in_camera(const char *s, t_scene *scene)
 static bool	alloc_light(t_light **light)
 {
 	*light = (t_light *)malloc(sizeof(t_light));
-	if (!light)
+	if (!*light)
 		return (printf("Error\n"), perror("malloc"), false);
+	ft_bzero(*light, sizeof(t_light));
 	(*light)->next = NULL;
 	return (true);
 }

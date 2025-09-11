@@ -274,7 +274,6 @@ char		**space_split(char const *s);
 bool		check_range(double value, double min, double max);
 bool		check_equal(double value, double target);
 const char	*skip_spaces(const char *s);
-bool		ft_isspace(char c);
 
 //print_error
 void		print_error(int code, const char *s);

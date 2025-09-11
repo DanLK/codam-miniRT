@@ -41,7 +41,7 @@ int	main(int argc, char *argv[])
 	ft_bzero(&scene, sizeof(t_scene));
 	if (!parser(&scene, argv[1]))
 		return (EXIT_FAILURE);
-	print_scene(&scene);
+	// print_scene(&scene);
 
 	//mlx init
 	mlx = mlx_init(WIDTH, HEIGHT, "MiniRT", true);

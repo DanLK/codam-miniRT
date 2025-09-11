@@ -52,6 +52,8 @@ static bool	handle_line(char *buffer, t_scene *scene)
 		return (printf("Error\n"), perror("malloc"), false);
 	if (trimmed[0] == '\0')
 		return (free(trimmed), true);
+	if (trimmed[0] == '#')
+		return (free(trimmed), true);
 	if (!get_params(trimmed, scene))
 		return (free(trimmed), false);
 	return (free(trimmed), true);
