@@ -13,8 +13,7 @@
 #ifndef MINIRT_H
 # define MINIRT_H
 # define WIDTH 1024
-# define RATIO (4.0 / 3.0)
-# define HEIGHT (int)(WIDTH / RATIO)
+# define HEIGHT 768
 # define EPSILON 1e-8
 
 # include "libft.h"
@@ -81,7 +80,7 @@ typedef struct s_light
 	t_coord			pos;
 	double			ratio;
 	t_color			color;
-	struct	s_light	*next;
+	struct s_light	*next;
 }	t_light;
 
 typedef enum e_obj_type
@@ -138,9 +137,6 @@ typedef struct s_scene_status
 	bool	has_ambient;
 	bool	has_camera;
 	bool	has_light;
-	bool	has_sphere;
-	bool	has_plane;
-	bool	has_cylinder;
 }	t_scene_status;
 
 typedef struct s_scene
@@ -173,72 +169,24 @@ typedef enum e_cy_position
 {
 	TOP_CAP,
 	BOTTOM_CAP,
-	CURVED_SURFACE
+	WALL
 }	t_cy_position;
 
-
-//                 Vec
-// Main
-t_vec		*init_vec(double x, double y, double z);
+//-----------------Vec------------------
 t_vec		vec(double x, double y, double z);
-void		neg_vec(t_vec *vec);
-t_vec		neg_vec_new(t_vec vec);
-void		scale_vec(t_vec *vec, double scalar);
-t_vec		scaled(t_vec vec, double scalar);
 double		len_vec(t_vec vec);
-void		normalize(t_vec v);
+t_vec		neg_vec(t_vec vec);
+t_vec		scaled(t_vec vec, double scalar);
 t_vec		normalized(t_vec v);
 // Operations
 t_vec		sum_vec(t_vec u, t_vec v);
-t_vec		*sum_vec_new(t_vec u, t_vec v);
 double		dot(t_vec u, t_vec v);
 t_vec		cross(t_vec u, t_vec v);
 t_vec		sub_vec(t_vec u, t_vec v);
-// Utils
-void		print_vec_name(t_vec *v, char *name);
-
-//                 Color
-t_color		calc_obj_color(t_object *obj, t_scene *scene, t_ray ray, double t);
-
-//color_cal_lights
-t_color		calc_obj_solo(t_color obj, t_color light, double ratio,
-				double intens);
-t_color		cal_diffuse(t_scene *scn, t_coord hit_p, t_object *obj,
-				bool *in_shadow);
-
-//color_intensity
-t_vec		get_sphere_normal(t_object *obj, t_coord hit_p);
-int			find_point_on_cylinder(t_object *obj, t_coord hit_p, t_vec *v,
-				double *proj);
-double		calc_intensity(t_coord hit_p, t_object *obj, t_coord light_p);
-
-//color_utils
-int			get_rgba(int r, int g, int b, int a);
-t_color		sum_color(t_color cl1, t_color cl2);
-t_color		calc_background_color(t_ray ray);
-
-//viewport
-void		make_vport(t_camera cam, t_vport *viewport);
-
-//                 Rays
-t_coord		ray_at(t_ray ray, double t);
-t_ray		set_ray(t_coord start, t_vec ray_dir);
-
-//Render
-void		render(mlx_image_t *img, t_scene *scene, t_vport *vp);
-
-//Hitting object
-bool		hit_sphere(t_object *obj, t_ray ray, double *dist);
-bool		hit_plane(t_object *obj, t_ray ray, double *dist);
-bool		hit_cylinder(t_object *obj, t_ray ray, double *dist);
-bool		hit_object(t_ray ray, t_object *obj, double *dist);
+t_vec		reject(t_vec v, t_vec dir);
 
 //---------------------Parser----------------------------
 bool		parser(t_scene *scene, const char *filename);
-
-//print_struct
-void		print_scene(t_scene *scene);
-void		print_vport(t_vport *vp);
 
 //parser_ato
 bool		ft_atod(const char *s, double *result);
@@ -267,15 +215,65 @@ void		free_light_list(t_light *light);
 void		free_object_list(t_object *obj);
 
 //parser_space_split
-void		free_split(char **split);
 char		**space_split(char const *s);
 
 //parser_util
 bool		check_range(double value, double min, double max);
 bool		check_equal(double value, double target);
 const char	*skip_spaces(const char *s);
+void		free_split(char **split);
+void		free_scene(t_scene *scene);
 
 //print_error
 void		print_error(int code, const char *s);
+
+//-----------------for Debug------------------
+void		print_scene(t_scene *scene);
+void		print_vport(t_vport *vp);
+
+//-----------------Event------------------
+void		esc_hook(mlx_key_data_t keydata, void *param);
+void		close_hook(void *param);
+
+//-----------------Color------------------
+t_color		calc_obj_color(t_object *obj, t_scene *scene, t_ray ray, double t);
+
+//color_cal_lights
+t_color		calc_obj_solo(t_color obj, t_color light, double ratio,
+				double intens);
+t_color		cal_diffuse(t_scene *scn, t_coord hit_p, t_object *obj,
+				bool *in_shadow);
+
+//color_intensity
+t_vec		get_sphere_normal(t_object *obj, t_coord hit_p);
+int			find_point_on_cylinder(t_object *obj, t_coord hit_p, t_vec *v,
+				double *proj);
+double		calc_intensity(t_coord hit_p, t_object *obj, t_coord light_p);
+
+//color_utils
+int			get_rgba(int r, int g, int b, int a);
+t_color		sum_color(t_color cl1, t_color cl2);
+t_color		calc_background_color(t_ray ray);
+
+//-----------------Viewport------------------
+void		make_vport(t_camera cam, t_vport *viewport);
+
+//-----------------Rays------------------
+t_coord		ray_at(t_ray ray, double t);
+t_ray		set_ray(t_coord start, t_vec ray_dir);
+
+//-----------------Render------------------
+void		render(mlx_image_t *img, t_scene *scene, t_vport *vp);
+
+//-----------------Hitting------------------
+bool		hit_sphere(t_object *obj, t_ray ray, double *dist);
+bool		hit_plane(t_object *obj, t_ray ray, double *dist);
+bool		hit_cylinder(t_object *obj, t_ray ray, double *dist);
+bool		hit_object(t_ray ray, t_object *obj, double *dist);
+//cylinder
+bool		hit_wall(t_object *obj, t_ray ray, double *dist);
+bool		hit_cap(t_object *obj, t_ray ray, double *dist, char cap);
+bool		quadratic_check(double coef[3], t_object *obj, t_ray ray,
+				double *dist);
 
 #endif

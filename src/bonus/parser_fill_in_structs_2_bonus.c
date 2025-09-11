@@ -17,6 +17,7 @@ static bool	alloc_object(t_object **obj)
 	*obj = (t_object *)malloc(sizeof(t_object));
 	if (!*obj)
 		return (printf("Error\n"), perror("malloc"), false);
+	ft_bzero(*obj, sizeof(t_object));
 	(*obj)->next = NULL;
 	return (true);
 }
@@ -45,7 +46,6 @@ bool	fill_in_sphere(const char *s, t_scene *scene)
 	obj->sp.diameter = diameter;
 	obj->type = SPHERE;
 	append_object(&scene->objects, obj);
-	scene->status.has_sphere = true;
 	return (free_split(params), true);
 }
 
@@ -69,7 +69,6 @@ bool	fill_in_plane(const char *s, t_scene *scene)
 		return (free(obj), free_split(params), false);
 	obj->type = PLANE;
 	append_object(&scene->objects, obj);
-	scene->status.has_plane = true;
 	return (free_split(params), true);
 }
 
@@ -98,6 +97,5 @@ bool	fill_in_cylinder(const char *s, t_scene *scene)
 	obj->cy.diameter = diameter;
 	obj->cy.height = height;
 	obj->type = CYLINDER;
-	scene->status.has_cylinder = true;
 	return (append_object(&scene->objects, obj), free_split(pr), true);
 }

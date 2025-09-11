@@ -17,7 +17,6 @@ int	get_rgba(int r, int g, int b, int a)
 	return (r << 24 | g << 16 | b << 8 | a);
 }
 
-/* sum the effect of 2 colors and make sure it is still in valid range*/
 t_color	sum_color(t_color cl1, t_color cl2)
 {
 	t_color	ret;

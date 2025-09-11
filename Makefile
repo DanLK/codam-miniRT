@@ -4,8 +4,8 @@ NAME = miniRT
 BONUS_NAME = miniRT_bonus
 
 COMMON_SRC = miniRT.c \
+	  event.c \
 	  print_error.c \
-	  print_struct.c \
 	  ray.c \
 	  viewport.c \
 	  color_cal_lights.c \
@@ -21,7 +21,6 @@ COMMON_SRC = miniRT.c \
 	  hits.c \
 	  cylinder.c \
 	  vec_ops.c \
-	  vec_utils.c \
 	  vec.c \
 
 MANDATORY_ONLY_SRC = color_obj_mandatory.c \
