@@ -12,14 +12,14 @@
 
 #include "miniRT.h"
 
-void	free_split(char **split)
+static void	free_split_n(char **split, int n)
 {
 	int	i;
 
 	if (!split)
 		return ;
 	i = 0;
-	while (split[i])
+	while (i < n)
 	{
 		free(split[i]);
 		i++;
@@ -98,7 +98,7 @@ char	**space_split(char const *s)
 		current_len = word_len(s);
 		result[index_word] = allocate_and_copy(s, current_len);
 		if (!result[index_word])
-			return (free_split(result), NULL);
+			return (free_split_n(result, index_word), NULL);
 		s += current_len;
 		index_word++;
 	}

@@ -22,12 +22,6 @@ bool	check_equal(double value, double target)
 	return (fabs(value - target) < EPSILON);
 }
 
-bool	ft_isspace(char c)
-{
-	return (c == ' ' || c == '\f' || c == '\n'
-		|| c == '\r' || c == '\t' || c == '\v');
-}
-
 const char	*skip_spaces(const char *s)
 {
 	while (*s && ft_isspace(*s))
@@ -35,14 +29,17 @@ const char	*skip_spaces(const char *s)
 	return (s);
 }
 
-void	free_object_list(t_object *obj)
+void	free_split(char **split)
 {
-	t_object	*tmp;
+	int	i;
 
-	while (obj)
+	if (!split)
+		return ;
+	i = 0;
+	while (split[i])
 	{
-		tmp = obj->next;
-		free(obj);
-		obj = tmp;
+		free(split[i]);
+		i++;
 	}
+	free(split);
 }

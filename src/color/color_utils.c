@@ -30,3 +30,17 @@ t_color	sum_color(t_color cl1, t_color cl2)
 	ret.b = fmin(ret.b, 255);
 	return (ret);
 }
+
+t_color	calc_background_color(t_ray ray)
+{
+	t_color	color;
+	t_vec	unit_dir;
+	double	a;
+
+	unit_dir = normalized(ray.dir);
+	a = 0.5 * (unit_dir.y + 1.0);
+	color.r = (1 - a) * 255 + a * 25;
+	color.g = (1 - a) * 255 + a * 25;
+	color.b = (1 - a) * 255 + a * 112;
+	return (color);
+}

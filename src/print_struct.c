@@ -63,6 +63,7 @@ void	print_object(t_object *obj)
 			print_coord(obj->center);
 			printf("  Diameter: %g\n", obj->sp.diameter);
 			print_color(obj->color);
+			printf("is_checkerboard: %d\n", obj->is_chkb);
 			printf("\n");
 		}
 		else if (obj->type == PLANE)
@@ -71,6 +72,7 @@ void	print_object(t_object *obj)
 			print_coord(obj->center);
 			print_vector(obj->pl.dir);
 			print_color(obj->color);
+			printf("is_checkerboard: %d\n", obj->is_chkb);
 			printf("\n");
 		}
 		else if (obj->type == CYLINDER)
@@ -81,6 +83,7 @@ void	print_object(t_object *obj)
 			printf("  Diameter: %g\n", obj->cy.diameter);
 			printf("  Height: %g\n", obj->cy.height);
 			print_color(obj->color);
+			printf("is_checkerboard: %d\n", obj->is_chkb);
 			printf("\n");
 		}
 		obj = obj->next;
@@ -89,10 +92,17 @@ void	print_object(t_object *obj)
 
 void	print_scene(t_scene *scene)
 {
+	t_light	*cur;
+
 	printf("====== Scene Info ======\n");
 	print_ambient(&scene->ambient);
 	print_camera(&scene->camera);
-	print_light(&scene->light);
+	cur = scene->light;
+	while (cur)
+	{
+		print_light(cur);
+		cur = cur->next;
+	}
 	print_object(scene->objects);
 	printf("========================\n");
 }
