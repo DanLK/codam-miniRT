@@ -1,4 +1,4 @@
-vpath %.c src:src/color:src/parser:src/hittables:src/vec:src/bonus
+vpath %.c src:src/color:src/parser:src/hittables:src/vec:src/bonus:src/random
 
 NAME = miniRT
 BONUS_NAME = miniRT_bonus
@@ -23,6 +23,7 @@ COMMON_SRC = miniRT.c \
 	  vec_ops.c \
 	  vec_utils.c \
 	  vec.c \
+	  random.c
 
 MANDATORY_ONLY_SRC = color_obj_mandatory.c \
 	 		parser_fill_in_structs_1_mandatory.c \
