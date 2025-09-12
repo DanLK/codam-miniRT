@@ -6,6 +6,7 @@ BONUS_NAME = miniRT_bonus
 COMMON_SRC = miniRT.c \
 	  event.c \
 	  print_error.c \
+	  print_struct.c \
 	  ray.c \
 	  viewport.c \
 	  color_cal_lights.c \
@@ -44,7 +45,7 @@ BONUS_OBJ_DIR = ./obj_bonus
 OBJ = $(SRC:%.c=$(OBJ_DIR)/%.o)
 BONUS_OBJ = $(BONUS_SRC:%.c=$(BONUS_OBJ_DIR)/%.o)
 
-CFLAGS += -Wall -Werror -Wextra
+CFLAGS += -Wall -Werror -Wextra -fsanitize=address -g
 
 MLX42_REPO = https://github.com/codam-coding-college/MLX42.git
 LIBMLX = ./MLX42
@@ -66,10 +67,10 @@ $(LIBMLX):
 	git clone $(MLX42_REPO) $(LIBMLX)
 
 $(NAME): $(OBJ) $(LIBFT)
-	$(CC) -o $(NAME) $(OBJ) $(LIBS) $(LIBFT) $(HEADERS)
+	$(CC) $(CFLAGS) -o $(NAME) $(OBJ) $(LIBS) $(LIBFT) $(HEADERS)
 
 $(BONUS_NAME): $(BONUS_OBJ) $(LIBFT)
-	$(CC) -o $(BONUS_NAME) $(BONUS_OBJ) $(LIBS) $(LIBFT) $(HEADERS)
+	$(CC) $(CFLAGS) -o $(BONUS_NAME) $(BONUS_OBJ) $(LIBS) $(LIBFT) $(HEADERS)
 
 $(OBJ_DIR)/%.o: %.c
 	mkdir -p $(dir $@)

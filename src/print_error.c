@@ -32,9 +32,9 @@ void	print_error(int code, const char *s)
 	else if (code == OUT_RANGE)
 		printf("Number out of range: %s\n", s);
 	else if (code == VEC_NORM)
-		printf("Vector not normalized: %s\n", s);
+		printf("Zero vector cannot be normalized: %s\n", s);
 	else if (code == DIGITS_ONLY)
-		printf("Only accepts positive integers with digits: %s\n", s);
+		printf("Only accepts non-negative integers in digits: %s\n", s);
 	else if (code == DUP_ELEM)
 		printf("Duplicate element: %s\n", s);
 	else if (code == MISS_ELEM)

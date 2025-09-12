@@ -21,6 +21,7 @@ static bool	init_scene(t_scene *scene, int argc, char *argv[])
 	ft_bzero(scene, sizeof(t_scene));
 	if (!parser(scene, argv[1]))
 		return (false);
+	print_scene(scene);
 	return (true);
 }
 

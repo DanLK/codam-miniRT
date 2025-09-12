@@ -41,6 +41,9 @@ bool	fill_in_sphere(const char *s, t_scene *scene)
 	if (!ft_atod(params[2], &diameter))
 		return (print_error(DOUBLE, params[2]), free(obj),
 			free_split(params), false);
+	if (diameter < 0)
+		return (print_error(OUT_RANGE, params[2]), free(obj),
+			free_split(params), false);
 	obj->sp.diameter = diameter;
 	obj->type = SPHERE;
 	append_object(&scene->objects, obj);
@@ -70,26 +73,28 @@ bool	fill_in_plane(const char *s, t_scene *scene)
 
 bool	fill_in_cylinder(const char *s, t_scene *scene)
 {
-	char		**pr;
+	char		**p;
 	t_object	*obj;
 	double		diameter;
 	double		height;
 
 	if (!s || !scene)
 		return (false);
-	pr = space_split(s);
-	if (!pr || !pr[1] || !pr[2] || !pr[3] || !pr[4] || !pr[5] || pr[6])
-		return (print_error(PARAM_COUNT, s), free_split(pr), false);
+	p = space_split(s);
+	if (!p || !p[1] || !p[2] || !p[3] || !p[4] || !p[5] || p[6])
+		return (print_error(PARAM_COUNT, s), free_split(p), false);
 	if (!alloc_object(&obj))
-		return (free_split(pr), false);
-	if (!check_coord(pr[1], &obj->center) || !check_color(pr[5], &obj->color)
-		|| !check_vector(pr[2], &(obj->cy.dir)))
-		return (free(obj), free_split(pr), false);
-	if (!ft_atod(pr[3], &diameter) || !ft_atod(pr[4], &height))
-		return (print_error(DOUBLE, "diameter or height"), free(obj),
-			free_split(pr), false);
+		return (free_split(p), false);
+	if (!check_coord(p[1], &obj->center) || !check_color(p[5], &obj->color)
+		|| !check_vector(p[2], &(obj->cy.dir)))
+		return (free(obj), free_split(p), false);
+	if (!ft_atod(p[3], &diameter) || !ft_atod(p[4], &height))
+		return (print_error(DOUBLE, "cy:d/h"), free(obj), free_split(p), false);
+	if (diameter < 0 || height < 0)
+		return (print_error(OUT_RANGE, "cy:d/h"), free(obj),
+			free_split(p), false);
 	obj->cy.diameter = diameter;
 	obj->cy.height = height;
 	obj->type = CYLINDER;
-	return (append_object(&scene->objects, obj), free_split(pr), true);
+	return (append_object(&scene->objects, obj), free_split(p), true);
 }

@@ -90,6 +90,7 @@ bool	fill_in_light(const char *s, t_scene *scene)
 		|| !check_ratio(params[2], &light->ratio)
 		|| !check_color(params[3], &light->color))
 		return (free(light), free_split(params), false);
+	light->color = (t_color){255,255,255};
 	append_light(&scene->light, light);
 	scene->status.has_light = true;
 	return (free_split(params), true);
