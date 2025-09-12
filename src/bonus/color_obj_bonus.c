@@ -31,7 +31,7 @@ static t_color	get_chkb_color(t_object *obj, t_coord hit_p)
 		cy_pos = find_point_on_cylinder(obj, hit_p, &v, &proj);
 		if (!obj->cy.basis.ready)
 			set_local_basis(obj->cy.dir, &obj->cy.basis);
-		if (cy_pos == CURVED_SURFACE)
+		if (cy_pos == WALL)
 			return (cal_cy_chkb_curved_surface(obj, v, proj));
 		else
 			return (cal_cy_chkb_cap(obj, v));
@@ -51,7 +51,8 @@ t_color	calc_obj_color(t_object *obj, t_scene *scn, t_ray ray, double t)
 		obj->show_color = get_chkb_color(obj, hit_point);
 	else
 		obj->show_color = obj->color;
-	obj_amb = calc_obj_solo(obj->show_color, scn->ambient.color, scn->ambient.ratio, 1);
+	obj_amb = calc_obj_solo(obj->show_color, scn->ambient.color,
+			scn->ambient.ratio, 1);
 	obj_dif = cal_diffuse(scn, hit_point, obj, &in_shadow);
 	if (in_shadow)
 		return (obj_amb);

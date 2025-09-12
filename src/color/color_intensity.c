@@ -26,7 +26,7 @@ int	find_point_on_cylinder(t_object *obj, t_coord hit_p, t_vec *v, double *proj)
 	if (check_equal(*proj, -obj->cy.height / 2))
 		return (BOTTOM_CAP);
 	else
-		return (CURVED_SURFACE);
+		return (WALL);
 }
 
 static t_vec	get_cylinder_normal(t_object *obj, t_coord hit_p)
@@ -39,7 +39,7 @@ static t_vec	get_cylinder_normal(t_object *obj, t_coord hit_p)
 	if (pos == TOP_CAP)
 		return (obj->cy.dir);
 	else if (pos == BOTTOM_CAP)
-		return (neg_vec_new(obj->cy.dir));
+		return (neg_vec(obj->cy.dir));
 	else
 		return (normalized(sub_vec(v, scaled(obj->cy.dir, proj))));
 }

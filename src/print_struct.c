@@ -27,6 +27,11 @@ void	print_vector(t_vec v)
 	printf("  Vector: (%g, %g, %g)\n", v.x, v.y, v.z);
 }
 
+void	print_vec_name(t_vec *v, char *name)
+{
+	printf("%s: (%f, %f, %f)\n", name, v->x, v->y, v->z);
+}
+
 void	print_ambient(t_ambient *a)
 {
 	printf("Ambient:\n");

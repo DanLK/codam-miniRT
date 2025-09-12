@@ -28,20 +28,11 @@ t_color	calc_obj_color(t_object *obj, t_scene *scn, t_ray ray, double t)
 	in_shadow = true;
 	hit_point = ray_at(ray, t);
 	obj->show_color = obj->color;
-	obj_amb = calc_obj_solo(obj->show_color, scn->ambient.color, scn->ambient.ratio, 1);
+	obj_amb = calc_obj_solo(obj->show_color, scn->ambient.color,
+			scn->ambient.ratio, 1);
 	obj_dif = cal_diffuse(scn, hit_point, obj, &in_shadow);
 	if (in_shadow)
 		return (obj_amb);
 	else
 		return (sum_color(obj_amb, obj_dif));
 }
-
-// // //testing code: shows object_color as it is
-// t_color	calc_obj_color(t_object *obj, t_scene *scn, t_ray ray, double t)
-// {
-// 	(void) t;
-// 	(void) scn;
-// 	(void) ray;
-
-// 	return (obj->color);
-// }

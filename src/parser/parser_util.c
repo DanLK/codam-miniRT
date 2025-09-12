@@ -43,3 +43,9 @@ void	free_split(char **split)
 	}
 	free(split);
 }
+
+void	free_scene(t_scene *scene)
+{
+	free_object_list(scene->objects);
+	free_light_list(scene->light);
+}
