@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                         ::::::::           */
-/*   color_utils.c                                       :+:    :+:           */
-/*                                                      +:+                   */
-/*   By: hogu <hogu@student.codam.nl>                  +#+                    */
-/*                                                    +#+                     */
-/*   Created: 2025/08/22 15:41:46 by hogu           #+#    #+#                */
-/*   Updated: 2025/08/22 15:41:47 by hogu           ########   odam.nl        */
+/*                                                        ::::::::            */
+/*   color_utils.c                                      :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: dloustal <dloustal@student.42.fr>            +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2025/08/22 15:41:46 by hogu          #+#    #+#                 */
+/*   Updated: 2025/09/11 14:45:07 by dloustal      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ t_color	sum_color(t_color cl1, t_color cl2)
 	return (ret);
 }
 
+/* Depicts a gradient in y from blue to white*/
 t_color	calc_background_color(t_ray ray)
 {
 	t_color	color;

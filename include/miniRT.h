@@ -6,16 +6,17 @@
 /*   By: dloustal <dloustal@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/07 13:30:20 by hogu          #+#    #+#                 */
-/*   Updated: 2025/09/11 14:07:32 by dloustal      ########   odam.nl         */
+/*   Updated: 2025/09/11 15:54:32 by dloustal      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINIRT_H
 # define MINIRT_H
-# define WIDTH 1024
+# define WIDTH 2048
 # define RATIO (4.0 / 3.0)
 # define HEIGHT (int)(WIDTH / RATIO)
 # define EPSILON 1e-8
+# define SAMPLES 10
 
 # include "libft.h"
 # include "MLX42/MLX42.h"

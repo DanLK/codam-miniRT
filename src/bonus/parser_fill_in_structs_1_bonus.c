@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                         ::::::::           */
-/*   parser_fill_in_structs_1.c                          :+:    :+:           */
-/*                                                      +:+                   */
-/*   By: hogu <hogu@student.codam.nl>                  +#+                    */
-/*                                                    +#+                     */
-/*   Created: 2025/08/12 15:52:00 by hogu           #+#    #+#                */
-/*   Updated: 2025/08/12 15:52:01 by hogu           ########   odam.nl        */
+/*                                                        ::::::::            */
+/*   parser_fill_in_structs_1_bonus.c                   :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: dloustal <dloustal@student.42.fr>            +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2025/08/12 15:52:00 by hogu          #+#    #+#                 */
+/*   Updated: 2025/09/11 15:22:06 by dloustal      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,12 @@ bool	validate_elem(t_scene *scene)
 		return (print_error(MISS_ELEM, "camera"), false);
 	if (!scene->status.has_light)
 		return (print_error(MISS_ELEM, "light"), false);
-	if (!scene->status.has_sphere)
-		return (print_error(MISS_ELEM, "sphere"), false);
-	if (!scene->status.has_plane)
-		return (print_error(MISS_ELEM, "plane"), false);
-	if (!scene->status.has_cylinder)
-		return (print_error(MISS_ELEM, "cylinder"), false);
+	// if (!scene->status.has_sphere)
+	// 	return (print_error(MISS_ELEM, "sphere"), false);
+	// if (!scene->status.has_plane)
+	// 	return (print_error(MISS_ELEM, "plane"), false);
+	// if (!scene->status.has_cylinder)
+	// 	return (print_error(MISS_ELEM, "cylinder"), false);
 	printf("everything looks good!\n");
 	return (true);
 }
