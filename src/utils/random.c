@@ -6,20 +6,20 @@
 /*   By: dloustal <dloustal@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/09/11 15:58:52 by dloustal      #+#    #+#                 */
-/*   Updated: 2025/09/12 15:02:26 by dloustal      ########   odam.nl         */
+/*   Updated: 2025/09/12 15:25:14 by dloustal      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
-rand_t	*init_rng()
+t_rand	*init_rng()
 {
-	rand_t			*rng;
+	t_rand			*rng;
 	struct timeval	tv;
 	struct timezone	tz;
 	uint64_t		seed;
 
-	rng = malloc(sizeof(rand_t));
+	rng = malloc(sizeof(t_rand));
 	if (!rng)
 		return (NULL);
 	// rng->increment = 127; // the fourth Mersenne prime
@@ -33,7 +33,7 @@ rand_t	*init_rng()
 /* PCG random number generator*/
 // *Really* minimal PCG32 code / (c) 2014 M.E. O'Neill / pcg-random.org
 // Licensed under Apache License 2.0 (NO WARRANTY, etc. see website)
-uint32_t	pcg_generator(rand_t	*rng)
+uint32_t	pcg_generator(t_rand	*rng)
 {
 	uint64_t	oldstate;
 	uint32_t	xorshifted;
@@ -48,7 +48,7 @@ uint32_t	pcg_generator(rand_t	*rng)
 
 void	print_random_number()
 {
-	rand_t		*rng;
+	t_rand		*rng;
 	uint32_t	number;
 
 	rng = init_rng();
@@ -66,7 +66,7 @@ void	print_random_number()
 double	random_double(void)
 {
 	double		n;
-	rand_t		*rng;
+	t_rand		*rng;
 	uint32_t	big_num;
 	int			i;
 

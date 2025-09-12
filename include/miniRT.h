@@ -6,17 +6,17 @@
 /*   By: dloustal <dloustal@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/07 13:30:20 by hogu          #+#    #+#                 */
-/*   Updated: 2025/09/12 15:01:09 by dloustal      ########   odam.nl         */
+/*   Updated: 2025/09/12 16:43:46 by dloustal      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINIRT_H
 # define MINIRT_H
-# define WIDTH 1024
+# define WIDTH 2048
 # define RATIO (4.0 / 3.0)
 # define HEIGHT (int)(WIDTH / RATIO)
 # define EPSILON 1e-8
-# define SAMPLES 10
+# define SAMPLES 8
 
 # include "libft.h"
 # include "MLX42/MLX42.h"
@@ -154,11 +154,11 @@ typedef struct s_scene
 	t_scene_status	status;
 }	t_scene;
 
-typedef struct rand_s
+typedef struct s_rand
 {
 	uint64_t	state;
 	uint64_t	increment;
-}		rand_t;
+}		t_rand;
 
 
 typedef enum e_error_code
@@ -222,8 +222,11 @@ double		calc_intensity(t_coord hit_p, t_object *obj, t_coord light_p);
 
 //color_utils
 int			get_rgba(int r, int g, int b, int a);
+t_color		color(int r, int g, int b);
+t_color		sum_col_notinrange(t_color cl1, t_color cl2);
 t_color		sum_color(t_color cl1, t_color cl2);
 t_color		calc_background_color(t_ray ray);
+t_color		scale_col(t_color cl, double scalar);
 
 //viewport
 void		make_vport(t_camera cam, t_vport *viewport);
@@ -234,6 +237,9 @@ t_ray		set_ray(t_coord start, t_vec ray_dir);
 
 //Render
 void		render(mlx_image_t *img, t_scene *scene, t_vport *vp);
+t_ray		get_ray(int w, int h, t_vport *vp, t_scene *scene);
+t_vec		sample_square(void);
+void		render_anti_aliasing(mlx_image_t *img, t_scene *scene, t_vport *vp);
 
 //Hitting object
 bool		hit_sphere(t_object *obj, t_ray ray, double *dist);
@@ -243,13 +249,15 @@ bool		hit_object(t_ray ray, t_object *obj, double *dist);
 
 //------------------------Utils-------------------------
 // Random
-rand_t		*init_rng();
-uint32_t	pcg_generator(rand_t	*rng);
+t_rand		*init_rng();
+uint32_t	pcg_generator(t_rand	*rng);
 void		print_random_number();
 double		random_double(void);
 double		random_in(double min, double max);
 void 		print_rand_double(void);
 void 		print_rand_double_in(double min, double max);
+//Interval
+void		clamp(double *num, double min, double max);
 
 //---------------------Parser----------------------------
 bool		parser(t_scene *scene, const char *filename);

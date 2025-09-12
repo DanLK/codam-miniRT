@@ -6,13 +6,13 @@
 /*   By: dloustal <dloustal@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/19 13:36:40 by dloustal      #+#    #+#                 */
-/*   Updated: 2025/08/27 12:30:42 by dloustal      ########   odam.nl         */
+/*   Updated: 2025/09/12 16:38:05 by dloustal      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
-static void	paint_pixel(mlx_image_t *img, t_ray ray, t_scene *scene, int *pixel)
+static t_color	get_color(t_ray ray, t_scene *scene)
 {
 	t_object	*tmp;
 	t_object	*closest;
@@ -36,8 +36,10 @@ static void	paint_pixel(mlx_image_t *img, t_ray ray, t_scene *scene, int *pixel)
 		cl = calc_obj_color(closest, scene, ray, dist_min);
 	else
 		cl = calc_background_color(ray);
-	mlx_put_pixel(img, pixel[0], pixel[1], get_rgba(cl.r, cl.g, cl.b, 255));
+	return (cl);
+	// mlx_put_pixel(img, pixel[0], pixel[1], get_rgba(cl.r, cl.g, cl.b, 255));
 }
+
 
 /*used pointer *vp to avoid duplicating all data in vp struct,
 	though it will not make a visible difference in speed. */
@@ -51,7 +53,7 @@ void	render(mlx_image_t *img, t_scene *scene, t_vport *vp)
 {
 	int			i_h;
 	int			i_w;
-	int			pixel_coord[2];
+	t_color		cl;
 	t_coord		pixel_center;
 	t_ray		ray;
 
@@ -65,13 +67,58 @@ void	render(mlx_image_t *img, t_scene *scene, t_vport *vp)
 						scaled(vp->delta_y, i_h)));
 			ray = set_ray(scene->camera.pos,
 					sub_vec(pixel_center, scene->camera.pos));
-			pixel_coord[0] = i_w;
-			pixel_coord[1] = i_h;
-			paint_pixel(img, ray, scene, pixel_coord);
-			// if (counter % 2048 == 0)
-			// 	print_vec(&ray.dir, "ray");
+			cl = get_color(ray, scene);
+			mlx_put_pixel(img, i_w, i_h, get_rgba(cl.r, cl.g, cl.b, 255));
 			i_w++;
 		}
 		i_h++;
 	}
+}
+
+void	render_anti_aliasing(mlx_image_t *img, t_scene *scene, t_vport *vp)
+{
+	int			i_h;
+	int			i_w;
+	t_color		col;
+	t_ray		ray;
+	int			k;
+
+	i_h = 0;
+	while (i_h < (int)img->height)
+	{
+		i_w = 0;
+		while (i_w < (int)img->width)
+		{
+			k = 0;
+			col = color(0,0,0);
+			while (k++ < SAMPLES)
+			{
+				ray = get_ray(i_w, i_h, vp, scene);
+				col = sum_col_notinrange(col, get_color(ray, scene));
+			}
+			col = scale_col(col, 1.0 / SAMPLES);
+			mlx_put_pixel(img, i_w, i_h, get_rgba(col.r, col.g, col.b, 255));
+			i_w++;
+		}
+		i_h++;
+	}
+}
+
+t_ray	get_ray(int w, int h, t_vport *vp, t_scene *scene)
+{
+	t_vec	offset;
+	t_coord	pixel_center;
+	t_ray	ray;
+
+	offset = sample_square();
+	pixel_center = sum_vec(vp->p_00, sum_vec(scaled(vp->delta_x, w + offset.x),
+						scaled(vp->delta_y, h + offset.y)));
+	ray = set_ray(scene->camera.pos,
+					sub_vec(pixel_center, scene->camera.pos));
+	return (ray);
+}
+
+t_vec	sample_square(void)
+{
+	return (vec(random_double() - 0.5, random_double() - 0.5, 0));
 }

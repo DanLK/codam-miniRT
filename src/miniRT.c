@@ -6,7 +6,7 @@
 /*   By: dloustal <dloustal@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/07 14:51:55 by dloustal      #+#    #+#                 */
-/*   Updated: 2025/09/12 15:03:08 by dloustal      ########   odam.nl         */
+/*   Updated: 2025/09/12 16:39:48 by dloustal      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,21 +16,7 @@ int	main(int argc, char *argv[])
 {
 	mlx_t		*mlx;
 	mlx_image_t	*img;
-	// Paint a gradient
-	// t_vec		*c_topright;
-	// t_vec		*c_botleft;
-	// u_int32_t	w;
-	// uint32_t	h;
-	// int			r;
-	// int			g;
-	// int			b;
-	// Experiments with the viewport
 	t_vport		vp;
-	// int			i_h;
-	// int			i_w;
-	// t_coord		pixel_center;
-	// t_ray		ray;
-	// int			counter;
 	t_scene	scene;
 
 	//parsing
@@ -68,7 +54,10 @@ int	main(int argc, char *argv[])
 	print_vport(&vp);
 	
 	//render
-	render(img, &scene, &vp);
+	if (SAMPLES == 1)
+		render(img, &scene, &vp);
+	else
+		render_anti_aliasing(img, &scene, &vp);
 
 	if (mlx_image_to_window(mlx, img, 0, 0) < 0)
     {
@@ -77,8 +66,6 @@ int	main(int argc, char *argv[])
 	}
 	mlx_loop(mlx);
 	mlx_terminate(mlx);
-	// free(c_botleft);
-	// free(c_topright);
  	free_object_list(scene.objects);
 	free_light_list(scene.light);
 	return (EXIT_SUCCESS);
