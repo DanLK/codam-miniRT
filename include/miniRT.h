@@ -6,15 +6,17 @@
 /*   By: dloustal <dloustal@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/07 13:30:20 by hogu          #+#    #+#                 */
-/*   Updated: 2025/08/27 12:34:21 by dloustal      ########   odam.nl         */
+/*   Updated: 2025/09/15 10:48:00 by dloustal      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINIRT_H
 # define MINIRT_H
-# define WIDTH 1024
-# define HEIGHT 768
+# define WIDTH 2048
+# define RATIO (4.0 / 3.0)
+# define HEIGHT (int)(WIDTH / RATIO)
 # define EPSILON 1e-8
+# define SAMPLES 16
 
 # include "libft.h"
 # include "MLX42/MLX42.h"
@@ -25,6 +27,7 @@
 # include <float.h>
 # include <stdbool.h>
 # include <stdlib.h>
+# include <sys/time.h>
 
 typedef struct s_vec
 {
@@ -148,6 +151,13 @@ typedef struct s_scene
 	t_scene_status	status;
 }	t_scene;
 
+typedef struct s_rand
+{
+	uint64_t	state;
+	uint64_t	increment;
+}		t_rand;
+
+
 typedef enum e_error_code
 {
 	WRONG_ARGS,
@@ -184,6 +194,18 @@ double		dot(t_vec u, t_vec v);
 t_vec		cross(t_vec u, t_vec v);
 t_vec		sub_vec(t_vec u, t_vec v);
 t_vec		reject(t_vec v, t_vec dir);
+
+//------------------------Utils-------------------------
+// Random
+t_rand		*init_rng();
+uint32_t	pcg_generator(t_rand	*rng);
+void		print_random_number();
+double		random_double(void);
+double		random_in(double min, double max);
+void 		print_rand_double(void);
+void 		print_rand_double_in(double min, double max);
+//Interval
+void		clamp(double *num, double min, double max);
 
 //---------------------Parser----------------------------
 bool		parser(t_scene *scene, const char *filename);

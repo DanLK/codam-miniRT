@@ -1,4 +1,4 @@
-vpath %.c src:src/color:src/parser:src/hittables:src/vec:src/bonus
+vpath %.c src:src/color:src/parser:src/hittables:src/vec:src/bonus:src/utils
 
 NAME = miniRT
 BONUS_NAME = miniRT_bonus
@@ -23,6 +23,8 @@ COMMON_SRC = miniRT.c \
 	  cylinder.c \
 	  vec_ops.c \
 	  vec.c \
+	  random.c \
+	  interval.c
 
 MANDATORY_ONLY_SRC = color_obj_mandatory.c \
 	 		parser_fill_in_structs_1_mandatory.c \
@@ -50,17 +52,19 @@ CFLAGS += -Wall -Werror -Wextra -fsanitize=address -g
 MLX42_REPO = https://github.com/codam-coding-college/MLX42.git
 LIBMLX = ./MLX42
 
-HEADERS = -Iinclude -I$(LIBFT_DIR) -I $(LIBMLX)/include
 LIBS := $(LIBMLX)/build/libmlx42.a -lm -ldl -lglfw -pthread
 LIBFT_DIR = ./libft
 LIBFT = $(LIBFT_DIR)/libft.a
+HEADERS = -Iinclude -I$(LIBFT_DIR) -I $(LIBMLX)/include
 
 all: libmlx42 $(NAME)
 
 bonus: CFLAGS += -DBONUS
 bonus: libmlx42 $(BONUS_NAME)
 
-libmlx42: $(LIBMLX)
+libmlx42: $(LIBMLX)/build/libmlx42.a
+
+$(LIBMLX)/build/libmlx42.a: $(LIBMLX)
 	@cmake $(LIBMLX) -B $(LIBMLX)/build && make -C $(LIBMLX)/build -j4
 
 $(LIBMLX):
