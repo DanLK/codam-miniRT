@@ -60,6 +60,35 @@ bool	hit_plane(t_object *obj, t_ray ray, double *dist)
 	return (true);
 }
 
+bool	hit_cylinder(t_object *obj, t_ray ray, double *dist)
+{
+	bool	hits_tcap;
+	bool	hits_bcap;
+	bool	hits_wall;
+	double	hit_dist[3];
+	double	nearest;
+
+	hit_dist[TOP_CAP] = DBL_MAX;
+	hit_dist[BOTTOM_CAP] = DBL_MAX;
+	hit_dist[WALL] = DBL_MAX;
+	nearest = DBL_MAX;
+	hits_tcap = hit_cap(obj, ray, &hit_dist[TOP_CAP], 't');
+	hits_bcap = hit_cap(obj, ray, &hit_dist[BOTTOM_CAP], 'b');
+	hits_wall = hit_wall(obj, ray, &hit_dist[WALL]);
+	if (hits_tcap && hit_dist[TOP_CAP] > EPSILON)
+		nearest = fmin(nearest, hit_dist[TOP_CAP]);
+	if (hits_bcap && hit_dist[BOTTOM_CAP] > EPSILON)
+		nearest = fmin(nearest, hit_dist[BOTTOM_CAP]);
+	if (hits_wall && hit_dist[WALL] > EPSILON)
+		nearest = fmin(nearest, hit_dist[WALL]);
+	if (nearest < DBL_MAX)
+	{
+		*dist = nearest;
+		return (true);
+	}
+	return (false);
+}
+
 bool	hit_object(t_ray ray, t_object *obj, double *dist)
 {
 	if (obj->type == SPHERE)

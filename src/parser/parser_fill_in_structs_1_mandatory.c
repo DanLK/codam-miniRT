@@ -6,7 +6,7 @@
 /*   By: dloustal <dloustal@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/12 15:52:00 by hogu          #+#    #+#                 */
-/*   Updated: 2025/09/11 15:21:49 by dloustal      ########   odam.nl         */
+/*   Updated: 2025/09/15 10:48:28 by dloustal      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,6 @@ bool	validate_elem(t_scene *scene)
 		return (print_error(MISS_ELEM, "camera"), false);
 	if (!scene->status.has_light)
 		return (print_error(MISS_ELEM, "light"), false);
-	// if (!scene->status.has_sphere)
-	// 	return (print_error(MISS_ELEM, "sphere"), false);
-	// if (!scene->status.has_plane)
-	// 	return (print_error(MISS_ELEM, "plane"), false);
-	// if (!scene->status.has_cylinder)
-	// 	return (print_error(MISS_ELEM, "cylinder"), false);
-	printf("everything looks good!\n");
 	return (true);
 }
 
@@ -97,6 +90,7 @@ bool	fill_in_light(const char *s, t_scene *scene)
 		|| !check_ratio(params[2], &light->ratio)
 		|| !check_color(params[3], &light->color))
 		return (free(light), free_split(params), false);
+	light->color = (t_color){255, 255, 255};
 	append_light(&scene->light, light);
 	scene->status.has_light = true;
 	return (free_split(params), true);

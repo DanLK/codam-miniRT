@@ -22,16 +22,6 @@ t_vec	sum_vec(t_vec u, t_vec v)
 	return (sum);
 }
 
-t_vec	*sum_vec_new(t_vec u, t_vec v)
-{
-	t_vec	*sum;
-
-	sum = init_vec(u.x + v.x, u.y + v.y, u.z + v.z);
-	if (!sum)
-		return (NULL);
-	return (sum);
-}
-
 double	dot(t_vec u, t_vec v)
 {
 	double	dot;
@@ -58,4 +48,12 @@ t_vec	sub_vec(t_vec u, t_vec v)
 	diff.y = u.y - v.y;
 	diff.z = u.z - v.z;
 	return (diff);
+}
+
+/*Returns the component of vector v that is orthogonal to dir
+aka, removes the part of v that is parallel to dir, 
+leaving only the perpendicular (lateral) component. */
+t_vec	reject(t_vec v, t_vec dir)
+{
+	return (sub_vec(v, scaled(dir, dot(v, dir))));
 }
