@@ -77,7 +77,7 @@ t_color	cal_cy_chkb_curved_surface(t_object *obj, t_vec v, double proj)
 	double	m;
 	double	n;
 
-	m = (proj + obj->cy.height / 2.0) / obj->cy.height; // map to [0,1]
+	m = (proj + obj->cy.height / 2.0) / obj->cy.height;
 	radial = sub_vec(v, scaled(obj->cy.dir, proj));
 	get_local_coord(&obj->cy.basis, &local, radial);
 	longtitude = atan2(local.x, local.y);
