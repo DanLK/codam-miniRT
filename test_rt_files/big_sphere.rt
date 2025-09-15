@@ -2,7 +2,7 @@ A 0.6 255,255,255
 C  0,0,-5 	0,0,1 	120
 L 0,0,-10 0.6 255,255,255
 
-sp  0,0,5	15	204,153,255
+sp  0,0,5	15	50,50,50
 
 #If the light is between the camera and the object, it doesn't seem to light it
 # Not sure if this is normal (?)

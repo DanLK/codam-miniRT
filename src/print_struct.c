@@ -6,7 +6,7 @@
 /*   By: dloustal <dloustal@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/14 12:23:50 by hogu          #+#    #+#                 */
-/*   Updated: 2025/08/27 12:29:43 by dloustal      ########   odam.nl         */
+/*   Updated: 2025/09/15 11:39:56 by dloustal      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void	print_object(t_object *obj)
 			print_coord(obj->center);
 			printf("  Diameter: %g\n", obj->sp.diameter);
 			print_color(obj->color);
-			printf("is_checkerboard: %d\n", obj->is_chkb);
+			printf("  is_checkerboard: %d\n", obj->is_chkb);
 			printf("\n");
 		}
 		else if (obj->type == PLANE)
@@ -77,7 +77,7 @@ void	print_object(t_object *obj)
 			print_coord(obj->center);
 			print_vector(obj->pl.dir);
 			print_color(obj->color);
-			printf("is_checkerboard: %d\n", obj->is_chkb);
+			printf("  is_checkerboard: %d\n", obj->is_chkb);
 			printf("\n");
 		}
 		else if (obj->type == CYLINDER)
@@ -88,7 +88,7 @@ void	print_object(t_object *obj)
 			printf("  Diameter: %g\n", obj->cy.diameter);
 			printf("  Height: %g\n", obj->cy.height);
 			print_color(obj->color);
-			printf("is_checkerboard: %d\n", obj->is_chkb);
+			printf("  is_checkerboard: %d\n", obj->is_chkb);
 			printf("\n");
 		}
 		obj = obj->next;

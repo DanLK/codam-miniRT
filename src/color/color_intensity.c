@@ -6,7 +6,7 @@
 /*   By: dloustal <dloustal@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/22 14:50:29 by hogu          #+#    #+#                 */
-/*   Updated: 2025/08/27 12:37:11 by dloustal      ########   odam.nl         */
+/*   Updated: 2025/09/15 15:21:15 by dloustal      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static t_vec	get_cylinder_normal(t_object *obj, t_coord hit_p)
 		return (normalized(sub_vec(v, scaled(obj->cy.dir, proj))));
 }
 
-static t_vec	get_normal(t_object *obj, t_coord hit_point)
+t_vec	get_normal(t_object *obj, t_coord hit_point)
 {
 	if (obj->type == SPHERE)
 		return (get_sphere_normal(obj, hit_point));

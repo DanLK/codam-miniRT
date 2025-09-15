@@ -24,6 +24,7 @@ COMMON_SRC = miniRT.c \
 	  vec_ops.c \
 	  vec.c \
 	  random.c \
+	  random_vec.c \
 	  interval.c
 
 MANDATORY_ONLY_SRC = color_obj_mandatory.c \
@@ -47,7 +48,7 @@ BONUS_OBJ_DIR = ./obj_bonus
 OBJ = $(SRC:%.c=$(OBJ_DIR)/%.o)
 BONUS_OBJ = $(BONUS_SRC:%.c=$(BONUS_OBJ_DIR)/%.o)
 
-CFLAGS += -Wall -Werror -Wextra -fsanitize=address -g
+CFLAGS += -Wall -Werror -Wextra -fsanitize=address -g -O3 -flto
 
 MLX42_REPO = https://github.com/codam-coding-college/MLX42.git
 LIBMLX = ./MLX42
