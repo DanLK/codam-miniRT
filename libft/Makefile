@@ -63,22 +63,22 @@ CFLAGS += -Wall -Werror -Wextra
 all: $(NAME)
 
 $(NAME): $(OBJFILES)
-	ar rcs $(NAME) $(OBJFILES)
+	@ar rcs $(NAME) $(OBJFILES)
 
 $(OBJ_DIR)/%.o: %.c 
-	mkdir -p $(dir $@)
-	$(CC) -c $(CFLAGS) -o $@ $<
+	@mkdir -p $(dir $@)
+	@$(CC) -c $(CFLAGS) -o $@ $<
 
 bonus: $(OBJFILES) $(BONUS_OBJS)
-	ar rcs $(NAME) $(BONUS_OBJS) $(OBJFILES)
+	@ar rcs $(NAME) $(BONUS_OBJS) $(OBJFILES)
 
 clean: 
-	rm -f $(OBJFILES)
-	rm -f $(BONUS_OBJS)
-	rm -r -f $(OBJ_DIR)
+	@rm -f $(OBJFILES)
+	@rm -f $(BONUS_OBJS)
+	@rm -r -f $(OBJ_DIR)
 
 fclean: clean
-	rm -f $(NAME)
+	@rm -f $(NAME)
 
 re: fclean all
 

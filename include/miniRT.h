@@ -6,7 +6,7 @@
 /*   By: dloustal <dloustal@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/07 13:30:20 by hogu          #+#    #+#                 */
-/*   Updated: 2025/09/15 15:47:06 by dloustal      ########   odam.nl         */
+/*   Updated: 2025/09/26 11:17:53 by dloustal      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # define HEIGHT (int)(WIDTH / RATIO)
 # define EPSILON 1e-8
 # define SAMPLES 1
-# define DEPTH 2
+# define DEPTH 1
 
 # include "libft.h"
 # include "MLX42/MLX42.h"

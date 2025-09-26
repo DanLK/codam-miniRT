@@ -69,34 +69,37 @@ $(LIBMLX)/build/libmlx42.a: $(LIBMLX)
 	@cmake $(LIBMLX) -B $(LIBMLX)/build && make -C $(LIBMLX)/build -j4
 
 $(LIBMLX):
-	git clone $(MLX42_REPO) $(LIBMLX)
+	@git clone $(MLX42_REPO) $(LIBMLX)
 
 $(NAME): $(OBJ) $(LIBFT)
-	$(CC) $(CFLAGS) -o $(NAME) $(OBJ) $(LIBS) $(LIBFT) $(HEADERS)
+	@$(CC) $(CFLAGS) -o $(NAME) $(OBJ) $(LIBS) $(LIBFT) $(HEADERS)
+	@echo "Make successful"
 
 $(BONUS_NAME): $(BONUS_OBJ) $(LIBFT)
-	$(CC) $(CFLAGS) -o $(BONUS_NAME) $(BONUS_OBJ) $(LIBS) $(LIBFT) $(HEADERS)
+	@$(CC) $(CFLAGS) -o $(BONUS_NAME) $(BONUS_OBJ) $(LIBS) $(LIBFT) $(HEADERS)
+	@echo "Make bonus successful"
 
 $(OBJ_DIR)/%.o: %.c
-	mkdir -p $(dir $@)
-	$(CC) $(CFLAGS) $(HEADERS) -c $< -o $@
+	@mkdir -p $(dir $@)
+	@$(CC) $(CFLAGS) $(HEADERS) -c $< -o $@
 
 $(BONUS_OBJ_DIR)/%.o: %.c
-	mkdir -p $(dir $@)
-	$(CC) $(CFLAGS) $(HEADERS) -c $< -o $@
+	@mkdir -p $(dir $@)
+	@$(CC) $(CFLAGS) $(HEADERS) -c $< -o $@
 
 $(LIBFT):
-	$(MAKE) -C $(LIBFT_DIR)
+	@$(MAKE) -C $(LIBFT_DIR)
 
 clean:
-	rm -f $(OBJ) $(BONUS_OBJ)
-	rm -rf $(OBJ_DIR) $(BONUS_OBJ_DIR)
-	rm -rf $(LIBMLX)
-	$(MAKE) -C $(LIBFT_DIR) clean
+	@rm -f $(OBJ) $(BONUS_OBJ)
+	@rm -rf $(OBJ_DIR) $(BONUS_OBJ_DIR)
+	@rm -rf $(LIBMLX)
+	@$(MAKE) -C $(LIBFT_DIR) clean
+	@echo "clean successful"
 
 fclean: clean
-	rm -f $(NAME) $(BONUS_NAME)
-	$(MAKE) -C $(LIBFT_DIR) fclean
+	@rm -f $(NAME) $(BONUS_NAME)
+	@$(MAKE) -C $(LIBFT_DIR) fclean
 
 re: fclean all
 
