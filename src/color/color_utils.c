@@ -6,7 +6,7 @@
 /*   By: dloustal <dloustal@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/22 15:41:46 by hogu          #+#    #+#                 */
-/*   Updated: 2025/09/26 15:00:18 by dloustal      ########   odam.nl         */
+/*   Updated: 2025/09/26 15:49:57 by dloustal      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,16 +43,24 @@ t_color	color(double r, double g, double b)
 	return (col);
 }
 
-/*Sum two colors while not keeping the result as a valid color*/
-t_color	sum_col_notinrange(t_color cl1, t_color cl2)
+t_color	multiply_color(t_color cl1, t_color cl2)
 {
-	t_color	new;
+	return (color(cl1.r * cl2.r, cl1.g * cl2.g, cl1.b * cl2.b));
 
-	new.r = cl1.r + cl2.r;
-	new.g = cl1.g + cl2.g;
-	new.b = cl1.b + cl2.b;
-	return (new);
+
 }
+
+/*Sum two colors while not keeping the result as a valid color*/
+// Not needed for now because I'm clamping all the way at the end anyways (to_byte)
+// t_color	sum_col_notinrange(t_color cl1, t_color cl2)
+// {
+// 	t_color	new;
+
+// 	new.r = cl1.r + cl2.r;
+// 	new.g = cl1.g + cl2.g;
+// 	new.b = cl1.b + cl2.b;
+// 	return (new);
+// }
 
 /* sum the effect of 2 colors and make sure it is still in valid range*/
 t_color	sum_color(t_color cl1, t_color cl2)
@@ -68,33 +76,13 @@ t_color	sum_color(t_color cl1, t_color cl2)
 	return (ret);
 }
 
-// double	clamp(double n, double min, double max)
-// {
-// 	if (n < min)
-// 		return (min);
-// 	if (n > max)
-// 		return (max);
-// 	else
-// 		return (n);
-// }
-
 t_color	scale_col(t_color cl, double scalar)
 {
 	t_color	new;
-	double	red;
-	double	green;
-	double	blue;
 
-	red = (cl.r / 255.0) * scalar * 255.0;
-	green = (cl.g / 255.0) * scalar * 255.0;
-	blue = (cl.b / 255.0) * scalar *255.0;
-
-	clamp(&red, 0, 255);
-	clamp(&green, 0, 255);
-	clamp(&blue, 0, 255);
-	new.r = (int)red;
-	new.g = (int)green;
-	new.b = (int)blue;
+	new.r = cl.r * scalar;
+	new.g = cl.g * scalar;
+	new.b = cl.b * scalar;
 	return (new);
 	//Should add some error handling (?)
 }

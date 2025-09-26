@@ -6,7 +6,7 @@
 /*   By: dloustal <dloustal@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/07 13:30:20 by hogu          #+#    #+#                 */
-/*   Updated: 2025/09/26 14:52:10 by dloustal      ########   odam.nl         */
+/*   Updated: 2025/09/26 17:04:13 by dloustal      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # define HEIGHT (int)(WIDTH / RATIO)
 # define EPSILON 1e-8
 # define SAMPLES 1
-# define DEPTH 1
+# define DEPTH 4
 
 # include "libft.h"
 # include "MLX42/MLX42.h"
@@ -281,7 +281,8 @@ t_vec		get_normal(t_object *obj, t_coord hit_point);
 
 //color_utils
 int			get_rgba(t_color col, double alpha);
-t_color		sum_col_notinrange(t_color cl1, t_color cl2);
+// t_color		sum_col_notinrange(t_color cl1, t_color cl2);
+t_color		multiply_color(t_color cl1, t_color cl2);
 t_color		sum_color(t_color cl1, t_color cl2);
 t_color		calc_background_color(t_ray ray);
 t_color		color(double r, double g, double b);

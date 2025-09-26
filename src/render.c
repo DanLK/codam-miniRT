@@ -6,7 +6,7 @@
 /*   By: dloustal <dloustal@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/19 13:36:40 by dloustal      #+#    #+#                 */
-/*   Updated: 2025/09/26 14:27:52 by dloustal      ########   odam.nl         */
+/*   Updated: 2025/09/26 17:03:04 by dloustal      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,11 +55,11 @@ void	render_aa_deep(mlx_image_t *img, t_scene *scene, t_vport *vp)
 		while (i_w < (int)img->width)
 		{
 			k = 0;
-			col = color(0,0,0);
+			col = color(0.0, 0.0, 0.0);
 			while (k++ < SAMPLES)
 			{
 				ray = get_ray(i_w, i_h, vp, scene);
-				col = sum_col_notinrange(col, get_color_deep(ray, scene, DEPTH));
+				col = sum_color(col, get_color_deep(ray, scene, DEPTH));
 			}
 			col = scale_col(col, 1.0 / SAMPLES);
 			mlx_put_pixel(img, i_w, i_h, get_rgba(col, 255));
@@ -69,6 +69,12 @@ void	render_aa_deep(mlx_image_t *img, t_scene *scene, t_vport *vp)
 	}
 }
 
+// static t_vec	orient_normal(t_vec normal, t_vec ray_dir)
+// {
+// 	if (dot(normal, ray_dir) > 0.0)
+// 		return (neg_vec(normal));
+// 	return (normal);
+// }
 
 t_color	get_color_deep(t_ray ray, t_scene *scene, int depth)
 {
@@ -76,11 +82,14 @@ t_color	get_color_deep(t_ray ray, t_scene *scene, int depth)
 	t_object	*closest;
 	double		dist;
 	double		dist_min;
-	t_color		cl;
+	t_coord		hit_point;
+	t_color		rec_cl; // recursive color
 	t_vec		random_dir;
+	t_color		cl;
+	t_vec		normal;
 
 	if (depth <= 0)
-		return (color(0,0,0));
+		return (color(0.0, 0.0, 0.0));
 	closest = NULL;
 	dist_min = DBL_MAX;
 	tmp = scene->objects;
@@ -89,19 +98,28 @@ t_color	get_color_deep(t_ray ray, t_scene *scene, int depth)
 		if (hit_object(ray, tmp, &dist) && dist < dist_min && dist > EPSILON)
 		{
 			dist_min = dist;
+			hit_point = ray_at(ray, dist_min);
 			closest = tmp;
 		}
 		tmp = tmp->next;
 	}
 	if (closest)
 	{
-		random_dir = random_vec_on_hemis(get_normal(closest, ray_at(ray, dist_min)));
-		// cl = scale_col(get_color_deep(set_ray(ray_at(ray, dist_min), random_dir), scene, depth - 1), 0.5);
-		cl = scale_col(get_color(set_ray(ray_at(ray, dist_min), random_dir), scene), 0.5);
+		// normal = orient_normal(get_normal(closest, hit_point), ray.dir);
+		normal = get_normal(closest, hit_point);
+    	// random_dir = random_vec_on_hemis(normal);
+		random_dir = sum_vec(normal, random_unit_vec());
+		rec_cl = scale_col(get_color_deep(
+            set_ray(hit_point, random_dir),
+            scene, depth-1), 0.5);
+		// cl = get_color(set_ray(hit_point, random_dir), scene);
+		cl = sum_color(rec_cl, calc_obj_color(closest, scene, ray, dist_min));
 	}
 	else
+	{
+		// rec_cl = color(1.0, 1.0, 1.0);
 		cl = calc_background_color(ray);
-	// printf("Color: r-%d g-%d b-%d\n", cl.r, cl.g, cl.b);
+	}
 	return (cl);
 }
 
@@ -158,7 +176,7 @@ void	render_anti_aliasing(mlx_image_t *img, t_scene *scene, t_vport *vp)
 			while (k++ < SAMPLES)
 			{
 				ray = get_ray(i_w, i_h, vp, scene);
-				col = sum_col_notinrange(col, get_color(ray, scene));
+				col = sum_color(col, get_color(ray, scene));
 			}
 			col = scale_col(col, 1.0 / SAMPLES);
 			mlx_put_pixel(img, i_w, i_h, get_rgba(col, 255));
