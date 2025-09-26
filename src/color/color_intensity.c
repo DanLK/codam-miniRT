@@ -6,7 +6,7 @@
 /*   By: dloustal <dloustal@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/22 14:50:29 by hogu          #+#    #+#                 */
-/*   Updated: 2025/09/15 15:21:15 by dloustal      ########   odam.nl         */
+/*   Updated: 2025/09/26 15:03:01 by dloustal      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,6 @@ double	calc_intensity(t_coord hit_p, t_object *obj, t_coord light_p)
 
 	light_dir = normalized(sub_vec(light_p, hit_p));
 	normal = get_normal(obj, hit_p);
-	intensity = fmax(0.0, dot(normal, light_dir));
+	intensity = fmin(1.0, fmax(0.0, dot(normal, light_dir)));
 	return (intensity);
 }

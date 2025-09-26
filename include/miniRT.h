@@ -6,7 +6,7 @@
 /*   By: dloustal <dloustal@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/07 13:30:20 by hogu          #+#    #+#                 */
-/*   Updated: 2025/09/26 12:10:18 by dloustal      ########   odam.nl         */
+/*   Updated: 2025/09/26 14:52:10 by dloustal      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # define HEIGHT (int)(WIDTH / RATIO)
 # define EPSILON 1e-8
 # define SAMPLES 1
-# define DEPTH 2
+# define DEPTH 1
 
 # include "libft.h"
 # include "MLX42/MLX42.h"
@@ -41,9 +41,9 @@ typedef t_vec	t_coord;
 
 typedef struct s_color
 {
-	int	r;
-	int	g;
-	int	b;
+	double	r;
+	double	g;
+	double	b;
 }	t_color;
 
 typedef struct s_ray
@@ -280,11 +280,11 @@ double		calc_intensity(t_coord hit_p, t_object *obj, t_coord light_p);
 t_vec		get_normal(t_object *obj, t_coord hit_point);
 
 //color_utils
-int			get_rgba(int r, int g, int b, int a);
+int			get_rgba(t_color col, double alpha);
 t_color		sum_col_notinrange(t_color cl1, t_color cl2);
 t_color		sum_color(t_color cl1, t_color cl2);
 t_color		calc_background_color(t_ray ray);
-t_color		color(int r, int g, int b);
+t_color		color(double r, double g, double b);
 t_color		scale_col(t_color cl, double scalar);
 
 //-----------------Viewport------------------

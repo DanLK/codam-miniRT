@@ -6,7 +6,7 @@
 /*   By: dloustal <dloustal@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/19 13:36:40 by dloustal      #+#    #+#                 */
-/*   Updated: 2025/09/26 12:23:10 by dloustal      ########   odam.nl         */
+/*   Updated: 2025/09/26 14:27:52 by dloustal      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	render_aa_deep(mlx_image_t *img, t_scene *scene, t_vport *vp)
 				col = sum_col_notinrange(col, get_color_deep(ray, scene, DEPTH));
 			}
 			col = scale_col(col, 1.0 / SAMPLES);
-			mlx_put_pixel(img, i_w, i_h, get_rgba(col.r, col.g, col.b, 255));
+			mlx_put_pixel(img, i_w, i_h, get_rgba(col, 255));
 			i_w++;
 		}
 		i_h++;
@@ -132,7 +132,7 @@ void	render(mlx_image_t *img, t_scene *scene, t_vport *vp)
 			ray = set_ray(scene->camera.pos,
 					sub_vec(pixel_center, scene->camera.pos));
 			cl = get_color(ray, scene);
-			mlx_put_pixel(img, i_w, i_h, get_rgba(cl.r, cl.g, cl.b, 255));
+			mlx_put_pixel(img, i_w, i_h, get_rgba(cl, 255));
 			i_w++;
 		}
 		i_h++;
@@ -161,7 +161,7 @@ void	render_anti_aliasing(mlx_image_t *img, t_scene *scene, t_vport *vp)
 				col = sum_col_notinrange(col, get_color(ray, scene));
 			}
 			col = scale_col(col, 1.0 / SAMPLES);
-			mlx_put_pixel(img, i_w, i_h, get_rgba(col.r, col.g, col.b, 255));
+			mlx_put_pixel(img, i_w, i_h, get_rgba(col, 255));
 			i_w++;
 		}
 		i_h++;

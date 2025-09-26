@@ -6,7 +6,7 @@
 /*   By: dloustal <dloustal@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/14 12:23:50 by hogu          #+#    #+#                 */
-/*   Updated: 2025/09/15 11:39:56 by dloustal      ########   odam.nl         */
+/*   Updated: 2025/09/26 14:42:52 by dloustal      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	print_color(t_color c)
 {
-	printf("  Color: (%d, %d, %d)\n", c.r, c.g, c.b);
+	printf("  Color: (%f, %f, %f)\n", c.r, c.g, c.b);
 }
 
 void	print_coord(t_coord c)

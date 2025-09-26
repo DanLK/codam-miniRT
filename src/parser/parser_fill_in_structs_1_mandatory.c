@@ -6,7 +6,7 @@
 /*   By: dloustal <dloustal@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/12 15:52:00 by hogu          #+#    #+#                 */
-/*   Updated: 2025/09/15 10:48:28 by dloustal      ########   odam.nl         */
+/*   Updated: 2025/09/26 15:04:37 by dloustal      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ bool	fill_in_light(const char *s, t_scene *scene)
 		|| !check_ratio(params[2], &light->ratio)
 		|| !check_color(params[3], &light->color))
 		return (free(light), free_split(params), false);
-	light->color = (t_color){255, 255, 255};
+	light->color = (t_color){1.0, 1.0, 1.0};
 	append_light(&scene->light, light);
 	scene->status.has_light = true;
 	return (free_split(params), true);

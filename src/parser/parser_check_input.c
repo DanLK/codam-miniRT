@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                         ::::::::           */
-/*   parser_check_color.c                                :+:    :+:           */
-/*                                                      +:+                   */
-/*   By: hogu <hogu@student.codam.nl>                  +#+                    */
-/*                                                    +#+                     */
-/*   Created: 2025/08/12 12:17:08 by hogu           #+#    #+#                */
-/*   Updated: 2025/08/12 12:17:09 by hogu           ########   odam.nl        */
+/*                                                        ::::::::            */
+/*   parser_check_input.c                               :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: dloustal <dloustal@student.42.fr>            +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2025/08/12 12:17:08 by hogu          #+#    #+#                 */
+/*   Updated: 2025/09/26 14:37:32 by dloustal      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,9 @@ bool	check_color(const char *s, t_color *color)
 	if (!ft_atoi_strict(cl[0], &r, 255) || !ft_atoi_strict(cl[1], &g, 255)
 		|| !ft_atoi_strict(cl[2], &b, 255))
 		return (free_split(cl), false);
-	color->r = r;
-	color->g = g;
-	color->b = b;
+	color->r = r / 255.0;
+	color->g = g / 255.0;
+	color->b = b / 255.0;
 	return (free_split(cl), true);
 }
 

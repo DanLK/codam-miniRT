@@ -6,7 +6,7 @@
 /*   By: dloustal <dloustal@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/09/10 11:52:45 by hogu          #+#    #+#                 */
-/*   Updated: 2025/09/12 15:19:31 by dloustal      ########   odam.nl         */
+/*   Updated: 2025/09/26 14:41:08 by dloustal      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,9 @@ t_color	calc_obj_solo(t_color obj, t_color light, double ratio, double intens)
 {
 	t_color	ret;
 
-	ret.r = obj.r * light.r / 255.0 * ratio * intens;
-	ret.g = obj.g * light.g / 255.0 * ratio * intens;
-	ret.b = obj.b * light.b / 255.0 * ratio * intens;
+	ret.r = obj.r * light.r * ratio * intens;
+	ret.g = obj.g * light.g * ratio * intens;
+	ret.b = obj.b * light.b * ratio * intens;
 	return (ret);
 }
 
