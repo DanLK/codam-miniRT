@@ -6,7 +6,7 @@
 /*   By: dloustal <dloustal@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/22 15:41:46 by hogu          #+#    #+#                 */
-/*   Updated: 2025/09/15 10:49:47 by dloustal      ########   odam.nl         */
+/*   Updated: 2025/09/26 13:04:51 by dloustal      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,13 +52,33 @@ t_color	sum_color(t_color cl1, t_color cl2)
 	return (ret);
 }
 
+// double	clamp(double n, double min, double max)
+// {
+// 	if (n < min)
+// 		return (min);
+// 	if (n > max)
+// 		return (max);
+// 	else
+// 		return (n);
+// }
+
 t_color	scale_col(t_color cl, double scalar)
 {
 	t_color	new;
+	double	red;
+	double	green;
+	double	blue;
 
-	new.r = cl.r * scalar;
-	new.g = cl.g * scalar;
-	new.b = cl.b * scalar;
+	red = (cl.r / 255.0) * scalar * 255.0;
+	green = (cl.g / 255.0) * scalar * 255.0;
+	blue = (cl.b / 255.0) * scalar *255.0;
+
+	clamp(&red, 0, 255);
+	clamp(&green, 0, 255);
+	clamp(&blue, 0, 255);
+	new.r = (int)red;
+	new.g = (int)green;
+	new.b = (int)blue;
 	return (new);
 	//Should add some error handling (?)
 }

@@ -6,7 +6,7 @@
 /*   By: dloustal <dloustal@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/19 13:36:40 by dloustal      #+#    #+#                 */
-/*   Updated: 2025/09/15 15:45:16 by dloustal      ########   odam.nl         */
+/*   Updated: 2025/09/26 12:23:10 by dloustal      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,11 +95,13 @@ t_color	get_color_deep(t_ray ray, t_scene *scene, int depth)
 	}
 	if (closest)
 	{
-		random_dir = random_vec_on_hemis(get_normal(closest, ray_at(ray, dist)));
-		cl = scale_col(get_color_deep(set_ray(ray_at(ray, dist), random_dir), scene, depth - 1), 0.5);
+		random_dir = random_vec_on_hemis(get_normal(closest, ray_at(ray, dist_min)));
+		// cl = scale_col(get_color_deep(set_ray(ray_at(ray, dist_min), random_dir), scene, depth - 1), 0.5);
+		cl = scale_col(get_color(set_ray(ray_at(ray, dist_min), random_dir), scene), 0.5);
 	}
 	else
 		cl = calc_background_color(ray);
+	// printf("Color: r-%d g-%d b-%d\n", cl.r, cl.g, cl.b);
 	return (cl);
 }
 
