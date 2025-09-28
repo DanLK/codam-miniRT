@@ -3,10 +3,10 @@
 /*                                                        ::::::::            */
 /*   render.c                                           :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: dloustal <dloustal@student.42.fr>            +#+                     */
+/*   By: dloustal <marvin@42.fr>                      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/19 13:36:40 by dloustal      #+#    #+#                 */
-/*   Updated: 2025/09/26 17:03:04 by dloustal      ########   odam.nl         */
+/*   Updated: 2025/09/28 21:17:58 by dloustalot    ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,14 +39,14 @@ static t_color	get_color(t_ray ray, t_scene *scene)
 	return (cl);
 }
 
-/*Rendering with all materials at 50% color absorption with antialiasing*/
+/*Rendering with all materials at 50% color absorption with(out) antialiasing*/
 void	render_aa_deep(mlx_image_t *img, t_scene *scene, t_vport *vp)
 {
 	int			i_h;
 	int			i_w;
-	t_color		col;
+	t_color		cl;
 	t_ray		ray;
-	int			k;
+	t_coord		pixel_center;
 
 	i_h = 0;
 	while (i_h < (int)img->height)
@@ -54,29 +54,19 @@ void	render_aa_deep(mlx_image_t *img, t_scene *scene, t_vport *vp)
 		i_w = 0;
 		while (i_w < (int)img->width)
 		{
-			k = 0;
-			col = color(0.0, 0.0, 0.0);
-			while (k++ < SAMPLES)
-			{
-				ray = get_ray(i_w, i_h, vp, scene);
-				col = sum_color(col, get_color_deep(ray, scene, DEPTH));
-			}
-			col = scale_col(col, 1.0 / SAMPLES);
-			mlx_put_pixel(img, i_w, i_h, get_rgba(col, 255));
+			pixel_center = sum_vec(vp->p_00, sum_vec(scaled(vp->delta_x, i_w),
+						scaled(vp->delta_y, i_h)));
+			ray = set_ray(scene->camera.pos,
+					sub_vec(pixel_center, scene->camera.pos));
+			cl = get_color_deep(ray, ray, scene, DEPTH);
+			mlx_put_pixel(img, i_w, i_h, get_rgba(cl, 255));
 			i_w++;
 		}
 		i_h++;
 	}
 }
 
-// static t_vec	orient_normal(t_vec normal, t_vec ray_dir)
-// {
-// 	if (dot(normal, ray_dir) > 0.0)
-// 		return (neg_vec(normal));
-// 	return (normal);
-// }
-
-t_color	get_color_deep(t_ray ray, t_scene *scene, int depth)
+t_color	get_color_deep(t_ray ray, t_ray ray2, t_scene *scene, int depth)
 {
 	t_object	*tmp;
 	t_object	*closest;
@@ -87,6 +77,7 @@ t_color	get_color_deep(t_ray ray, t_scene *scene, int depth)
 	t_vec		random_dir;
 	t_color		cl;
 	t_vec		normal;
+	t_vec		offset_point;
 
 	if (depth <= 0)
 		return (color(0.0, 0.0, 0.0));
@@ -105,21 +96,16 @@ t_color	get_color_deep(t_ray ray, t_scene *scene, int depth)
 	}
 	if (closest)
 	{
-		// normal = orient_normal(get_normal(closest, hit_point), ray.dir);
 		normal = get_normal(closest, hit_point);
-    	// random_dir = random_vec_on_hemis(normal);
+		offset_point = sum_vec(hit_point, scaled(normal, 1e-4));
+		// random_dir = random_vec_on_hemis(normal);
 		random_dir = sum_vec(normal, random_unit_vec());
-		rec_cl = scale_col(get_color_deep(
-            set_ray(hit_point, random_dir),
-            scene, depth-1), 0.5);
-		// cl = get_color(set_ray(hit_point, random_dir), scene);
-		cl = sum_color(rec_cl, calc_obj_color(closest, scene, ray, dist_min));
+		rec_cl = scale_col(get_color_deep(set_ray(offset_point, random_dir), ray2,
+            scene, depth-1), 0.05);
+		cl = sum_color(rec_cl, calc_obj_color(closest, scene, ray2, dist_min));
 	}
 	else
-	{
-		// rec_cl = color(1.0, 1.0, 1.0);
 		cl = calc_background_color(ray);
-	}
 	return (cl);
 }
 

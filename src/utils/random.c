@@ -3,14 +3,16 @@
 /*                                                        ::::::::            */
 /*   random.c                                           :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: dloustal <dloustal@student.42.fr>            +#+                     */
+/*   By: dloustal <marvin@42.fr>                      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/09/11 15:58:52 by dloustal      #+#    #+#                 */
-/*   Updated: 2025/09/12 15:25:14 by dloustal      ########   odam.nl         */
+/*   Updated: 2025/09/28 20:36:34 by dloustalot    ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
+
+static t_rand	*g_rng = NULL;
 
 t_rand	*init_rng()
 {
@@ -70,9 +72,12 @@ double	random_double(void)
 	uint32_t	big_num;
 	int			i;
 
-	rng = init_rng();
-	if (!rng)
-		return (0); // Not sure what to do in this case
+	if (!g_rng)
+	{
+		rng = init_rng();
+		if (!rng)
+			return (0); // Not sure what to do in this case
+	}
 	i = 0;
 	while (i++ < 5)
 		big_num = pcg_generator(rng);

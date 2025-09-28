@@ -3,10 +3,10 @@
 /*                                                        ::::::::            */
 /*   miniRT.h                                           :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: dloustal <dloustal@student.42.fr>            +#+                     */
+/*   By: dloustal <marvin@42.fr>                      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/07 13:30:20 by hogu          #+#    #+#                 */
-/*   Updated: 2025/09/26 17:04:13 by dloustal      ########   odam.nl         */
+/*   Updated: 2025/09/28 21:16:02 by dloustalot    ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # define HEIGHT (int)(WIDTH / RATIO)
 # define EPSILON 1e-8
 # define SAMPLES 1
-# define DEPTH 4
+# define DEPTH 2
 
 # include "libft.h"
 # include "MLX42/MLX42.h"
@@ -301,7 +301,7 @@ void		render_anti_aliasing(mlx_image_t *img, t_scene *scene, t_vport *vp);
 t_ray		get_ray(int w, int h, t_vport *vp, t_scene *scene);
 t_vec		sample_square(void);
 void		render_aa_deep(mlx_image_t *img, t_scene *scene, t_vport *vp);
-t_color		get_color_deep(t_ray ray, t_scene *scene, int depth);
+t_color		get_color_deep(t_ray ray, t_ray ray2, t_scene *scene, int depth);
 
 //-----------------Hitting------------------
 bool		hit_sphere(t_object *obj, t_ray ray, double *dist);

@@ -3,10 +3,10 @@
 /*                                                        ::::::::            */
 /*   color_utils.c                                      :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: dloustal <dloustal@student.42.fr>            +#+                     */
+/*   By: dloustal <marvin@42.fr>                      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/22 15:41:46 by hogu          #+#    #+#                 */
-/*   Updated: 2025/09/26 15:49:57 by dloustal      ########   odam.nl         */
+/*   Updated: 2025/09/28 19:55:44 by dloustalot    ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 static int	to_byte(double c)
 {
 	clamp(&c, 0.0, 1.0);
+	c = sqrt(c);
 	return ((int)(c * 255.0));
 }
 
