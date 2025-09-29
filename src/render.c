@@ -3,10 +3,10 @@
 /*                                                        ::::::::            */
 /*   render.c                                           :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: dloustal <marvin@42.fr>                      +#+                     */
+/*   By: dloustal <dloustal@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/19 13:36:40 by dloustal      #+#    #+#                 */
-/*   Updated: 2025/09/28 21:17:58 by dloustalot    ########   odam.nl         */
+/*   Updated: 2025/09/29 16:26:06 by dloustal      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,17 @@ static t_color	get_color(t_ray ray, t_scene *scene)
 	return (cl);
 }
 
+static t_color	compute_color(t_ray ray, t_scene *scene)
+{
+	t_color	cl;
+
+	if (DEPTH == 1)
+		cl = get_color(ray, scene);
+	else
+		cl = get_color_deep(ray, ray, scene, DEPTH);
+	return (cl);
+}
+
 /*Rendering with all materials at 50% color absorption with(out) antialiasing*/
 void	render_aa_deep(mlx_image_t *img, t_scene *scene, t_vport *vp)
 {
@@ -46,7 +57,7 @@ void	render_aa_deep(mlx_image_t *img, t_scene *scene, t_vport *vp)
 	int			i_w;
 	t_color		cl;
 	t_ray		ray;
-	t_coord		pixel_center;
+	int			k;
 
 	i_h = 0;
 	while (i_h < (int)img->height)
@@ -54,11 +65,14 @@ void	render_aa_deep(mlx_image_t *img, t_scene *scene, t_vport *vp)
 		i_w = 0;
 		while (i_w < (int)img->width)
 		{
-			pixel_center = sum_vec(vp->p_00, sum_vec(scaled(vp->delta_x, i_w),
-						scaled(vp->delta_y, i_h)));
-			ray = set_ray(scene->camera.pos,
-					sub_vec(pixel_center, scene->camera.pos));
-			cl = get_color_deep(ray, ray, scene, DEPTH);
+			k = 0;
+			cl = color(0.0, 0.0, 0.0);
+			while (k++ < SAMPLES)
+			{
+				ray = get_ray(i_w, i_h, vp, scene);
+				cl = sum_color(cl, compute_color(ray, scene));
+			}
+			cl = scale_col(cl, 1.0 / SAMPLES);
 			mlx_put_pixel(img, i_w, i_h, get_rgba(cl, 255));
 			i_w++;
 		}
@@ -73,11 +87,11 @@ t_color	get_color_deep(t_ray ray, t_ray ray2, t_scene *scene, int depth)
 	double		dist;
 	double		dist_min;
 	t_coord		hit_point;
-	t_color		rec_cl; // recursive color
-	t_vec		random_dir;
-	t_color		cl;
-	t_vec		normal;
 	t_vec		offset_point;
+	t_vec		random_dir;
+	t_vec		normal;
+	t_color		rec_cl; // recursive color
+	t_color		cl;
 
 	if (depth <= 0)
 		return (color(0.0, 0.0, 0.0));
@@ -97,25 +111,16 @@ t_color	get_color_deep(t_ray ray, t_ray ray2, t_scene *scene, int depth)
 	if (closest)
 	{
 		normal = get_normal(closest, hit_point);
-		offset_point = sum_vec(hit_point, scaled(normal, 1e-4));
-		// random_dir = random_vec_on_hemis(normal);
+		offset_point = sum_vec(hit_point, scaled(normal, 1e-6));
 		random_dir = sum_vec(normal, random_unit_vec());
 		rec_cl = scale_col(get_color_deep(set_ray(offset_point, random_dir), ray2,
-            scene, depth-1), 0.05);
+            scene, depth - 1), 0.15);
 		cl = sum_color(rec_cl, calc_obj_color(closest, scene, ray2, dist_min));
 	}
 	else
 		cl = calc_background_color(ray);
 	return (cl);
 }
-
-/*used pointer *vp to avoid duplicating all data in vp struct,
-	though it will not make a visible difference in speed. */
-
-/*other changes: 
-	1. renamed paint_gradientpix() to paint_pixel();
-	2. packed i_h and i_w in pixel_coord[2], to pass into paint_pixel(), 
-		limiting parameter count to 4. */
 
 void	render(mlx_image_t *img, t_scene *scene, t_vport *vp)
 {

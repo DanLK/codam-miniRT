@@ -3,10 +3,10 @@
 /*                                                        ::::::::            */
 /*   random.c                                           :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: dloustal <marvin@42.fr>                      +#+                     */
+/*   By: dloustal <dloustal@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/09/11 15:58:52 by dloustal      #+#    #+#                 */
-/*   Updated: 2025/09/28 20:36:34 by dloustalot    ########   odam.nl         */
+/*   Updated: 2025/09/29 11:56:46 by dloustal      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,21 +68,21 @@ void	print_random_number()
 double	random_double(void)
 {
 	double		n;
-	t_rand		*rng;
+	// t_rand		*rng;
 	uint32_t	big_num;
 	int			i;
 
 	if (!g_rng)
 	{
-		rng = init_rng();
-		if (!rng)
+		g_rng = init_rng();
+		if (!g_rng)
 			return (0); // Not sure what to do in this case
 	}
 	i = 0;
 	while (i++ < 5)
-		big_num = pcg_generator(rng);
+		big_num = pcg_generator(g_rng);
 	n = ((double)big_num) / pow(2.0, 32.0);
-	free(rng);
+	// free(rng);
 	return (n);
 }
 

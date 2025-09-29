@@ -6,7 +6,7 @@
 /*   By: dloustal <dloustal@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/09/15 11:41:39 by dloustal      #+#    #+#                 */
-/*   Updated: 2025/09/15 11:58:15 by dloustal      ########   odam.nl         */
+/*   Updated: 2025/09/29 11:58:04 by dloustal      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,10 @@ t_vec	random_unit_vec(void)
 		vec = random_vec_in(-1.0, 1.0);
 		len_sq = vec.x * vec.x + vec.y * vec.y + vec.z * vec.z;
 		if (len_sq <= 1.0 && EPSILON < len_sq)
+		{
+			// printf("(%f, %f, %f)\n", normalized(vec).x, normalized(vec).y, normalized(vec).z);
 			return (normalized(vec));
+		}
 	}
 }
 

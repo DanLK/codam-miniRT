@@ -3,20 +3,20 @@
 /*                                                        ::::::::            */
 /*   miniRT.h                                           :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: dloustal <marvin@42.fr>                      +#+                     */
+/*   By: dloustal <dloustal@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/07 13:30:20 by hogu          #+#    #+#                 */
-/*   Updated: 2025/09/28 21:16:02 by dloustalot    ########   odam.nl         */
+/*   Updated: 2025/09/29 16:30:04 by dloustal      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINIRT_H
 # define MINIRT_H
-# define WIDTH 1024
+# define WIDTH 2048
 # define RATIO (4.0 / 3.0)
 # define HEIGHT (int)(WIDTH / RATIO)
 # define EPSILON 1e-8
-# define SAMPLES 1
+# define SAMPLES 6
 # define DEPTH 2
 
 # include "libft.h"

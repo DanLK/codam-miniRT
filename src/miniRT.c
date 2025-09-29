@@ -6,7 +6,7 @@
 /*   By: dloustal <dloustal@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/07 14:51:55 by dloustal      #+#    #+#                 */
-/*   Updated: 2025/09/15 15:44:54 by dloustal      ########   odam.nl         */
+/*   Updated: 2025/09/29 16:01:15 by dloustal      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,8 @@ static bool	render_scene(mlx_t *mlx, mlx_image_t *img, t_scene *scene,
 	make_vport(scene->camera, vp);
 	if (SAMPLES == 1 && DEPTH == 1)
 		render(img, scene, vp);
-	else if (DEPTH == 1)
-		render_anti_aliasing(img, scene, vp);
+	// else if (DEPTH == 1)
+	// 	render_anti_aliasing(img, scene, vp);
 	else
 		render_aa_deep(img, scene, vp);
 	if (mlx_image_to_window(mlx, img, 0, 0) < 0)
