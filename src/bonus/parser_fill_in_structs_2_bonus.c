@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   parser_fill_in_structs_bonus.c                     :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: hogu <hogu@student.codam.nl>               +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/03 16:22:22 by hogu              #+#    #+#             */
-/*   Updated: 2025/09/03 16:22:23 by hogu             ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   parser_fill_in_structs_2_bonus.c                   :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: dloustal <dloustal@student.42.fr>            +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2025/09/03 16:22:22 by hogu          #+#    #+#                 */
+/*   Updated: 2025/10/01 17:14:54 by dloustal      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ static bool	alloc_object(t_object **obj)
 	if (!*obj)
 		return (printf("Error\n"), perror("malloc"), false);
 	ft_bzero(*obj, sizeof(t_object));
+	((*obj)->material).type = DEFAULT;
+	((*obj)->material).albedo = 1.0;
 	(*obj)->next = NULL;
 	return (true);
 }
@@ -31,12 +33,13 @@ bool	fill_in_sphere(const char *s, t_scene *scene)
 	if (!s || !scene)
 		return (false);
 	pr = space_split(s);
-	if (!pr || !pr[1] || !pr[2] || !pr[3] || !pr[4] || pr[5])
+	if (!pr || !pr[1] || !pr[2] || !pr[3] || !pr[4] || (pr[5] && !pr[6]) || pr[7])
 		return (print_error(PARAM_COUNT, s), free_split(pr), false);
 	if (!alloc_object(&obj))
 		return (free_split(pr), false);
 	if (!check_coord(pr[1], &obj->center) || !check_color(pr[3], &obj->color)
-		|| !check_chkb(pr[4], &obj->is_chkb))
+		|| !check_chkb(pr[4], &obj->is_chkb)
+		|| (pr[5] && !check_material(pr[5], pr[6], &obj->material)))
 		return (free(obj), free_split(pr), false);
 	if (!ft_atod(pr[2], &diameter))
 		return (print_error(DOUBLE, pr[2]), free(obj), free_split(pr), false);

@@ -6,7 +6,7 @@
 /*   By: dloustal <dloustal@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/07 13:30:20 by hogu          #+#    #+#                 */
-/*   Updated: 2025/10/01 14:12:45 by dloustal      ########   odam.nl         */
+/*   Updated: 2025/10/01 16:29:17 by dloustal      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -187,7 +187,8 @@ typedef enum e_error_code
 	DIGITS_ONLY,
 	DUP_ELEM,
 	MISS_ELEM,
-	INVALID_CHKB
+	INVALID_CHKB,
+	INVALID_MAT
 }	t_error_code;
 
 typedef enum e_cy_position

@@ -6,7 +6,7 @@
 /*   By: dloustal <dloustal@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/14 12:23:50 by hogu          #+#    #+#                 */
-/*   Updated: 2025/09/26 14:42:52 by dloustal      ########   odam.nl         */
+/*   Updated: 2025/10/01 17:09:42 by dloustal      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,20 @@ void	print_light(t_light *l)
 	printf("\n");
 }
 
+static void print_material(t_material *material)
+{
+	if (!material)
+		printf("Material is NULL\n");
+	if (material->type == LAMBERTIAN)
+		printf("	Material: lambertian\n");
+	if (material->type == METAL)
+		printf("	Material: metal\n");
+	if (material->type == DEFAULT)
+		printf("	Material: default\n");
+	printf("	Albedo: %f\n", material->albedo);
+
+}
+
 void	print_object(t_object *obj)
 {
 	while (obj)
@@ -67,18 +81,12 @@ void	print_object(t_object *obj)
 			printf("Sphere:\n");
 			print_coord(obj->center);
 			printf("  Diameter: %g\n", obj->sp.diameter);
-			print_color(obj->color);
-			printf("  is_checkerboard: %d\n", obj->is_chkb);
-			printf("\n");
 		}
 		else if (obj->type == PLANE)
 		{
 			printf("Plane:\n");
 			print_coord(obj->center);
 			print_vector(obj->pl.dir);
-			print_color(obj->color);
-			printf("  is_checkerboard: %d\n", obj->is_chkb);
-			printf("\n");
 		}
 		else if (obj->type == CYLINDER)
 		{
@@ -87,10 +95,10 @@ void	print_object(t_object *obj)
 			print_vector(obj->cy.dir);
 			printf("  Diameter: %g\n", obj->cy.diameter);
 			printf("  Height: %g\n", obj->cy.height);
-			print_color(obj->color);
-			printf("  is_checkerboard: %d\n", obj->is_chkb);
-			printf("\n");
 		}
+		print_color(obj->color);
+		printf("  is_checkerboard: %d\n", obj->is_chkb);
+		print_material(&obj->material);
 		obj = obj->next;
 	}
 }

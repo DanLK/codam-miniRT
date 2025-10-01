@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   miniRT_bonus.h                                     :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: hogu <hogu@student.codam.nl>               +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/08 15:51:36 by hogu              #+#    #+#             */
-/*   Updated: 2025/09/08 15:51:39 by hogu             ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   miniRT_bonus.h                                     :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: dloustal <dloustal@student.42.fr>            +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2025/09/08 15:51:36 by hogu          #+#    #+#                 */
+/*   Updated: 2025/10/01 17:11:36 by dloustal      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ t_color		cal_cy_chkb_curved_surface(t_object *obj, t_vec v, double proj);
 
 //parser
 bool		check_chkb(const char *str, bool *is_chkb);
+bool		check_material(const char *mat, const char *alb, t_material	*material);
 
 //print error
 void		print_error_bonus(int code, const char *s);
