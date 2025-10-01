@@ -10,6 +10,7 @@ COMMON_SRC = miniRT.c \
 	  ray.c \
 	  viewport.c \
 	  color_cal_lights.c \
+	  color_calc.c \
 	  color_intensity.c \
 	  color_utils.c \
 	  parser_atod.c \

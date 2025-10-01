@@ -65,7 +65,7 @@ t_color	cal_diffuse(t_scene *scn, t_coord hit_p, t_object *obj, bool *in_shadow)
 			intensity = calc_intensity(hit_p, obj, cur->pos);
 			single = calc_obj_solo(obj->show_color, cur->color, cur->ratio,
 					intensity);
-			sum = sum_color(sum, single);
+			sum = col_sum(sum, single);
 		}
 		cur = cur->next;
 	}
