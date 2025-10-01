@@ -6,15 +6,18 @@
 /*   By: dloustal <dloustal@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/07 13:30:20 by hogu          #+#    #+#                 */
-/*   Updated: 2025/08/27 12:34:21 by dloustal      ########   odam.nl         */
+/*   Updated: 2025/09/29 16:30:04 by dloustal      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINIRT_H
 # define MINIRT_H
-# define WIDTH 1024
-# define HEIGHT 768
+# define WIDTH 2048
+# define RATIO (4.0 / 3.0)
+# define HEIGHT (int)(WIDTH / RATIO)
 # define EPSILON 1e-8
+# define SAMPLES 6
+# define DEPTH 2
 
 # include "libft.h"
 # include "MLX42/MLX42.h"
@@ -25,6 +28,7 @@
 # include <float.h>
 # include <stdbool.h>
 # include <stdlib.h>
+# include <sys/time.h>
 
 typedef struct s_vec
 {
@@ -37,9 +41,9 @@ typedef t_vec	t_coord;
 
 typedef struct s_color
 {
-	int	r;
-	int	g;
-	int	b;
+	double	r;
+	double	g;
+	double	b;
 }	t_color;
 
 typedef struct s_ray
@@ -148,6 +152,13 @@ typedef struct s_scene
 	t_scene_status	status;
 }	t_scene;
 
+typedef struct s_rand
+{
+	uint64_t	state;
+	uint64_t	increment;
+}		t_rand;
+
+
 typedef enum e_error_code
 {
 	WRONG_ARGS,
@@ -184,6 +195,23 @@ double		dot(t_vec u, t_vec v);
 t_vec		cross(t_vec u, t_vec v);
 t_vec		sub_vec(t_vec u, t_vec v);
 t_vec		reject(t_vec v, t_vec dir);
+
+//------------------------Utils-------------------------
+// Random
+t_rand		*init_rng();
+uint32_t	pcg_generator(t_rand	*rng);
+void		print_random_number();
+double		random_double(void);
+double		random_in(double min, double max);
+void 		print_rand_double(void);
+void 		print_rand_double_in(double min, double max);
+//Random vec
+t_vec		random_vec(void);
+t_vec		random_vec_in(double min, double max);
+t_vec		random_unit_vec(void);
+t_vec		random_vec_on_hemis(t_vec normal);
+//Interval
+void		clamp(double *num, double min, double max); // Not using this function yet
 
 //---------------------Parser----------------------------
 bool		parser(t_scene *scene, const char *filename);
@@ -249,11 +277,16 @@ t_vec		get_sphere_normal(t_object *obj, t_coord hit_p);
 int			find_point_on_cylinder(t_object *obj, t_coord hit_p, t_vec *v,
 				double *proj);
 double		calc_intensity(t_coord hit_p, t_object *obj, t_coord light_p);
+t_vec		get_normal(t_object *obj, t_coord hit_point);
 
 //color_utils
-int			get_rgba(int r, int g, int b, int a);
+int			get_rgba(t_color col, double alpha);
+// t_color		sum_col_notinrange(t_color cl1, t_color cl2);
+t_color		multiply_color(t_color cl1, t_color cl2);
 t_color		sum_color(t_color cl1, t_color cl2);
 t_color		calc_background_color(t_ray ray);
+t_color		color(double r, double g, double b);
+t_color		scale_col(t_color cl, double scalar);
 
 //-----------------Viewport------------------
 void		make_vport(t_camera cam, t_vport *viewport);
@@ -264,6 +297,11 @@ t_ray		set_ray(t_coord start, t_vec ray_dir);
 
 //-----------------Render------------------
 void		render(mlx_image_t *img, t_scene *scene, t_vport *vp);
+void		render_anti_aliasing(mlx_image_t *img, t_scene *scene, t_vport *vp);
+t_ray		get_ray(int w, int h, t_vport *vp, t_scene *scene);
+t_vec		sample_square(void);
+void		render_aa_deep(mlx_image_t *img, t_scene *scene, t_vport *vp);
+t_color		get_color_deep(t_ray ray, t_ray ray2, t_scene *scene, int depth);
 
 //-----------------Hitting------------------
 bool		hit_sphere(t_object *obj, t_ray ray, double *dist);

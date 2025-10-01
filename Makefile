@@ -1,4 +1,4 @@
-vpath %.c src:src/color:src/parser:src/hittables:src/vec:src/bonus
+vpath %.c src:src/color:src/parser:src/hittables:src/vec:src/bonus:src/utils
 
 NAME = miniRT
 BONUS_NAME = miniRT_bonus
@@ -23,6 +23,9 @@ COMMON_SRC = miniRT.c \
 	  cylinder.c \
 	  vec_ops.c \
 	  vec.c \
+	  random.c \
+	  random_vec.c \
+	  interval.c
 
 MANDATORY_ONLY_SRC = color_obj_mandatory.c \
 	 		parser_fill_in_structs_1_mandatory.c \
@@ -45,53 +48,58 @@ BONUS_OBJ_DIR = ./obj_bonus
 OBJ = $(SRC:%.c=$(OBJ_DIR)/%.o)
 BONUS_OBJ = $(BONUS_SRC:%.c=$(BONUS_OBJ_DIR)/%.o)
 
-CFLAGS += -Wall -Werror -Wextra -fsanitize=address -g
+CFLAGS += -Wall -Werror -Wextra -fsanitize=address -g -O3 -flto
 
 MLX42_REPO = https://github.com/codam-coding-college/MLX42.git
 LIBMLX = ./MLX42
 
-HEADERS = -Iinclude -I$(LIBFT_DIR) -I $(LIBMLX)/include
 LIBS := $(LIBMLX)/build/libmlx42.a -lm -ldl -lglfw -pthread
 LIBFT_DIR = ./libft
 LIBFT = $(LIBFT_DIR)/libft.a
+HEADERS = -Iinclude -I$(LIBFT_DIR) -I $(LIBMLX)/include
 
 all: libmlx42 $(NAME)
 
 bonus: CFLAGS += -DBONUS
 bonus: libmlx42 $(BONUS_NAME)
 
-libmlx42: $(LIBMLX)
+libmlx42: $(LIBMLX)/build/libmlx42.a
+
+$(LIBMLX)/build/libmlx42.a: $(LIBMLX)
 	@cmake $(LIBMLX) -B $(LIBMLX)/build && make -C $(LIBMLX)/build -j4
 
 $(LIBMLX):
-	git clone $(MLX42_REPO) $(LIBMLX)
+	@git clone $(MLX42_REPO) $(LIBMLX)
 
 $(NAME): $(OBJ) $(LIBFT)
-	$(CC) $(CFLAGS) -o $(NAME) $(OBJ) $(LIBS) $(LIBFT) $(HEADERS)
+	@$(CC) $(CFLAGS) -o $(NAME) $(OBJ) $(LIBS) $(LIBFT) $(HEADERS)
+	@echo "Make successful"
 
 $(BONUS_NAME): $(BONUS_OBJ) $(LIBFT)
-	$(CC) $(CFLAGS) -o $(BONUS_NAME) $(BONUS_OBJ) $(LIBS) $(LIBFT) $(HEADERS)
+	@$(CC) $(CFLAGS) -o $(BONUS_NAME) $(BONUS_OBJ) $(LIBS) $(LIBFT) $(HEADERS)
+	@echo "Make bonus successful"
 
 $(OBJ_DIR)/%.o: %.c
-	mkdir -p $(dir $@)
-	$(CC) $(CFLAGS) $(HEADERS) -c $< -o $@
+	@mkdir -p $(dir $@)
+	@$(CC) $(CFLAGS) $(HEADERS) -c $< -o $@
 
 $(BONUS_OBJ_DIR)/%.o: %.c
-	mkdir -p $(dir $@)
-	$(CC) $(CFLAGS) $(HEADERS) -c $< -o $@
+	@mkdir -p $(dir $@)
+	@$(CC) $(CFLAGS) $(HEADERS) -c $< -o $@
 
 $(LIBFT):
-	$(MAKE) -C $(LIBFT_DIR)
+	@$(MAKE) -C $(LIBFT_DIR)
 
 clean:
-	rm -f $(OBJ) $(BONUS_OBJ)
-	rm -rf $(OBJ_DIR) $(BONUS_OBJ_DIR)
-	rm -rf $(LIBMLX)
-	$(MAKE) -C $(LIBFT_DIR) clean
+	@rm -f $(OBJ) $(BONUS_OBJ)
+	@rm -rf $(OBJ_DIR) $(BONUS_OBJ_DIR)
+	@rm -rf $(LIBMLX)
+	@$(MAKE) -C $(LIBFT_DIR) clean
+	@echo "clean successful"
 
 fclean: clean
-	rm -f $(NAME) $(BONUS_NAME)
-	$(MAKE) -C $(LIBFT_DIR) fclean
+	@rm -f $(NAME) $(BONUS_NAME)
+	@$(MAKE) -C $(LIBFT_DIR) fclean
 
 re: fclean all
 
