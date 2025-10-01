@@ -6,17 +6,17 @@
 /*   By: dloustal <dloustal@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/07 13:30:20 by hogu          #+#    #+#                 */
-/*   Updated: 2025/09/29 16:30:04 by dloustal      ########   odam.nl         */
+/*   Updated: 2025/10/01 14:12:45 by dloustal      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINIRT_H
 # define MINIRT_H
-# define WIDTH 2048
+# define WIDTH 1536
 # define RATIO (4.0 / 3.0)
 # define HEIGHT (int)(WIDTH / RATIO)
 # define EPSILON 1e-8
-# define SAMPLES 6
+# define SAMPLES 3
 # define DEPTH 2
 
 # include "libft.h"
@@ -94,6 +94,19 @@ typedef enum e_obj_type
 	CYLINDER
 }	t_obj_type;
 
+typedef	enum e_mat_type
+{
+	LAMBERTIAN,
+	METAL,
+	DEFAULT
+}		t_mat_type;
+
+typedef struct s_material
+{
+	double		albedo;
+	t_mat_type	type;
+}		t_material;
+
 typedef struct s_sphere
 {
 	double	diameter;
@@ -127,6 +140,7 @@ typedef struct s_object
 	bool			is_chkb;
 	t_color			show_color;
 	t_coord			center;
+	t_material		material;
 	union
 	{
 		t_sphere	sp;

@@ -6,7 +6,7 @@
 /*   By: dloustal <dloustal@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/19 13:36:40 by dloustal      #+#    #+#                 */
-/*   Updated: 2025/09/29 16:26:06 by dloustal      ########   odam.nl         */
+/*   Updated: 2025/10/01 12:13:02 by dloustal      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,7 @@ t_color	get_color_deep(t_ray ray, t_ray ray2, t_scene *scene, int depth)
 		offset_point = sum_vec(hit_point, scaled(normal, 1e-6));
 		random_dir = sum_vec(normal, random_unit_vec());
 		rec_cl = scale_col(get_color_deep(set_ray(offset_point, random_dir), ray2,
-            scene, depth - 1), 0.15);
+            scene, depth - 1), 0.5);
 		cl = sum_color(rec_cl, calc_obj_color(closest, scene, ray2, dist_min));
 	}
 	else
