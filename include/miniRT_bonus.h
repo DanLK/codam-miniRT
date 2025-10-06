@@ -3,10 +3,10 @@
 /*                                                        ::::::::            */
 /*   miniRT_bonus.h                                     :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: dloustal <dloustal@student.42.fr>            +#+                     */
+/*   By: dloustal <marvin@42.fr>                      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/09/08 15:51:36 by hogu          #+#    #+#                 */
-/*   Updated: 2025/10/01 17:11:36 by dloustal      ########   odam.nl         */
+/*   Updated: 2025/10/06 17:41:11 by dloustalot    ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,10 @@
 //color_local_coord
 void		set_local_basis(t_vec dir, t_basis *basis);
 void		get_local_coord(t_basis *basis, t_coord *local, t_vec v);
+
+//trace_color per material
+t_color		compute_color_lamb(t_ray ray, t_ray camera_ray, t_scene *scene, int depth);
+t_color		trace_color(t_ray ray, t_ray camera_ray, t_scene *scene, int depth);
 
 //color_cal_checkerboard
 t_color		cal_pl_chkb(t_object *obj, t_coord hit_p);

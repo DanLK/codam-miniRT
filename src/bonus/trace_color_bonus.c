@@ -6,7 +6,7 @@
 /*   By: dloustal <marvin@42.fr>                      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/10/06 16:27:04 by dloustalot    #+#    #+#                 */
-/*   Updated: 2025/10/06 17:37:51 by dloustalot    ########   odam.nl         */
+/*   Updated: 2025/10/06 17:58:36 by dloustalot    ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,15 @@ t_color	compute_color_lamb(t_ray ray, t_ray camera_ray, t_scene *scene, int dept
 			calc_obj_color(obj, scene, camera_ray, t)));
 }
 
+t_color	compute_color_metal(t_ray ray, t_ray camera_ray, t_scene *scene, int depth)
+{
+
+}
+
+t_vec	get_scattered_lamb();
+
+t_vec	get_scattered_metal();
+
 t_color	trace_color(t_ray ray, t_ray camera_ray, t_scene *scene, int depth)
 {
 	t_object	*obj;
@@ -61,4 +70,9 @@ t_color	trace_color(t_ray ray, t_ray camera_ray, t_scene *scene, int depth)
 		return (calc_obj_color(obj, scene, ray, t));
 	else
 		return (calc_obj_color(obj, scene, ray, t));	
+}
+
+t_vec	reflected(t_vec v, t_vec normal)
+{
+	return (sub_vec(v, scaled(normal, 2.0 * dot(v, normal))));
 }
