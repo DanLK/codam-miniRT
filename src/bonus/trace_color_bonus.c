@@ -6,7 +6,7 @@
 /*   By: dloustal <marvin@42.fr>                      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/10/06 16:27:04 by dloustalot    #+#    #+#                 */
-/*   Updated: 2025/10/06 17:13:38 by dloustalot    ########   odam.nl         */
+/*   Updated: 2025/10/06 17:37:51 by dloustalot    ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,6 @@ t_color	trace_color(t_ray ray, t_ray camera_ray, t_scene *scene, int depth)
 	t_object	*obj;
 	double		t;
 
-	// if (depth <= 0)
-	// 	return (color(0.0, 0.0, 0.0));
 	if (!find_closest_hit(ray, scene, &obj, &t))
 		return (calc_background_color(ray));
 	if (obj->material.type == LAMBERTIAN)

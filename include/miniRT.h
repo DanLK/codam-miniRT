@@ -6,7 +6,7 @@
 /*   By: dloustal <marvin@42.fr>                      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/07 13:30:20 by hogu          #+#    #+#                 */
-/*   Updated: 2025/10/06 14:18:09 by dloustalot    ########   odam.nl         */
+/*   Updated: 2025/10/06 17:21:11 by dloustalot    ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # define RATIO (4.0 / 3.0)
 # define HEIGHT (int)(WIDTH / RATIO)
 # define EPSILON 1e-8
-# define SAMPLES 6
+# define SAMPLES 8
 # define DEPTH 2
 
 # include "libft.h"
