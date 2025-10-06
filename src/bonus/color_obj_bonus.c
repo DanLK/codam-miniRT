@@ -57,5 +57,5 @@ t_color	calc_obj_color(t_object *obj, t_scene *scn, t_ray ray, double t)
 	if (in_shadow)
 		return (obj_amb);
 	else
-		return (sum_color(obj_amb, obj_dif));
+		return (col_sum(obj_amb, obj_dif));
 }

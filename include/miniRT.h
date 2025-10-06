@@ -6,7 +6,7 @@
 /*   By: dloustal <marvin@42.fr>                      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/07 13:30:20 by hogu          #+#    #+#                 */
-/*   Updated: 2025/10/06 13:53:52 by dloustalot    ########   odam.nl         */
+/*   Updated: 2025/10/06 14:18:09 by dloustalot    ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -226,7 +226,7 @@ t_vec		random_vec_in(double min, double max);
 t_vec		random_unit_vec(void);
 t_vec		random_vec_on_hemis(t_vec normal);
 //Interval
-void		clamp(double *num, double min, double max); // Not using this function yet
+void		clamp(double *num, double min, double max);
 
 //---------------------Parser----------------------------
 bool		parser(t_scene *scene, const char *filename);
@@ -294,14 +294,15 @@ int			find_point_on_cylinder(t_object *obj, t_coord hit_p, t_vec *v,
 double		calc_intensity(t_coord hit_p, t_object *obj, t_coord light_p);
 t_vec		get_normal(t_object *obj, t_coord hit_point);
 
+//color_calc
+t_color		col_sum(t_color cl1, t_color cl2);
+t_color		col_mul(t_color cl1, t_color cl2);
+t_color		col_scale(t_color cl, double scalar);
+
 //color_utils
 int			get_rgba(t_color col, double alpha);
-// t_color		sum_col_notinrange(t_color cl1, t_color cl2);
-t_color		multiply_color(t_color cl1, t_color cl2);
-t_color		sum_color(t_color cl1, t_color cl2);
-t_color		calc_background_color(t_ray ray);
 t_color		color(double r, double g, double b);
-t_color		scale_col(t_color cl, double scalar);
+t_color		calc_background_color(t_ray ray);
 
 //-----------------Viewport------------------
 void		make_vport(t_camera cam, t_vport *viewport);
@@ -311,18 +312,18 @@ t_coord		ray_at(t_ray ray, double t);
 t_ray		set_ray(t_coord start, t_vec ray_dir);
 
 //-----------------Render------------------
-void		render(mlx_image_t *img, t_scene *scene, t_vport *vp);
-void		render_anti_aliasing(mlx_image_t *img, t_scene *scene, t_vport *vp);
-t_ray		get_ray(int w, int h, t_vport *vp, t_scene *scene);
-t_vec		sample_square(void);
-void		render_aa_deep(mlx_image_t *img, t_scene *scene, t_vport *vp);
-t_color		get_color_deep(t_ray ray, t_ray ray2, t_scene *scene, int depth);
+void		render_image(mlx_image_t *img, t_scene *scene, t_vport *vp);
+t_color		trace_color(t_ray ray, t_ray camera_ray, t_scene *scene, int depth);
+// void		render_anti_aliasing(mlx_image_t *img, t_scene *scene, t_vport *vp);
+// t_ray		get_ray(int w, int h, t_vport *vp, t_scene *scene);
+// t_vec		sample_square(void);
+// void		render_aa_deep(mlx_image_t *img, t_scene *scene, t_vport *vp);
+// t_color		get_color_deep(t_ray ray, t_ray ray2, t_scene *scene, int depth);
 
 //-----------------Hitting------------------
-bool		hit_sphere(t_object *obj, t_ray ray, double *dist);
-bool		hit_plane(t_object *obj, t_ray ray, double *dist);
-bool		hit_cylinder(t_object *obj, t_ray ray, double *dist);
 bool		hit_object(t_ray ray, t_object *obj, double *dist);
+bool		find_closest_hit(t_ray ray, t_scene *scene, t_object **out_obj, double *out_tmin);
+
 //cylinder
 bool		hit_wall(t_object *obj, t_ray ray, double *dist);
 bool		hit_cap(t_object *obj, t_ray ray, double *dist, char cap);

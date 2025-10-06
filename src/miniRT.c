@@ -47,12 +47,7 @@ static bool	render_scene(mlx_t *mlx, mlx_image_t *img, t_scene *scene,
 		t_vport *vp)
 {
 	make_vport(scene->camera, vp);
-	if (SAMPLES == 1 && DEPTH == 1)
-		render(img, scene, vp);
-	// else if (DEPTH == 1)
-	// 	render_anti_aliasing(img, scene, vp);
-	else
-		render_aa_deep(img, scene, vp);
+	render_image(img, scene, vp);
 	if (mlx_image_to_window(mlx, img, 0, 0) < 0)
 	{
 		ft_putstr_fd((char *)mlx_strerror(mlx_errno), STDERR_FILENO);
