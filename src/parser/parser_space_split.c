@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                         ::::::::           */
-/*   parser_split.c                                      :+:    :+:           */
-/*                                                      +:+                   */
-/*   By: hogu <hogu@student.codam.nl>                  +#+                    */
-/*                                                    +#+                     */
-/*   Created: 2025/08/13 11:24:50 by hogu           #+#    #+#                */
-/*   Updated: 2025/08/13 11:24:51 by hogu           ########   odam.nl        */
+/*                                                        ::::::::            */
+/*   parser_space_split.c                               :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: dloustal <marvin@42.fr>                      +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2025/08/13 11:24:50 by hogu          #+#    #+#                 */
+/*   Updated: 2025/10/06 13:28:49 by dloustalot    ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ static int	count_words(char const *s)
 				i++;
 		}
 	}
+	printf("Word count: %d\n", count);
 	return (count);
 }
 
