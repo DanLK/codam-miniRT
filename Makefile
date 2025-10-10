@@ -40,6 +40,7 @@ BONUS_ONLY_SRC = color_cal_checkerboard_bonus.c \
 			parser_fill_in_structs_1_bonus.c \
 			parser_fill_in_structs_2_bonus.c \
 			trace_color_bonus.c \
+			scattered.c \
 			print_error_bonus.c
 
 SRC = $(COMMON_SRC) $(MANDATORY_ONLY_SRC)

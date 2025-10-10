@@ -6,7 +6,7 @@
 /*   By: dloustal <marvin@42.fr>                      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/07 13:30:20 by hogu          #+#    #+#                 */
-/*   Updated: 2025/10/06 17:21:11 by dloustalot    ########   odam.nl         */
+/*   Updated: 2025/10/10 16:42:44 by dloustalot    ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,6 +166,15 @@ typedef struct s_scene
 	t_scene_status	status;
 }	t_scene;
 
+typedef struct s_hit_point
+{
+	t_coord		hp;
+	double		t;
+	t_object	*obj;
+	t_vec		normal;
+}		t_hit_point;
+
+
 typedef struct s_rand
 {
 	uint64_t	state;
@@ -322,7 +331,8 @@ t_color		trace_color(t_ray ray, t_ray camera_ray, t_scene *scene, int depth);
 
 //-----------------Hitting------------------
 bool		hit_object(t_ray ray, t_object *obj, double *dist);
-bool		find_closest_hit(t_ray ray, t_scene *scene, t_object **out_obj, double *out_tmin);
+bool		find_closest_hit(t_ray ray, t_scene *scene, t_hit_point *hp);
+// bool		find_closest_hit(t_ray ray, t_scene *scene, t_object **out_obj, double *out_tmin);
 
 //cylinder
 bool		hit_wall(t_object *obj, t_ray ray, double *dist);

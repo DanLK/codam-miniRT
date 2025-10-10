@@ -6,14 +6,13 @@
 /*   By: dloustal <marvin@42.fr>                      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/19 13:36:40 by dloustal      #+#    #+#                 */
-/*   Updated: 2025/10/06 16:48:07 by dloustalot    ########   odam.nl         */
+/*   Updated: 2025/10/10 13:35:29 by dloustalot    ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
-bool	find_closest_hit(t_ray ray, t_scene *scene, t_object **out_obj,
-	double *out_t_min)
+bool	find_closest_hit(t_ray ray, t_scene *scene, t_hit_point *hp)
 {
 	t_object	*closest;
 	t_object	*cur;
@@ -34,10 +33,39 @@ bool	find_closest_hit(t_ray ray, t_scene *scene, t_object **out_obj,
 	}
 	if (!closest)
 		return (false);
-	*out_obj = closest;
-	*out_t_min = t_min;
+	hp->obj = closest;
+	hp->t = t_min;
+	hp->hp = ray_at(ray, t_min);
+	hp->normal = get_normal(closest, hp->hp);
 	return (true);
 }
+
+// bool	find_closest_hit(t_ray ray, t_scene *scene, t_object **out_obj,
+// 	double *out_t_min)
+// {
+// 	t_object	*closest;
+// 	t_object	*cur;
+// 	double		t;
+// 	double		t_min;
+
+// 	closest = NULL;
+// 	t_min = DBL_MAX;
+// 	cur = scene->objects;
+// 	while (cur)
+// 	{
+// 		if (hit_object(ray, cur, &t) && t > EPSILON && t < t_min)
+// 		{
+// 			t_min = t;
+// 			closest = cur;
+// 		}
+// 		cur = cur->next;
+// 	}
+// 	if (!closest)
+// 		return (false);
+// 	*out_obj = closest;
+// 	*out_t_min = t_min;
+// 	return (true);
+// }
 
 static t_ray	sample_camera_ray(int w, int h, t_vport *vp, t_scene *scene)
 {
