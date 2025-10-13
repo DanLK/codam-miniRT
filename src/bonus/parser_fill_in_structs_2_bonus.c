@@ -6,7 +6,7 @@
 /*   By: dloustal <marvin@42.fr>                      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/09/03 16:22:22 by hogu          #+#    #+#                 */
-/*   Updated: 2025/10/06 13:50:03 by dloustalot    ########   odam.nl         */
+/*   Updated: 2025/10/13 13:40:27 by dloustalot    ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,14 +61,15 @@ bool	fill_in_plane(const char *s, t_scene *scene)
 		return (false);
 	params = space_split(s);
 	if (!params || !params[1] || !params[2] || !params[3] || !params[4]
-		|| params[5])
+		|| (params[5] && !params[6]) || (params[5] && params[7]))
 		return (print_error(PARAM_COUNT, s), free_split(params), false);
 	if (!alloc_object(&obj))
 		return (free_split(params), false);
 	if (!check_coord(params[1], &obj->center)
 		|| !check_vector(params[2], &(obj->pl.dir))
 		|| !check_color(params[3], &obj->color)
-		|| !check_chkb(params[4], &obj->is_chkb))
+		|| !check_chkb(params[4], &obj->is_chkb)
+		|| (params[5] && !check_material(params[5], params[6], &obj->material)))
 		return (free(obj), free_split(params), false);
 	obj->type = PLANE;
 	append_object(&scene->objects, obj);
@@ -85,13 +86,15 @@ bool	fill_in_cylinder(const char *s, t_scene *scene)
 	if (!s || !scene)
 		return (false);
 	p = space_split(s);
-	if (!p || !p[1] || !p[2] || !p[3] || !p[4] || !p[5] || !p[6] || p[7])
+	if (!p || !p[1] || !p[2] || !p[3] || !p[4] || !p[5] || !p[6]
+		|| (p[7] && !p[8]) || (p[7] && p[9]))
 		return (print_error(PARAM_COUNT, s), free_split(p), false);
 	if (!alloc_object(&obj))
 		return (free_split(p), false);
 	if (!check_coord(p[1], &obj->center) || !check_color(p[5], &obj->color)
 		|| !check_vector(p[2], &(obj->cy.dir))
-		|| !check_chkb(p[6], &obj->is_chkb))
+		|| !check_chkb(p[6], &obj->is_chkb)
+		|| (p[7] && !check_material(p[7], p[8], &obj->material)))
 		return (free(obj), free_split(p), false);
 	if (!ft_atod(p[3], &diameter) || !ft_atod(p[4], &height))
 		return (print_error(DOUBLE, "cy:d/h"), free(obj), free_split(p), false);
