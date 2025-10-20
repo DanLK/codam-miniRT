@@ -57,7 +57,7 @@ CFLAGS += -Wall -Werror -Wextra -fsanitize=address -g -O3 -flto
 MLX42_REPO = https://github.com/codam-coding-college/MLX42.git
 LIBMLX = ./MLX42
 
-LIBS := $(LIBMLX)/build/libmlx42.a -lm -ldl -lglfw -L"/opt/homebrew/Cellar/glfw/3.4/lib/" -pthread
+LIBS := $(LIBMLX)/build/libmlx42.a -lm -ldl -lglfw -pthread
 LIBFT_DIR = ./libft
 LIBFT = $(LIBFT_DIR)/libft.a
 HEADERS = -Iinclude -I$(LIBFT_DIR) -I $(LIBMLX)/include
@@ -76,11 +76,11 @@ $(LIBMLX):
 	@git clone $(MLX42_REPO) $(LIBMLX)
 
 $(NAME): $(OBJ) $(LIBFT)
-	@$(CC) $(CFLAGS) -o $(NAME) $(OBJ) $(LIBS) $(LIBFT) $(HEADERS) -framework Cocoa -framework OpenGL -framework IOKit
+	@$(CC) $(CFLAGS) -o $(NAME) $(OBJ) $(LIBS) $(LIBFT) $(HEADERS)
 	@echo "Make successful"
 
 $(BONUS_NAME): $(BONUS_OBJ) $(LIBFT)
-	@$(CC) $(CFLAGS) -o $(BONUS_NAME) $(BONUS_OBJ) $(LIBS) $(LIBFT) $(HEADERS) -framework Cocoa -framework OpenGL -framework IOKit
+	@$(CC) $(CFLAGS) -o $(BONUS_NAME) $(BONUS_OBJ) $(LIBS) $(LIBFT) $(HEADERS)
 	@echo "Make bonus successful"
 
 $(OBJ_DIR)/%.o: %.c

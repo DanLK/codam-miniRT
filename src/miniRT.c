@@ -6,7 +6,7 @@
 /*   By: dloustal <dloustal@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/07 14:51:55 by dloustal      #+#    #+#                 */
-/*   Updated: 2025/09/29 16:01:15 by dloustal      ########   odam.nl         */
+/*   Updated: 2025/10/20 15:30:13 by dloustal      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static bool	init_scene(t_scene *scene, int argc, char *argv[])
 	ft_bzero(scene, sizeof(t_scene));
 	if (!parser(scene, argv[1]))
 		return (false);
-	print_scene(scene);
+	// print_scene(scene);
 	return (true);
 }
 
@@ -48,6 +48,7 @@ static bool	render_scene(mlx_t *mlx, mlx_image_t *img, t_scene *scene,
 {
 	make_vport(scene->camera, vp);
 	render_image(img, scene, vp);
+	print_scene(scene);
 	if (mlx_image_to_window(mlx, img, 0, 0) < 0)
 	{
 		ft_putstr_fd((char *)mlx_strerror(mlx_errno), STDERR_FILENO);

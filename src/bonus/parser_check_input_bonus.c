@@ -6,7 +6,7 @@
 /*   By: dloustal <dloustal@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/09/03 16:47:53 by hogu          #+#    #+#                 */
-/*   Updated: 2025/10/01 17:26:46 by dloustal      ########   odam.nl         */
+/*   Updated: 2025/10/20 11:54:02 by dloustal      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,13 +41,15 @@ static bool	check_mat_type(const char *type, t_material *material)
 
 static bool	check_albedo(const char *alb_num, t_material *material)
 {
-	double albedo;
+	// double albedo;
 
-	if (!ft_atod(alb_num, &albedo))
-		return (print_error_bonus(INVALID_MAT, alb_num), false);
-	if (albedo < 0.0001 || albedo > 1)
-		return (print_error_bonus(INVALID_MAT, alb_num), false);
-	material->albedo = albedo;
+	(void)alb_num;
+	(void)material;
+	// if (!ft_atod(alb_num, &albedo))
+	// 	return (print_error_bonus(INVALID_MAT, alb_num), false);
+	// if (albedo < 0.0001 || albedo > 1)
+	// 	return (print_error_bonus(INVALID_MAT, alb_num), false);
+	// material->albedo = albedo;
 	return (true);
 }
 

@@ -3,10 +3,10 @@
 /*                                                        ::::::::            */
 /*   miniRT_bonus.h                                     :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: dloustal <marvin@42.fr>                      +#+                     */
+/*   By: dloustal <dloustal@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/09/08 15:51:36 by hogu          #+#    #+#                 */
-/*   Updated: 2025/10/10 16:31:28 by dloustalot    ########   odam.nl         */
+/*   Updated: 2025/10/20 11:48:55 by dloustal      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,12 @@ void		get_local_coord(t_basis *basis, t_coord *local, t_vec v);
 
 //trace_color
 // t_color		compute_color_lamb(t_ray ray, t_ray camera_ray, t_scene *scene, int depth);
-bool		get_scattered_ray(t_ray ray, t_hit_point hp, t_ray *scattered, double *attenuation);
+bool		get_scattered_ray(t_ray ray, t_hit_point hp, t_ray *scattered, t_color *attenuation);
 t_color		trace_color(t_ray ray, t_ray camera_ray, t_scene *scene, int depth);
 
 //scattered
-bool		get_scattered_lmb(t_ray ray, t_hit_point hp, t_ray *scatt, double *att);
-bool		get_scattered_metal(t_ray ray, t_hit_point hp, t_ray *scatt, double *att);
+bool		get_scattered_lmb(t_ray ray, t_hit_point hp, t_ray *scatt, t_color *att);
+bool		get_scattered_metal(t_ray ray, t_hit_point hp, t_ray *scatt, t_color *att);
 // bool		get_scattered_default(t_ray ray, t_hit_point hp, t_ray *scatt, double *att);
 
 //color_cal_checkerboard

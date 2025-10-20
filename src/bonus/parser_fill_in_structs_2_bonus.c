@@ -3,10 +3,10 @@
 /*                                                        ::::::::            */
 /*   parser_fill_in_structs_2_bonus.c                   :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: dloustal <marvin@42.fr>                      +#+                     */
+/*   By: dloustal <dloustal@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/09/03 16:22:22 by hogu          #+#    #+#                 */
-/*   Updated: 2025/10/13 13:40:27 by dloustalot    ########   odam.nl         */
+/*   Updated: 2025/10/20 11:54:25 by dloustal      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static bool	alloc_object(t_object **obj)
 		return (printf("Error\n"), perror("malloc"), false);
 	ft_bzero(*obj, sizeof(t_object));
 	((*obj)->material).type = DEFAULT;
-	((*obj)->material).albedo = 0.0;
+	((*obj)->material).albedo = color(0.0, 0.0, 0.0);
 	(*obj)->next = NULL;
 	return (true);
 }

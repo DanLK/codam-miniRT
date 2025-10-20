@@ -6,7 +6,7 @@
 /*   By: dloustal <dloustal@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/14 12:23:50 by hogu          #+#    #+#                 */
-/*   Updated: 2025/10/01 17:09:42 by dloustal      ########   odam.nl         */
+/*   Updated: 2025/10/20 14:15:09 by dloustal      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ static void print_material(t_material *material)
 		printf("	Material: metal\n");
 	if (material->type == DEFAULT)
 		printf("	Material: default\n");
-	printf("	Albedo: %f\n", material->albedo);
+	// printf("	Albedo: %f\n", material->albedo);
 
 }
 
@@ -97,6 +97,8 @@ void	print_object(t_object *obj)
 			printf("  Height: %g\n", obj->cy.height);
 		}
 		print_color(obj->color);
+		printf("  Show");
+		print_color(obj->show_color);
 		printf("  is_checkerboard: %d\n", obj->is_chkb);
 		print_material(&obj->material);
 		obj = obj->next;

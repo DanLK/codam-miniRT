@@ -3,21 +3,21 @@
 /*                                                        ::::::::            */
 /*   miniRT.h                                           :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: dloustal <marvin@42.fr>                      +#+                     */
+/*   By: dloustal <dloustal@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/07 13:30:20 by hogu          #+#    #+#                 */
-/*   Updated: 2025/10/10 16:42:44 by dloustalot    ########   odam.nl         */
+/*   Updated: 2025/10/20 16:49:31 by dloustal      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINIRT_H
 # define MINIRT_H
-# define WIDTH 1024
+# define WIDTH 1536
 # define RATIO (4.0 / 3.0)
 # define HEIGHT (int)(WIDTH / RATIO)
-# define EPSILON 1e-8
-# define SAMPLES 8
-# define DEPTH 2
+# define EPSILON 1e-6
+# define SAMPLES 2
+# define DEPTH 3
 
 # include "libft.h"
 # include "MLX42/MLX42.h"
@@ -103,7 +103,7 @@ typedef	enum e_mat_type
 
 typedef struct s_material
 {
-	double		albedo;
+	t_color		albedo;
 	t_mat_type	type;
 }		t_material;
 
@@ -337,5 +337,8 @@ bool		find_closest_hit(t_ray ray, t_scene *scene, t_hit_point *hp);
 //cylinder
 bool		hit_wall(t_object *obj, t_ray ray, double *dist);
 bool		hit_cap(t_object *obj, t_ray ray, double *dist, char cap);
+
+//Printin
+void	print_color(t_color c);
 
 #endif
