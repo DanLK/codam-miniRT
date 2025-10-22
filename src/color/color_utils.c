@@ -6,7 +6,7 @@
 /*   By: dloustal <dloustal@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/22 15:41:46 by hogu          #+#    #+#                 */
-/*   Updated: 2025/09/29 16:14:35 by dloustal      ########   odam.nl         */
+/*   Updated: 2025/10/22 13:36:53 by dloustal      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static int	to_byte(double c)
 {
 	clamp(&c, 0.0, 1.0);
-	// c = sqrt(c); // gamma correction
+	c = sqrt(c); // gamma correction
 	return ((int)(c * 255.0));
 }
 
