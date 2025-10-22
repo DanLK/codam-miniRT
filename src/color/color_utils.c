@@ -26,7 +26,6 @@ int	get_rgba(t_color col, double alpha)
 	int	b;
 	int	a;
 
-
 	r = to_byte(col.r);
 	g = to_byte(col.g);
 	b = to_byte(col.b);
@@ -42,50 +41,6 @@ t_color	color(double r, double g, double b)
 	col.g = g;
 	col.b = b;
 	return (col);
-}
-
-t_color	multiply_color(t_color cl1, t_color cl2)
-{
-	return (color(cl1.r * cl2.r, cl1.g * cl2.g, cl1.b * cl2.b));
-
-
-}
-
-/*Sum two colors while not keeping the result as a valid color*/
-// Not needed for now because I'm clamping all the way at the end anyways (to_byte)
-// t_color	sum_col_notinrange(t_color cl1, t_color cl2)
-// {
-// 	t_color	new;
-
-// 	new.r = cl1.r + cl2.r;
-// 	new.g = cl1.g + cl2.g;
-// 	new.b = cl1.b + cl2.b;
-// 	return (new);
-// }
-
-/* sum the effect of 2 colors and make sure it is still in valid range*/
-t_color	sum_color(t_color cl1, t_color cl2)
-{
-	t_color	ret;
-
-	ret.r = cl1.r + cl2.r;
-	ret.g = cl1.g + cl2.g;
-	ret.b = cl1.b + cl2.b;
-	// clamp(&ret.r, 0.0, 1.0);
-	// clamp(&ret.g, 0.0, 1.0);
-	// clamp(&ret.b, 0.0, 1.0);
-	return (ret);
-}
-
-t_color	scale_col(t_color cl, double scalar)
-{
-	t_color	new;
-
-	new.r = cl.r * scalar;
-	new.g = cl.g * scalar;
-	new.b = cl.b * scalar;
-	return (new);
-	//Should add some error handling (?)
 }
 
 /* Depicts a gradient in y from blue to white*/
