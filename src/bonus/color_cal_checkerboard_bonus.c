@@ -26,23 +26,23 @@ static t_color	coord_to_color(t_color obj_color, double u, double v)
 	if ((iu + iv) % 2 == 0)
 		return (obj_color);
 	else
-		return ((t_color){255, 255, 255});
+		return ((t_color){1.0, 1.0, 1.0});
 }
 
-t_color	cal_pl_chkb(t_object *obj, t_coord hit_p)
+t_color	cal_pl_chkb(t_hit_point *hp)
 {
 	t_vec	v;
 	t_coord	local;
 
-	v = sub_vec(hit_p, obj->center);
-	get_local_coord(&obj->pl.basis, &local, v);
+	v = sub_vec(hp->hp, hp->obj->center);
+	get_local_coord(&hp->obj->pl.basis, &local, v);
 	if ((int)(floor(local.x) + floor(local.y)) % 2 == 0)
-		return (obj->color);
+		return (hp->obj->color);
 	else
-		return ((t_color){255, 255, 255});
+		return ((t_color){1.0, 1.0, 1.0});
 }
 
-t_color	cal_sp_chkb(t_object *obj, t_coord hit_p)
+t_color	cal_sp_chkb(t_hit_point *hp)
 {
 	t_vec	normal;
 	double	longtitude;
@@ -50,12 +50,12 @@ t_color	cal_sp_chkb(t_object *obj, t_coord hit_p)
 	double	u;
 	double	v;
 
-	normal = get_sphere_normal(obj, hit_p);
+	normal = get_sphere_normal(hp);
 	longtitude = atan2(normal.z, normal.x);
 	u = (longtitude + M_PI) / (2.0 * M_PI);
 	latitude = acos(normal.y);
 	v = latitude / M_PI;
-	return (coord_to_color(obj->color, u, v));
+	return (coord_to_color(hp->obj->color, u, v));
 }
 
 t_color	cal_cy_chkb_cap(t_object *obj, t_vec v)
@@ -66,7 +66,7 @@ t_color	cal_cy_chkb_cap(t_object *obj, t_vec v)
 	if ((int)(floor(local.x) + floor(local.y)) % 2 == 0)
 		return (obj->color);
 	else
-		return ((t_color){255, 255, 255});
+		return ((t_color){1.0, 1.0, 1.0});
 }
 
 t_color	cal_cy_chkb_curved_surface(t_object *obj, t_vec v, double proj)

@@ -1,4 +1,4 @@
-vpath %.c src:src/color:src/parser:src/hittables:src/vec:src/bonus:src/utils
+vpath %.c src:src/color:src/parser:src/hittables:src/vec:src/bonus:src/utils:src/render
 
 NAME = miniRT
 BONUS_NAME = miniRT_bonus
@@ -16,6 +16,7 @@ COMMON_SRC = miniRT.c \
 	  parser_atod.c \
 	  parser_check_input.c \
 	  parser_list_mgr.c \
+	  parser_object_man.c \
 	  parser_space_split.c \
 	  parser_util.c \
 	  parser.c \
@@ -29,15 +30,18 @@ COMMON_SRC = miniRT.c \
 	  interval.c
 
 MANDATORY_ONLY_SRC = color_obj_mandatory.c \
-	 		parser_fill_in_structs_1_mandatory.c \
-			parser_fill_in_structs_2_mandatory.c \
+	 		parser_fill_in_configs_mandatory.c \
+			parser_fill_in_objects_mandatory.c \
+			trace_color_mandatory.c
 
 BONUS_ONLY_SRC = color_cal_checkerboard_bonus.c \
 			color_local_basis_bonus.c \
 			color_obj_bonus.c \
 			parser_check_input_bonus.c \
-			parser_fill_in_structs_1_bonus.c \
-			parser_fill_in_structs_2_bonus.c \
+			parser_fill_in_configs_bonus.c \
+			parser_fill_in_objects_bonus.c \
+			trace_color_bonus.c \
+			scattered.c \
 			print_error_bonus.c
 
 SRC = $(COMMON_SRC) $(MANDATORY_ONLY_SRC)

@@ -6,19 +6,18 @@
 /*   By: dloustal <dloustal@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/07 13:30:20 by hogu          #+#    #+#                 */
-/*   Updated: 2025/09/29 16:30:04 by dloustal      ########   odam.nl         */
+/*   Updated: 2025/10/22 14:01:49 by dloustal      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINIRT_H
 # define MINIRT_H
-# define WIDTH 2048
+# define WIDTH 1536
 # define RATIO (4.0 / 3.0)
 # define HEIGHT (int)(WIDTH / RATIO)
-# define EPSILON 1e-8
-# define SAMPLES 6
-# define DEPTH 2
-# define ALBEDO 0.15
+# define EPSILON 1e-6
+# define SAMPLES 4
+# define DEPTH 4
 
 # include "libft.h"
 # include "MLX42/MLX42.h"
@@ -95,6 +94,19 @@ typedef enum e_obj_type
 	CYLINDER
 }	t_obj_type;
 
+typedef enum e_mat_type
+{
+	LAMBERTIAN,
+	METAL,
+	DEFAULT
+}		t_mat_type;
+
+typedef struct s_material
+{
+	t_color		albedo;
+	t_mat_type	type;
+}		t_material;
+
 typedef struct s_sphere
 {
 	double	diameter;
@@ -121,6 +133,13 @@ typedef struct s_cylinder
 	t_basis	basis;
 }	t_cylinder;
 
+typedef struct s_bonus_status
+{
+	bool	has_chkb;
+	bool	has_mat;
+	bool	has_albedo;
+}	t_bonus_status;
+
 typedef struct s_object
 {
 	t_obj_type		type;
@@ -128,6 +147,8 @@ typedef struct s_object
 	bool			is_chkb;
 	t_color			show_color;
 	t_coord			center;
+	t_material		material;
+	t_bonus_status	bonus_status;
 	union
 	{
 		t_sphere	sp;
@@ -153,12 +174,19 @@ typedef struct s_scene
 	t_scene_status	status;
 }	t_scene;
 
+typedef struct s_hit_point
+{
+	t_coord		hp;
+	double		t;
+	t_object	*obj;
+	t_vec		normal;
+}		t_hit_point;
+
 typedef struct s_rand
 {
 	uint64_t	state;
 	uint64_t	increment;
 }		t_rand;
-
 
 typedef enum e_error_code
 {
@@ -174,7 +202,11 @@ typedef enum e_error_code
 	DIGITS_ONLY,
 	DUP_ELEM,
 	MISS_ELEM,
-	INVALID_CHKB
+	INVALID_OPTION,
+	INVALID_CHKB,
+	INVALID_MAT,
+	INVALID_ALBEDO,
+	DUP_KEY
 }	t_error_code;
 
 typedef enum e_cy_position
@@ -183,6 +215,8 @@ typedef enum e_cy_position
 	BOTTOM_CAP,
 	WALL
 }	t_cy_position;
+
+typedef bool	(*t_parse_man_fn)(char **, t_object **, int *);
 
 //-----------------Vec------------------
 t_vec		vec(double x, double y, double z);
@@ -204,8 +238,8 @@ uint32_t	pcg_generator(t_rand	*rng);
 void		print_random_number();
 double		random_double(void);
 double		random_in(double min, double max);
-void 		print_rand_double(void);
-void 		print_rand_double_in(double min, double max);
+void		print_rand_double(void);
+void		print_rand_double_in(double min, double max);
 //Random vec
 t_vec		random_vec(void);
 t_vec		random_vec_in(double min, double max);
@@ -233,15 +267,20 @@ bool		validate_elem(t_scene *scene);
 bool		fill_in_ambient(const char *line, t_scene *scene);
 bool		fill_in_camera(const char *line, t_scene *scene);
 bool		fill_in_light(const char *s, t_scene *scene);
-bool		fill_in_sphere(const char *s, t_scene *scene);
-bool		fill_in_plane(const char *s, t_scene *scene);
-bool		fill_in_cylinder(const char *s, t_scene *scene);
+bool		fill_in_object(const char *s, t_scene *scene,
+				t_parse_man_fn parse_man);
 
 //parser_list_manager
 void		append_light(t_light **list, t_light *new);
 void		append_object(t_object **list, t_object *new);
 void		free_light_list(t_light *light);
 void		free_object_list(t_object *obj);
+void		free_split(char **split);
+
+//parser_object_man
+bool		parse_sphere_man(char **p, t_object **out, int *i_opt);
+bool		parse_plane_man(char **p, t_object **out, int *i_opt);
+bool		parse_cylinder_man(char **p, t_object **out, int *i_opt);
 
 //parser_space_split
 char		**space_split(char const *s);
@@ -250,7 +289,7 @@ char		**space_split(char const *s);
 bool		check_range(double value, double min, double max);
 bool		check_equal(double value, double target);
 const char	*skip_spaces(const char *s);
-void		free_split(char **split);
+int			ft_strcmp(const char *s1, const char *s2);
 void		free_scene(t_scene *scene);
 
 //print_error
@@ -265,20 +304,18 @@ void		esc_hook(mlx_key_data_t keydata, void *param);
 void		close_hook(void *param);
 
 //-----------------Color------------------
-t_color		calc_obj_color(t_object *obj, t_scene *scene, t_ray ray, double t);
+t_color		calc_obj_color(t_hit_point *hp, t_scene *scene);
 
 //color_cal_lights
 t_color		calc_obj_solo(t_color obj, t_color light, double ratio,
 				double intens);
-t_color		cal_diffuse(t_scene *scn, t_coord hit_p, t_object *obj,
-				bool *in_shadow);
+t_color		cal_diffuse(t_scene *scn, t_hit_point *hp, bool *in_shadow);
 
 //color_intensity
-t_vec		get_sphere_normal(t_object *obj, t_coord hit_p);
-int			find_point_on_cylinder(t_object *obj, t_coord hit_p, t_vec *v,
-				double *proj);
-double		calc_intensity(t_coord hit_p, t_object *obj, t_coord light_p);
-t_vec		get_normal(t_object *obj, t_coord hit_point);
+t_vec		get_sphere_normal(t_hit_point *hp);
+int			find_point_on_cylinder(t_hit_point *hp, t_vec *v, double *proj);
+double		calc_intensity(t_hit_point *hp, t_coord light_p);
+t_vec		get_normal(t_hit_point *hp);
 
 //color_calc
 t_color		col_sum(t_color cl1, t_color cl2);
@@ -300,18 +337,16 @@ t_ray		set_ray(t_coord start, t_vec ray_dir);
 //-----------------Render------------------
 void		render_image(mlx_image_t *img, t_scene *scene, t_vport *vp);
 t_color		trace_color(t_ray ray, t_ray camera_ray, t_scene *scene, int depth);
-// void		render_anti_aliasing(mlx_image_t *img, t_scene *scene, t_vport *vp);
-// t_ray		get_ray(int w, int h, t_vport *vp, t_scene *scene);
-// t_vec		sample_square(void);
-// void		render_aa_deep(mlx_image_t *img, t_scene *scene, t_vport *vp);
-// t_color		get_color_deep(t_ray ray, t_ray ray2, t_scene *scene, int depth);
 
 //-----------------Hitting------------------
 bool		hit_object(t_ray ray, t_object *obj, double *dist);
-bool		find_closest_hit(t_ray ray, t_scene *scene, t_object **out_obj, double *out_tmin);
+bool		find_closest_hit(t_ray ray, t_scene *scene, t_hit_point *hp);
 
 //cylinder
 bool		hit_wall(t_object *obj, t_ray ray, double *dist);
 bool		hit_cap(t_object *obj, t_ray ray, double *dist, char cap);
+
+//Printin
+void		print_color(t_color c);
 
 #endif

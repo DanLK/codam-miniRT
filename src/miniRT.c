@@ -6,7 +6,7 @@
 /*   By: dloustal <dloustal@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/07 14:51:55 by dloustal      #+#    #+#                 */
-/*   Updated: 2025/09/29 16:01:15 by dloustal      ########   odam.nl         */
+/*   Updated: 2025/10/22 15:11:52 by dloustal      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ static bool	init_scene(t_scene *scene, int argc, char *argv[])
 	ft_bzero(scene, sizeof(t_scene));
 	if (!parser(scene, argv[1]))
 		return (false);
-	print_scene(scene);
 	return (true);
 }
 
@@ -48,6 +47,7 @@ static bool	render_scene(mlx_t *mlx, mlx_image_t *img, t_scene *scene,
 {
 	make_vport(scene->camera, vp);
 	render_image(img, scene, vp);
+	print_scene(scene);
 	if (mlx_image_to_window(mlx, img, 0, 0) < 0)
 	{
 		ft_putstr_fd((char *)mlx_strerror(mlx_errno), STDERR_FILENO);
@@ -83,36 +83,6 @@ int	main(int argc, char *argv[])
 			mlx_terminate(mlx);
 		return (EXIT_FAILURE);
 	}
-	// printf("Welcome to our miniRT\n");
-	// img = mlx_new_image(mlx, WIDTH, HEIGHT);
-	// if (!img)
-	// {
-	// 	ft_putstr_fd((char *)mlx_strerror(mlx_errno), STDERR_FILENO);
-	// 	free_object_list(scene.objects);
-	// 	free_light_list(scene.light);
-	// 	mlx_terminate(mlx);
-	// 	return (EXIT_FAILURE);
-	// }
-
-	// //vport
-	// make_vport(scene.camera, &vp);
-	// print_vport(&vp);
-	
-	// //render
-	// if (SAMPLES == 1)
-	// 	render(img, &scene, &vp);
-	// else
-	// 	render_anti_aliasing(img, &scene, &vp);
-
-	// if (mlx_image_to_window(mlx, img, 0, 0) < 0)
-    // {
-	// 	ft_putstr_fd((char *)mlx_strerror(mlx_errno), STDERR_FILENO);
-	// 	return (EXIT_FAILURE);
-	// }
-	// mlx_loop(mlx);
-	// mlx_terminate(mlx);
- 	// free_object_list(scene.objects);
-	// free_light_list(scene.light);
 	run_loop(mlx, &scene);
 	return (EXIT_SUCCESS);
 }

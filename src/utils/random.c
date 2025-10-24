@@ -6,7 +6,7 @@
 /*   By: dloustal <dloustal@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/09/11 15:58:52 by dloustal      #+#    #+#                 */
-/*   Updated: 2025/09/29 11:56:46 by dloustal      ########   odam.nl         */
+/*   Updated: 2025/10/22 15:10:41 by dloustal      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,19 +50,22 @@ uint32_t	pcg_generator(t_rand	*rng)
 
 void	print_random_number()
 {
-	t_rand		*rng;
+	// t_rand		*rng;
 	uint32_t	number;
 
-	rng = init_rng();
-	if (!rng)
-		return ;
+	if (!g_rng)
+	{
+		g_rng = init_rng();
+		if (!g_rng)
+			return ; // Not sure what to do in this case
+	}
 	int i = 0;
 	while (i++ < 10)
 	{
-		number = pcg_generator(rng);
+		number = pcg_generator(g_rng);
 		printf("Random number: %u\n", number);
 	}
-	free(rng);
+	// free(rng);
 }
 
 double	random_double(void)

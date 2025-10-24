@@ -12,46 +12,47 @@
 
 #include "miniRT.h"
 
-t_vec	get_sphere_normal(t_object *obj, t_coord hit_p)
+t_vec	get_sphere_normal(t_hit_point *hp)
 {
-	return (normalized(sub_vec(hit_p, obj->center)));
+	return (normalized(sub_vec(hp->hp, hp->obj->center)));
 }
 
-int	find_point_on_cylinder(t_object *obj, t_coord hit_p, t_vec *v, double *proj)
+int	find_point_on_cylinder(t_hit_point *hp, t_vec *v, double *proj)
 {
-	*v = sub_vec(hit_p, obj->center);
-	*proj = dot(*v, obj->cy.dir);
-	if (check_equal(*proj, obj->cy.height / 2))
+	*v = sub_vec(hp->hp, hp->obj->center);
+	*proj = dot(*v, hp->obj->cy.dir);
+	if (check_equal(*proj, hp->obj->cy.height / 2))
 		return (TOP_CAP);
-	if (check_equal(*proj, -obj->cy.height / 2))
+	if (check_equal(*proj, -hp->obj->cy.height / 2))
 		return (BOTTOM_CAP);
 	else
 		return (WALL);
 }
 
-static t_vec	get_cylinder_normal(t_object *obj, t_coord hit_p)
+static t_vec	get_cylinder_normal(t_hit_point *hp)
 {
 	int		pos;
 	t_vec	v;
 	double	proj;
 
-	pos = find_point_on_cylinder(obj, hit_p, &v, &proj);
+	pos = find_point_on_cylinder(hp, &v, &proj);
 	if (pos == TOP_CAP)
-		return (obj->cy.dir);
+		return (hp->obj->cy.dir);
 	else if (pos == BOTTOM_CAP)
-		return (neg_vec(obj->cy.dir));
+		return (neg_vec(hp->obj->cy.dir));
 	else
-		return (normalized(sub_vec(v, scaled(obj->cy.dir, proj))));
+		return (normalized(sub_vec(v, scaled(hp->obj->cy.dir, proj))));
 }
 
-t_vec	get_normal(t_object *obj, t_coord hit_point)
+//returns an outward, normalized vector
+t_vec	get_normal(t_hit_point *hp)
 {
-	if (obj->type == SPHERE)
-		return (get_sphere_normal(obj, hit_point));
-	if (obj->type == PLANE)
-		return (obj->pl.dir);
-	if (obj->type == CYLINDER)
-		return (get_cylinder_normal(obj, hit_point));
+	if (hp->obj->type == SPHERE)
+		return (get_sphere_normal(hp));
+	if (hp->obj->type == PLANE)
+		return (hp->obj->pl.dir);
+	if (hp->obj->type == CYLINDER)
+		return (get_cylinder_normal(hp));
 	else
 		return (vec(0, 0, 0));
 }
@@ -60,14 +61,12 @@ t_vec	get_normal(t_object *obj, t_coord hit_point)
 	logic see math_updated.txt
 	Normal vectors are calculated based on object type and hit_point position.
 */
-double	calc_intensity(t_coord hit_p, t_object *obj, t_coord light_p)
+double	calc_intensity(t_hit_point *hp, t_coord light_p)
 {
 	t_vec	light_dir;
-	t_vec	normal;
 	double	intensity;
 
-	light_dir = normalized(sub_vec(light_p, hit_p));
-	normal = get_normal(obj, hit_p);
-	intensity = fmin(1.0, fmax(0.0, dot(normal, light_dir)));
+	light_dir = normalized(sub_vec(light_p, hp->hp));
+	intensity = fmin(1.0, fmax(0.0, dot(hp->normal, light_dir)));
 	return (intensity);
 }

@@ -6,23 +6,24 @@
 /*   By: dloustal <dloustal@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/22 15:41:46 by hogu          #+#    #+#                 */
-/*   Updated: 2025/09/29 16:14:35 by dloustal      ########   odam.nl         */
+/*   Updated: 2025/10/22 13:36:53 by dloustal      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
+//sqrt for gamma correction
 static int	to_byte(double c)
 {
 	clamp(&c, 0.0, 1.0);
-	// c = sqrt(c); // gamma correction
+	c = sqrt(c);
 	return ((int)(c * 255.0));
 }
 
 int	get_rgba(t_color col, double alpha)
 {
-	int r;
-	int g;
+	int	r;
+	int	g;
 	int	b;
 	int	a;
 
@@ -35,7 +36,7 @@ int	get_rgba(t_color col, double alpha)
 
 t_color	color(double r, double g, double b)
 {
-	t_color col;
+	t_color	col;
 
 	col.r = r;
 	col.g = g;
