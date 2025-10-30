@@ -13,8 +13,7 @@
 #ifndef MINIRT_H
 # define MINIRT_H
 # define WIDTH 1536
-# define RATIO (4.0 / 3.0)
-# define HEIGHT (int)(WIDTH / RATIO)
+# define HEIGHT 1152
 # define EPSILON 1e-6
 # define SAMPLES 4
 # define DEPTH 4
@@ -233,20 +232,18 @@ t_vec		reject(t_vec v, t_vec dir);
 
 //------------------------Utils-------------------------
 // Random
-t_rand		*init_rng();
-uint32_t	pcg_generator(t_rand	*rng);
-void		print_random_number();
+t_rand		*init_rng(void);
+void		rng_destroy(void);
+uint32_t	pcg_generator(t_rand *rng);
+// void		print_random_number();
 double		random_double(void);
 double		random_in(double min, double max);
-void		print_rand_double(void);
-void		print_rand_double_in(double min, double max);
+// void		print_rand_double(void);
+// void		print_rand_double_in(double min, double max);
+
 //Random vec
-t_vec		random_vec(void);
-t_vec		random_vec_in(double min, double max);
 t_vec		random_unit_vec(void);
-t_vec		random_vec_on_hemis(t_vec normal);
-//Interval
-void		clamp(double *num, double min, double max);
+// t_vec		random_vec_on_hemis(t_vec normal);
 
 //---------------------Parser----------------------------
 bool		parser(t_scene *scene, const char *filename);
@@ -296,8 +293,8 @@ void		free_scene(t_scene *scene);
 void		print_error(int code, const char *s);
 
 //-----------------for Debug------------------
-void		print_scene(t_scene *scene);
-void		print_vport(t_vport *vp);
+// void		print_scene(t_scene *scene);
+// void		print_vport(t_vport *vp);
 
 //-----------------Event------------------
 void		esc_hook(mlx_key_data_t keydata, void *param);

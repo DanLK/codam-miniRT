@@ -26,7 +26,7 @@ static t_color	coord_to_color(t_color obj_color, double u, double v)
 	if ((iu + iv) % 2 == 0)
 		return (obj_color);
 	else
-		return ((t_color){1.0, 1.0, 1.0});
+		return (col_sum(obj_color, color(0.5, 0.5, 0.5)));
 }
 
 t_color	cal_pl_chkb(t_hit_point *hp)
@@ -39,7 +39,7 @@ t_color	cal_pl_chkb(t_hit_point *hp)
 	if ((int)(floor(local.x) + floor(local.y)) % 2 == 0)
 		return (hp->obj->color);
 	else
-		return ((t_color){1.0, 1.0, 1.0});
+		return (col_sum(hp->obj->color, color(0.5, 0.5, 0.5)));
 }
 
 t_color	cal_sp_chkb(t_hit_point *hp)
@@ -66,21 +66,20 @@ t_color	cal_cy_chkb_cap(t_object *obj, t_vec v)
 	if ((int)(floor(local.x) + floor(local.y)) % 2 == 0)
 		return (obj->color);
 	else
-		return ((t_color){1.0, 1.0, 1.0});
+		return (col_sum(obj->color, color(0.5, 0.5, 0.5)));
 }
 
 t_color	cal_cy_chkb_curved_surface(t_object *obj, t_vec v, double proj)
 {
-	t_coord	local;
 	t_vec	radial;
-	double	longtitude;
+	double	theta;
 	double	m;
 	double	n;
 
 	m = (proj + obj->cy.height / 2.0) / obj->cy.height;
 	radial = sub_vec(v, scaled(obj->cy.dir, proj));
-	get_local_coord(&obj->cy.basis, &local, radial);
-	longtitude = atan2(local.x, local.y);
-	n = (longtitude + M_PI) / (2.0 * M_PI);
+	theta = atan2(dot(radial, obj->cy.basis.y_axis),
+			dot(radial, obj->cy.basis.x_axis));
+	n = (theta + M_PI) / (2.0 * M_PI);
 	return (coord_to_color(obj->color, m, n));
 }

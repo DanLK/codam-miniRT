@@ -47,7 +47,6 @@ static bool	render_scene(mlx_t *mlx, mlx_image_t *img, t_scene *scene,
 {
 	make_vport(scene->camera, vp);
 	render_image(img, scene, vp);
-	print_scene(scene);
 	if (mlx_image_to_window(mlx, img, 0, 0) < 0)
 	{
 		ft_putstr_fd((char *)mlx_strerror(mlx_errno), STDERR_FILENO);
@@ -63,6 +62,7 @@ static void	run_loop(mlx_t *mlx, t_scene *scene)
 	mlx_loop(mlx);
 	mlx_terminate(mlx);
 	free_scene(scene);
+	rng_destroy();
 }
 
 int	main(int argc, char *argv[])
@@ -81,6 +81,7 @@ int	main(int argc, char *argv[])
 		free_scene(&scene);
 		if (mlx)
 			mlx_terminate(mlx);
+		rng_destroy();
 		return (EXIT_FAILURE);
 	}
 	run_loop(mlx, &scene);

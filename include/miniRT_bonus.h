@@ -15,8 +15,8 @@
 
 # include "miniRT.h"
 
-# define CHKB_COLS 3
-# define CHKB_ROWS 3
+# define CHKB_COLS 5
+# define CHKB_ROWS 5
 
 //color_local_coord
 void		set_local_basis(t_vec dir, t_basis *basis);

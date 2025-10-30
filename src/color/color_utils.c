@@ -12,6 +12,14 @@
 
 #include "miniRT.h"
 
+static void	clamp(double *num, double min, double max)
+{
+	if (*num < min)
+		*num = min;
+	else if (*num > max)
+		*num = max;
+}
+
 //sqrt for gamma correction
 static int	to_byte(double c)
 {

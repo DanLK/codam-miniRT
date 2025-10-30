@@ -1,21 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   interval.c                                         :+:    :+:            */
+/*   trace_color_mandatory.c                            :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: dloustal <dloustal@student.42.fr>            +#+                     */
+/*   By: dloustal <marvin@42.fr>                      +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2025/09/12 15:13:12 by dloustal      #+#    #+#                 */
-/*   Updated: 2025/09/12 15:17:06 by dloustal      ########   odam.nl         */
+/*   Created: 2025/10/06 16:40:24 by dloustalot    #+#    #+#                 */
+/*   Updated: 2025/10/10 13:39:16 by dloustalot    ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
-void	clamp(double *num, double min, double max)
+t_color	trace_color(t_ray ray, t_ray camera_ray, t_scene *scene, int depth)
 {
-	if (*num < min)
-		*num = min;
-	else if (*num > max)
-		*num = max;
+	t_hit_point	hp;
+
+	(void)camera_ray;
+	(void)depth;
+	if (!find_closest_hit(ray, scene, &hp))
+		return (calc_background_color(ray));
+	return (calc_obj_color(&hp, scene));
 }
