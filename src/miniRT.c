@@ -18,7 +18,6 @@ static bool	init_scene(t_scene *scene, int argc, char *argv[])
 		return (print_error(WRONG_ARGS, NULL), false);
 	if (HEIGHT < 1)
 		return (print_error(OUT_RANGE, "Image height"), false);
-	ft_bzero(scene, sizeof(t_scene));
 	if (!parser(scene, argv[1]))
 		return (false);
 	return (true);
@@ -74,6 +73,7 @@ int	main(int argc, char *argv[])
 
 	mlx = NULL;
 	img = NULL;
+	ft_bzero(&scene, sizeof(t_scene));
 	if (!init_scene(&scene, argc, argv)
 		|| !init_mlx(&mlx, &img)
 		|| !render_scene(mlx, img, &scene, &vp))

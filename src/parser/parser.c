@@ -93,5 +93,6 @@ bool	parser(t_scene *scene, const char *filename)
 	}
 	if (!validate_elem(scene))
 		return (gnl_drain(fd), false);
+	// print_scene(scene);
 	return (close(fd), true);
 }

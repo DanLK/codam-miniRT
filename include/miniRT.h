@@ -15,8 +15,8 @@
 # define WIDTH 1536
 # define HEIGHT 1152
 # define EPSILON 1e-6
-# define SAMPLES 4
-# define DEPTH 4
+# define SAMPLES 1
+# define DEPTH 1
 
 # include "libft.h"
 # include "MLX42/MLX42.h"
@@ -293,8 +293,8 @@ void		free_scene(t_scene *scene);
 void		print_error(int code, const char *s);
 
 //-----------------for Debug------------------
-// void		print_scene(t_scene *scene);
-// void		print_vport(t_vport *vp);
+void		print_scene(t_scene *scene);
+void		print_vport(t_vport *vp);
 
 //-----------------Event------------------
 void		esc_hook(mlx_key_data_t keydata, void *param);
