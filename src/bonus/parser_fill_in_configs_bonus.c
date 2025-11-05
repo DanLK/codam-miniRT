@@ -72,6 +72,7 @@ static bool	alloc_light(t_light **light)
 	return (true);
 }
 
+/*diff vs mandatory: 1) allow multiple lights 2)use user-specified color*/
 bool	fill_in_light(const char *s, t_scene *scene)
 {
 	char	**params;

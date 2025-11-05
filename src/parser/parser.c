@@ -33,11 +33,11 @@ static bool	get_params(const char *line, t_scene *scene)
 	else if (match_identifier(line, "L"))
 		return (fill_in_light(line, scene));
 	else if (match_identifier(line, "sp"))
-		return (fill_in_sphere(line, scene));
+		return (fill_in_object(line, scene, parse_sphere_man));
 	else if (match_identifier(line, "pl"))
-		return (fill_in_plane(line, scene));
+		return (fill_in_object(line, scene, parse_plane_man));
 	else if (match_identifier(line, "cy"))
-		return (fill_in_cylinder(line, scene));
+		return (fill_in_object(line, scene, parse_cylinder_man));
 	print_error(PARAM_TYPE, line);
 	return (false);
 }
@@ -93,5 +93,6 @@ bool	parser(t_scene *scene, const char *filename)
 	}
 	if (!validate_elem(scene))
 		return (gnl_drain(fd), false);
+	// print_scene(scene);
 	return (close(fd), true);
 }

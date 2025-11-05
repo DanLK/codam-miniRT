@@ -18,10 +18,12 @@ static bool	init_scene(t_scene *scene, int argc, char *argv[])
 		return (print_error(WRONG_ARGS, NULL), false);
 	if (HEIGHT < 1)
 		return (print_error(OUT_RANGE, "Image height"), false);
-	ft_bzero(scene, sizeof(t_scene));
 	if (!parser(scene, argv[1]))
 		return (false);
+<<<<<<< HEAD
 	// print_scene(scene);
+=======
+>>>>>>> main
 	return (true);
 }
 
@@ -64,6 +66,7 @@ static void	run_loop(mlx_t *mlx, t_scene *scene)
 	mlx_loop(mlx);
 	mlx_terminate(mlx);
 	free_scene(scene);
+	rng_destroy();
 }
 
 int	main(int argc, char *argv[])
@@ -75,6 +78,7 @@ int	main(int argc, char *argv[])
 
 	mlx = NULL;
 	img = NULL;
+	ft_bzero(&scene, sizeof(t_scene));
 	if (!init_scene(&scene, argc, argv)
 		|| !init_mlx(&mlx, &img)
 		|| !render_scene(mlx, img, &scene, &vp))
@@ -82,38 +86,9 @@ int	main(int argc, char *argv[])
 		free_scene(&scene);
 		if (mlx)
 			mlx_terminate(mlx);
+		rng_destroy();
 		return (EXIT_FAILURE);
 	}
-	// printf("Welcome to our miniRT\n");
-	// img = mlx_new_image(mlx, WIDTH, HEIGHT);
-	// if (!img)
-	// {
-	// 	ft_putstr_fd((char *)mlx_strerror(mlx_errno), STDERR_FILENO);
-	// 	free_object_list(scene.objects);
-	// 	free_light_list(scene.light);
-	// 	mlx_terminate(mlx);
-	// 	return (EXIT_FAILURE);
-	// }
-
-	// //vport
-	// make_vport(scene.camera, &vp);
-	// print_vport(&vp);
-	
-	// //render
-	// if (SAMPLES == 1)
-	// 	render(img, &scene, &vp);
-	// else
-	// 	render_anti_aliasing(img, &scene, &vp);
-
-	// if (mlx_image_to_window(mlx, img, 0, 0) < 0)
-    // {
-	// 	ft_putstr_fd((char *)mlx_strerror(mlx_errno), STDERR_FILENO);
-	// 	return (EXIT_FAILURE);
-	// }
-	// mlx_loop(mlx);
-	// mlx_terminate(mlx);
- 	// free_object_list(scene.objects);
-	// free_light_list(scene.light);
 	run_loop(mlx, &scene);
 	return (EXIT_SUCCESS);
 }

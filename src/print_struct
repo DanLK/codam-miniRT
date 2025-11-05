@@ -66,15 +66,8 @@ static void print_material(t_material *material)
 		printf("	Material: lambertian\n");
 	if (material->type == METAL)
 		printf("	Material: metal\n");
-<<<<<<< HEAD
-	if (material->type == DEFAULT)
-		printf("	Material: default\n");
-	// printf("	Albedo: %f\n", material->albedo);
-
-=======
 	printf("	Albedo:");
 	print_color(material->albedo);
->>>>>>> main
 }
 
 void	print_object(t_object *obj)

@@ -18,19 +18,17 @@ calculate object color for hit_points.
 	- obj_amb: effect under ambient light only;
 	- obj_dif: effect under point light only;	
 */
-t_color	calc_obj_color(t_object *obj, t_scene *scn, t_ray ray, double t)
+t_color	calc_obj_color(t_hit_point *hp, t_scene *scn)
 {
-	t_coord	hit_point;
 	t_color	obj_amb;
 	t_color	obj_dif;
 	bool	in_shadow;
 
 	in_shadow = true;
-	hit_point = ray_at(ray, t);
-	obj->show_color = obj->color;
-	obj_amb = calc_obj_solo(obj->show_color, scn->ambient.color,
+	hp->obj->show_color = hp->obj->color;
+	obj_amb = calc_obj_solo(hp->obj->show_color, scn->ambient.color,
 			scn->ambient.ratio, 1.0);
-	obj_dif = cal_diffuse(scn, hit_point, obj, &in_shadow);
+	obj_dif = cal_diffuse(scn, hp, &in_shadow);
 	if (in_shadow)
 		return (obj_amb);
 	else

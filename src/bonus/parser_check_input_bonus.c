@@ -12,17 +12,55 @@
 
 #include "miniRT_bonus.h"
 
-bool	check_chkb(const char *str, bool *is_chkb)
+bool	check_chkb(const char *val, bool *is_chkb, t_object *obj)
 {
-	if (ft_strncmp(str, "True", 4) == 0)
+	if (!val || !is_chkb)
+		return (false);
+	if (obj->bonus_status.has_chkb)
+		return (print_error_bonus(DUP_KEY, "chkb"), false);
+	if (!ft_strcmp(val, "true"))
 		*is_chkb = true;
-	else if (ft_strncmp(str, "False", 5) == 0)
+	else if (!ft_strcmp(val, "false"))
 		*is_chkb = false;
 	else
 	{
-		print_error_bonus(INVALID_CHKB, str);
+		print_error_bonus(INVALID_CHKB, val);
 		return (false);
 	}
+	obj->bonus_status.has_chkb = true;
+	return (true);
+}
+
+bool	check_mat_type(const char *type, t_object *obj)
+{
+	if (!type)
+		return (false);
+	if (obj->bonus_status.has_mat)
+		return (print_error_bonus(DUP_KEY, "mat"), false);
+	if (!ft_strcmp(type, "lambertian"))
+		obj->material.type = LAMBERTIAN;
+	else if (!ft_strcmp(type, "metal"))
+		obj->material.type = METAL;
+	else
+		return (print_error_bonus(INVALID_MAT, type), false);
+	obj->bonus_status.has_mat = true;
+	return (true);
+}
+
+bool	check_albedo(const char *alb_num, t_object *obj)
+{
+	double	albedo;
+
+	if (!alb_num)
+		return (false);
+	if (obj->bonus_status.has_albedo)
+		return (print_error_bonus(DUP_KEY, "albedo"), false);
+	if (!ft_atod(alb_num, &albedo))
+		return (print_error(DOUBLE, alb_num), false);
+	if (albedo < 0.0001 || albedo > 1)
+		return (print_error_bonus(INVALID_ALBEDO, alb_num), false);
+	obj->material.albedo = col_scale(obj->color, albedo);
+	obj->bonus_status.has_albedo = true;
 	return (true);
 }
 

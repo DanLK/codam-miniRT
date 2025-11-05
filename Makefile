@@ -1,47 +1,65 @@
+<<<<<<< HEAD
 vpath %.c src:src/color:src/parser:src/hittables:src/vec:src/bonus:src/utils:src/render
+=======
+vpath %.c src:src/bonus:src/color:src/hittables:src/parser:src/render:src/utils
+>>>>>>> main
 
 NAME = miniRT
 BONUS_NAME = miniRT_bonus
 
 COMMON_SRC = miniRT.c \
-	  event.c \
-	  print_error.c \
-	  print_struct.c \
-	  ray.c \
-	  viewport.c \
 	  color_cal_lights.c \
 	  color_calc.c \
 	  color_intensity.c \
 	  color_utils.c \
+	  hit_cylinder.c \
+	  hit_objects.c \
 	  parser_atod.c \
 	  parser_check_input.c \
 	  parser_list_mgr.c \
+	  parser_object_man.c \
+	  parser_print_error.c \
 	  parser_space_split.c \
 	  parser_util.c \
 	  parser.c \
+	  render_event.c \
+	  render_ray.c \
+	  render_viewport.c \
 	  render.c \
-	  hits.c \
-	  cylinder.c \
-	  vec_ops.c \
-	  vec.c \
-	  random.c \
-	  random_vec.c \
-	  interval.c
+	  util_random_gen.c \
+	  util_random_vec.c \
+	  util_vec_ops.c \
+	  util_vec.c \
+	  print_struct.c
 
 MANDATORY_ONLY_SRC = color_obj_mandatory.c \
+<<<<<<< HEAD
 	 		parser_fill_in_structs_1_mandatory.c \
 			parser_fill_in_structs_2_mandatory.c \
 			trace_color_mandatory.c
+=======
+	 		parser_fill_in_configs_mandatory.c \
+			parser_fill_in_objects_mandatory.c \
+			render_trace_color_mandatory.c
+>>>>>>> main
 
 BONUS_ONLY_SRC = color_cal_checkerboard_bonus.c \
 			color_local_basis_bonus.c \
 			color_obj_bonus.c \
 			parser_check_input_bonus.c \
+<<<<<<< HEAD
 			parser_fill_in_structs_1_bonus.c \
 			parser_fill_in_structs_2_bonus.c \
 			trace_color_bonus.c \
 			scattered.c \
 			print_error_bonus.c
+=======
+			parser_fill_in_configs_bonus.c \
+			parser_fill_in_objects_bonus.c \
+			parser_print_error_bonus.c \
+			render_scattered_bonus.c \
+			render_trace_color_bonus.c \
+>>>>>>> main
 
 SRC = $(COMMON_SRC) $(MANDATORY_ONLY_SRC)
 BONUS_SRC = $(COMMON_SRC) $(BONUS_ONLY_SRC)

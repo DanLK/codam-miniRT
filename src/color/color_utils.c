@@ -12,17 +12,30 @@
 
 #include "miniRT.h"
 
+static void	clamp(double *num, double min, double max)
+{
+	if (*num < min)
+		*num = min;
+	else if (*num > max)
+		*num = max;
+}
+
+//sqrt for gamma correction
 static int	to_byte(double c)
 {
 	clamp(&c, 0.0, 1.0);
+<<<<<<< HEAD
 	c = sqrt(c); // gamma correction
+=======
+	c = sqrt(c);
+>>>>>>> main
 	return ((int)(c * 255.0));
 }
 
 int	get_rgba(t_color col, double alpha)
 {
-	int r;
-	int g;
+	int	r;
+	int	g;
 	int	b;
 	int	a;
 
@@ -35,7 +48,7 @@ int	get_rgba(t_color col, double alpha)
 
 t_color	color(double r, double g, double b)
 {
-	t_color col;
+	t_color	col;
 
 	col.r = r;
 	col.g = g;

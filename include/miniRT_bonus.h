@@ -15,14 +15,20 @@
 
 # include "miniRT.h"
 
+<<<<<<< HEAD
 # define CHKB_COLS 3
 # define CHKB_ROWS 3
+=======
+# define CHKB_COLS 5
+# define CHKB_ROWS 5
+>>>>>>> main
 
 //color_local_coord
 void		set_local_basis(t_vec dir, t_basis *basis);
 void		get_local_coord(t_basis *basis, t_coord *local, t_vec v);
 
 //trace_color
+<<<<<<< HEAD
 // t_color		compute_color_lamb(t_ray ray, t_ray camera_ray, t_scene *scene, int depth);
 bool		get_scattered_ray(t_ray ray, t_hit_point hp, t_ray *scattered, t_color *attenuation);
 t_color		trace_color(t_ray ray, t_ray camera_ray, t_scene *scene, int depth);
@@ -31,16 +37,33 @@ t_color		trace_color(t_ray ray, t_ray camera_ray, t_scene *scene, int depth);
 bool		get_scattered_lmb(t_ray ray, t_hit_point hp, t_ray *scatt, t_color *att);
 bool		get_scattered_metal(t_ray ray, t_hit_point hp, t_ray *scatt, t_color *att);
 // bool		get_scattered_default(t_ray ray, t_hit_point hp, t_ray *scatt, double *att);
+=======
+bool		get_scattered_ray(t_ray ray, t_hit_point hp, t_ray *scattered,
+				t_color *attenuation);
+t_color		trace_color(t_ray ray, t_ray camera_ray, t_scene *scene, int depth);
+
+//scattered
+bool		get_scattered_lmb(t_ray ray, t_hit_point hp, t_ray *scatt,
+				t_color *att);
+bool		get_scattered_metal(t_ray ray, t_hit_point hp, t_ray *scatt,
+				t_color *att);
+>>>>>>> main
 
 //color_cal_checkerboard
-t_color		cal_pl_chkb(t_object *obj, t_coord hit_p);
-t_color		cal_sp_chkb(t_object *obj, t_coord hit_p);
+t_color		cal_pl_chkb(t_hit_point *hp);
+t_color		cal_sp_chkb(t_hit_point *hp);
 t_color		cal_cy_chkb_cap(t_object *obj, t_vec v);
 t_color		cal_cy_chkb_curved_surface(t_object *obj, t_vec v, double proj);
 
 //parser
+<<<<<<< HEAD
 bool		check_chkb(const char *str, bool *is_chkb);
 bool		check_material(const char *mat, const char *alb, t_material	*material);
+=======
+bool		check_chkb(const char *str, bool *is_chkb, t_object *obj);
+bool		check_mat_type(const char *type, t_object *obj);
+bool		check_albedo(const char *alb_num, t_object *obj);
+>>>>>>> main
 
 //print error
 void		print_error_bonus(int code, const char *s);
