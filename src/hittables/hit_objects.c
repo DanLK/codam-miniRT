@@ -16,7 +16,7 @@
 The vector abc is to represent the variables a, b and c in the general
 solution for a quadratic equation. abc.x = a, abc.y = b, abc.z = z
 */
-bool	hit_sphere(t_object *obj, t_ray ray, double *dist)
+static bool	hit_sphere(t_object *obj, t_ray ray, double *dist)
 {
 	t_vec	abc;
 	double	rad;
@@ -43,7 +43,7 @@ bool	hit_sphere(t_object *obj, t_ray ray, double *dist)
 	return (true);
 }
 
-bool	hit_plane(t_object *obj, t_ray ray, double *dist)
+static bool	hit_plane(t_object *obj, t_ray ray, double *dist)
 {
 	t_vec	oc;
 	double	denominator;
@@ -60,7 +60,7 @@ bool	hit_plane(t_object *obj, t_ray ray, double *dist)
 	return (true);
 }
 
-bool	hit_cylinder(t_object *obj, t_ray ray, double *dist)
+static bool	hit_cylinder(t_object *obj, t_ray ray, double *dist)
 {
 	bool	hits_tcap;
 	bool	hits_bcap;

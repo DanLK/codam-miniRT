@@ -29,19 +29,14 @@ const char	*skip_spaces(const char *s)
 	return (s);
 }
 
-void	free_split(char **split)
+int	ft_strcmp(const char *s1, const char *s2)
 {
 	int	i;
 
-	if (!split)
-		return ;
 	i = 0;
-	while (split[i])
-	{
-		free(split[i]);
+	while (s1[i] && s1[i] == s2[i])
 		i++;
-	}
-	free(split);
+	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
 }
 
 void	free_scene(t_scene *scene)

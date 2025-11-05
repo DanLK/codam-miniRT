@@ -1,0 +1,47 @@
+Bonus .rt File — Format & Options Guide
+
+This document describes the bonus syntax extensions used in .rt scene files.
+It focuses on the optional [key:value] pairs that define checkerboard and material properties.
+
+I. General rules
+	1. Each object line follows the same base format as in the mandatory part.
+	2. Then it may include one or more bonus options written as key:value.
+	3. Bonus options are optional and can appear in any order.
+	4. Lines starting with # are ignored.
+
+	Example:
+	sp <position> <diameter> <color> [options...]
+
+II. Supported options
+
+- chkb:true|false
+	Enable or disable a checkerboard pattern on the object’s surface.
+	Default: false
+
+- mat:lambertian|metal
+	Select the meterial model for the object’s surface.
+		lambertian: diffuse surface tjat scatters light evenly => Matte
+		metal: reflective surface with energy loss defined by albedo
+	Default: DEFAULT
+
+- alb:<0.0-1.0>
+	Defines how much light the surface reflects
+		low values -> darker surface (absorbs more light)
+		high values -> brighter surface (reflects more light)
+	Default: color(1.0, 1.0, 1.0)
+
+III. Examples
+
+1. Basic diffuse spheres
+	sp 0,0,0 20 255,255,255
+	sp 25,0,0 20 150,100,100 chkb:true
+
+2. Metallic spheres
+	sp -25,30,70 20 150,0,0   chkb:false mat:metal alb:0.3
+	sp 0,30,70   20 51,153,255 chkb:false mat:metal alb:0.6
+	sp 25,30,70  20 100,100,10 chkb:false mat:metal alb:0.9
+
+3. Diffuse (lambertian) spheres with varying brightness
+	sp -25,-30,70 20 150,0,0   mat:lambertian alb:0.3
+	sp 0,-30,70   20 51,153,255 mat:lambertian alb:0.6
+	sp 25,-30,70  20 100,100,10 mat:lambertian alb:0.9

@@ -1,0 +1,18 @@
+A 0.7 255,255,255
+C  0,0,0 0,0,1 80
+L -10,10,0 0.7 255,255,255
+
+sp -25,30,70 20 150,0,0 False mat:metal alb:0.1
+sp 0,30,70 20 51,153,255 False mat:metal alb:0.5
+# sp 25,30,85 15 51,153,255 False 
+sp 25,30,70 20 100,100,10 False mat:metal alb:0.8
+
+# pl	0,0,100 	0,0,1	150,150,150	False 
+
+sp -25,0,70 20 150,0,0 False 
+sp 0,0,70 20 51,153,255 False 
+sp 25,0,70 20 100,100,10 False 
+
+sp -25,-30,70 20 150,0,0 False mat:lambertian alb:0.1
+sp 0,-30,70 20 51,153,255 False mat:lambertian alb:0.5
+sp 25,-30,70 20 100,100,10 False mat:lambertian alb:0.8
