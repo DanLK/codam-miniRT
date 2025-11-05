@@ -26,6 +26,7 @@ COMMON_SRC = miniRT.c \
 	  util_random_vec.c \
 	  util_vec_ops.c \
 	  util_vec.c \
+	  print_struct.c
 
 MANDATORY_ONLY_SRC = color_obj_mandatory.c \
 	 		parser_fill_in_configs_mandatory.c \

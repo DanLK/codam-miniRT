@@ -29,7 +29,11 @@ static t_coord	calculate_p00(t_vport vp)
 void	make_vport(t_camera cam, t_vport *viewport)
 {
 	double	angle_rad;
+	t_vec	up;
 
+	up = vec(0.0, 1.0, 0.0);
+	if (1 - fabs(dot(cam.dir, up)) < EPSILON)
+		up = vec(1.0, 0.0, 0.0);
 	angle_rad = cam.fov * (M_PI / 180.0);
 	viewport->distance = 1.0;
 	viewport->ratio = (double)WIDTH / HEIGHT;
@@ -37,7 +41,7 @@ void	make_vport(t_camera cam, t_vport *viewport)
 	viewport->height = (double)(viewport->width / viewport->ratio);
 	viewport->center = sum_vec(cam.pos, scaled(normalized(cam.dir),
 				viewport->distance));
-	viewport->v_right = normalized(cross(vec(0.0, 1.0, 0.0), cam.dir));
+	viewport->v_right = normalized(cross(cam.dir, up));
 	viewport->v_down = normalized(cross(viewport->v_right, cam.dir));
 	viewport->delta_x = scaled(viewport->v_right, viewport->width / WIDTH);
 	viewport->delta_y = scaled(viewport->v_down, viewport->height / HEIGHT);

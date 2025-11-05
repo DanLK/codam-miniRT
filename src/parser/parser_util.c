@@ -41,6 +41,10 @@ int	ft_strcmp(const char *s1, const char *s2)
 
 void	free_scene(t_scene *scene)
 {
-	free_object_list(scene->objects);
-	free_light_list(scene->light);
+	if (!scene)
+		return ;
+	if (scene->objects)
+		free_object_list(scene->objects);
+	if (scene->light)
+		free_light_list(scene->light);
 }

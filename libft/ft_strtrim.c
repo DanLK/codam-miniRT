@@ -35,23 +35,21 @@ char	*ft_strtrim(char const *s1, char const *set)
 	size_t	end;
 	size_t	i;
 
+	if (!s1 || !set)
+		return (NULL);
 	start = 0;
-	while (is_in_set(s1[start], set))
-		start++;
 	len = ft_strlen(s1);
-	end = len - 1;
-	while (is_in_set(s1[end], set) && end >= start)
+	while (start < len && is_in_set(s1[start], set))
+		start++;
+	end = len;
+	while (end > start && is_in_set(s1[end - 1], set))
 		end--;
-	result = (char *)malloc((end - start + 2) * sizeof(char));
+	result = (char *)malloc((end - start + 1) * sizeof(char));
 	if (!result)
 		return (result);
 	i = 0;
-	while (i < end - start + 1)
-	{
-		result[i] = s1[i + start];
-		i++;
-	}
-	result[end - start + 1] = '\0';
+	ft_memcpy(result, s1 + start, end - start);
+	result[end - start] = '\0';
 	return (result);
 }
 
