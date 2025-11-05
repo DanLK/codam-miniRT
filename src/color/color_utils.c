@@ -6,7 +6,7 @@
 /*   By: dloustal <dloustal@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/22 15:41:46 by hogu          #+#    #+#                 */
-/*   Updated: 2025/10/22 13:36:53 by dloustal      ########   odam.nl         */
+/*   Updated: 2025/11/05 14:03:05 by dloustal      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,7 @@ static void	clamp(double *num, double min, double max)
 static int	to_byte(double c)
 {
 	clamp(&c, 0.0, 1.0);
-<<<<<<< HEAD
-	c = sqrt(c); // gamma correction
-=======
 	c = sqrt(c);
->>>>>>> main
 	return ((int)(c * 255.0));
 }
 

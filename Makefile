@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-vpath %.c src:src/color:src/parser:src/hittables:src/vec:src/bonus:src/utils:src/render
-=======
 vpath %.c src:src/bonus:src/color:src/hittables:src/parser:src/render:src/utils
->>>>>>> main
 
 NAME = miniRT
 BONUS_NAME = miniRT_bonus
@@ -33,33 +29,19 @@ COMMON_SRC = miniRT.c \
 	  print_struct.c
 
 MANDATORY_ONLY_SRC = color_obj_mandatory.c \
-<<<<<<< HEAD
-	 		parser_fill_in_structs_1_mandatory.c \
-			parser_fill_in_structs_2_mandatory.c \
-			trace_color_mandatory.c
-=======
 	 		parser_fill_in_configs_mandatory.c \
 			parser_fill_in_objects_mandatory.c \
 			render_trace_color_mandatory.c
->>>>>>> main
 
 BONUS_ONLY_SRC = color_cal_checkerboard_bonus.c \
 			color_local_basis_bonus.c \
 			color_obj_bonus.c \
 			parser_check_input_bonus.c \
-<<<<<<< HEAD
-			parser_fill_in_structs_1_bonus.c \
-			parser_fill_in_structs_2_bonus.c \
-			trace_color_bonus.c \
-			scattered.c \
-			print_error_bonus.c
-=======
 			parser_fill_in_configs_bonus.c \
 			parser_fill_in_objects_bonus.c \
 			parser_print_error_bonus.c \
 			render_scattered_bonus.c \
 			render_trace_color_bonus.c \
->>>>>>> main
 
 SRC = $(COMMON_SRC) $(MANDATORY_ONLY_SRC)
 BONUS_SRC = $(COMMON_SRC) $(BONUS_ONLY_SRC)

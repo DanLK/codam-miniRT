@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   random.c                                           :+:    :+:            */
+/*   util_random_gen.c                                  :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: dloustal <dloustal@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/09/11 15:58:52 by dloustal      #+#    #+#                 */
-/*   Updated: 2025/10/22 15:10:41 by dloustal      ########   odam.nl         */
+/*   Updated: 2025/11/05 14:03:41 by dloustal      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,27 +60,6 @@ uint32_t	pcg_generator(t_rand *rng)
 // 	// t_rand		*rng;
 // 	uint32_t	number;
 
-<<<<<<< HEAD:src/utils/random.c
-void	print_random_number()
-{
-	// t_rand		*rng;
-	uint32_t	number;
-
-	if (!g_rng)
-	{
-		g_rng = init_rng();
-		if (!g_rng)
-			return ; // Not sure what to do in this case
-	}
-	int i = 0;
-	while (i++ < 10)
-	{
-		number = pcg_generator(g_rng);
-		printf("Random number: %u\n", number);
-	}
-	// free(rng);
-}
-=======
 // 	if (!g_rng)
 // 	{
 // 		g_rng = init_rng();
@@ -95,7 +74,6 @@ void	print_random_number()
 // 	}
 // 	// free(rng);
 // }
->>>>>>> main:src/utils/util_random_gen.c
 
 double	random_double(void)
 {

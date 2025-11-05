@@ -6,7 +6,7 @@
 /*   By: dloustal <dloustal@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/14 12:23:50 by hogu          #+#    #+#                 */
-/*   Updated: 2025/10/20 14:15:09 by dloustal      ########   odam.nl         */
+/*   Updated: 2025/11/05 14:03:57 by dloustal      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,15 +66,8 @@ static void print_material(t_material *material)
 		printf("	Material: lambertian\n");
 	if (material->type == METAL)
 		printf("	Material: metal\n");
-<<<<<<< HEAD
-	if (material->type == DEFAULT)
-		printf("	Material: default\n");
-	// printf("	Albedo: %f\n", material->albedo);
-
-=======
 	printf("	Albedo:");
 	print_color(material->albedo);
->>>>>>> main
 }
 
 void	print_object(t_object *obj)

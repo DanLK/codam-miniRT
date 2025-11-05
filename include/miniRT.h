@@ -6,25 +6,17 @@
 /*   By: dloustal <dloustal@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/07 13:30:20 by hogu          #+#    #+#                 */
-/*   Updated: 2025/10/22 14:01:49 by dloustal      ########   odam.nl         */
+/*   Updated: 2025/11/05 14:02:39 by dloustal      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINIRT_H
 # define MINIRT_H
 # define WIDTH 1536
-<<<<<<< HEAD
-# define RATIO (4.0 / 3.0)
-# define HEIGHT (int)(WIDTH / RATIO)
-# define EPSILON 1e-6
-# define SAMPLES 1
-# define DEPTH 4
-=======
 # define HEIGHT 1152
 # define EPSILON 1e-6
 # define SAMPLES 1
 # define DEPTH 1
->>>>>>> main
 
 # include "libft.h"
 # include "MLX42/MLX42.h"
@@ -101,11 +93,7 @@ typedef enum e_obj_type
 	CYLINDER
 }	t_obj_type;
 
-<<<<<<< HEAD
-typedef	enum e_mat_type
-=======
 typedef enum e_mat_type
->>>>>>> main
 {
 	LAMBERTIAN,
 	METAL,
@@ -159,10 +147,7 @@ typedef struct s_object
 	t_color			show_color;
 	t_coord			center;
 	t_material		material;
-<<<<<<< HEAD
-=======
 	t_bonus_status	bonus_status;
->>>>>>> main
 	union
 	{
 		t_sphere	sp;
@@ -196,10 +181,6 @@ typedef struct s_hit_point
 	t_vec		normal;
 }		t_hit_point;
 
-<<<<<<< HEAD
-
-=======
->>>>>>> main
 typedef struct s_rand
 {
 	uint64_t	state;
@@ -220,16 +201,11 @@ typedef enum e_error_code
 	DIGITS_ONLY,
 	DUP_ELEM,
 	MISS_ELEM,
-<<<<<<< HEAD
-	INVALID_CHKB,
-	INVALID_MAT
-=======
 	INVALID_OPTION,
 	INVALID_CHKB,
 	INVALID_MAT,
 	INVALID_ALBEDO,
 	DUP_KEY
->>>>>>> main
 }	t_error_code;
 
 typedef enum e_cy_position
@@ -362,20 +338,12 @@ t_color		trace_color(t_ray ray, t_ray camera_ray, t_scene *scene, int depth);
 //-----------------Hitting------------------
 bool		hit_object(t_ray ray, t_object *obj, double *dist);
 bool		find_closest_hit(t_ray ray, t_scene *scene, t_hit_point *hp);
-<<<<<<< HEAD
-// bool		find_closest_hit(t_ray ray, t_scene *scene, t_object **out_obj, double *out_tmin);
-=======
->>>>>>> main
 
 //cylinder
 bool		hit_wall(t_object *obj, t_ray ray, double *dist);
 bool		hit_cap(t_object *obj, t_ray ray, double *dist, char cap);
 
 //Printin
-<<<<<<< HEAD
-void	print_color(t_color c);
-=======
 void		print_color(t_color c);
->>>>>>> main
 
 #endif

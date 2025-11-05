@@ -6,7 +6,7 @@
 /*   By: dloustal <dloustal@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/07 14:51:55 by dloustal      #+#    #+#                 */
-/*   Updated: 2025/10/22 15:11:52 by dloustal      ########   odam.nl         */
+/*   Updated: 2025/11/05 14:02:53 by dloustal      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,6 @@ static bool	init_scene(t_scene *scene, int argc, char *argv[])
 		return (print_error(OUT_RANGE, "Image height"), false);
 	if (!parser(scene, argv[1]))
 		return (false);
-<<<<<<< HEAD
-	// print_scene(scene);
-=======
->>>>>>> main
 	return (true);
 }
 
