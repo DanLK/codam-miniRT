@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   viewport.c                                         :+:    :+:            */
+/*   render_viewport.c                                  :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: dloustal <dloustal@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/13 16:08:18 by dloustal      #+#    #+#                 */
-/*   Updated: 2025/08/27 12:26:23 by dloustal      ########   odam.nl         */
+/*   Updated: 2025/11/05 14:19:15 by dloustal      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	make_vport(t_camera cam, t_vport *viewport)
 	viewport->height = (double)(viewport->width / viewport->ratio);
 	viewport->center = sum_vec(cam.pos, scaled(normalized(cam.dir),
 				viewport->distance));
-	viewport->v_right = normalized(cross(cam.dir, up));
+	viewport->v_right = normalized(cross(up, cam.dir));
 	viewport->v_down = normalized(cross(viewport->v_right, cam.dir));
 	viewport->delta_x = scaled(viewport->v_right, viewport->width / WIDTH);
 	viewport->delta_y = scaled(viewport->v_down, viewport->height / HEIGHT);
