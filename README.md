@@ -118,9 +118,17 @@ Here you can find some examples of [scenes](./test_rt_files/)
 	<figcaption> From elements.rt </figcaption>
 </figure>
 
+
+
 <figure>
 	<img src="./img/minirt-cylinders.png" width="780" height="600" alt="IMG" style="float: center;">
 	<figcaption> From cylinders.rt </figcaption>
+</figure>
+
+
+<figure>
+	<img src="./img/minirt-ambient.png" width="780" height="600" alt="IMG" style="float: center;">
+	<figcaption> Illustrates how colored ambient light affects white objects. From ambient.rt </figcaption>
 </figure>
 
 
@@ -129,4 +137,9 @@ Here you can find some examples of [scenes](./test_rt_files/)
 <figure>
 	<img src="./img/minirt-far_checkerboard.png" width="780" height="600" alt="IMG" style="float: center;">
 	<figcaption> From far_checkerboard.rt </figcaption>
+</figure>
+
+<figure>
+	<img src="./img/minirt-materials.png" width="780" height="600" alt="IMG" style="float: center;">
+	<figcaption> A scene with reflective and matte surfaces, and with multiple colored lights. From materials.rt </figcaption>
 </figure>
