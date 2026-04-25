@@ -111,7 +111,22 @@ Check [bonus .rt file guide](./Bonus_rt_File_Guide.txt) for specifics on formatt
 
 Here you can find some examples of [scenes](./test_rt_files/)
 
+#### Mandatory
+
 <figure>
 	<img src="./img/minirt-elements.png" width="780" height="600" alt="IMG" style="float: center;">
 	<figcaption> From elements.rt </figcaption>
+</figure>
+
+<figure>
+	<img src="./img/minirt-cylinders.png" width="780" height="600" alt="IMG" style="float: center;">
+	<figcaption> From cylinders.rt </figcaption>
+</figure>
+
+
+#### Bonus
+
+<figure>
+	<img src="./img/minirt-far_checkerboard.png" width="780" height="600" alt="IMG" style="float: center;">
+	<figcaption> From far_checkerboard.rt </figcaption>
 </figure>
